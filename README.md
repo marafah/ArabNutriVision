@@ -89,7 +89,8 @@ Bootstrap 5.3.3, Bootstrap Icons 1.11.3, Chart.js 4.4.1, transformers.js 2.17.2 
 The build loads the composition table, a demo account (`demo` / `arabnutrivision-demo`, example data only) and the admin account.
 With the default SQLite database, data entered online are reset when the free service restarts; set `DATABASE_URL`
 to a PostgreSQL database (Render, Neon, Supabase) to keep records permanently. Free services sleep after 15 minutes
-without visits, so the first page can take about a minute to load.
+without visits; the workflow `.github/workflows/keepalive.yml` pings the site every 10 minutes so it stays awake
+(a short loading page can still appear for about a minute right after each new deploy).
 
 ## Research code (`research/`)
 

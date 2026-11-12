@@ -1,0 +1,14 @@
+name: keep-alive
+# Pings the Render free service every 10 minutes so it never spins down
+# and visitors do not see the "service waking up" page.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Ping ArabNutriVision
+        run: curl -fsS --max-time 90 -o /dev/null -w "%{http_code}\n" https://arabnutrivision.onrender.com/ || true
