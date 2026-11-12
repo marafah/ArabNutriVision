@@ -112,29 +112,35 @@
   function status(t, err) { const s = $("#status"); s.textContent = t; s.className = "small mt-2 " + (err ? "text-danger" : "text-secondary"); }
 
   // ---- on-device recognition: CLIP zero-shot (open-source, runs in the browser; no API) ----
+  // Several visual descriptions per dish (prompt ensemble); a dish's score is the sum over its prompts.
   const LOOKS = {
-    maqluba: "maqluba, an upside-down rice cake with fried eggplant, cauliflower and chicken",
-    mansaf: "mansaf, lamb on yellow rice with white jameed yogurt sauce and almonds on flatbread",
-    musakhan: "musakhan, roasted chicken on taboon flatbread covered with purple sumac onions",
-    mulukhiyah: "mulukhiyah, a dark green jute leaf stew with chicken",
-    kabsa: "kabsa, orange spiced rice with roasted chicken and raisins",
-    mujaddara: "mujaddara, brown lentils and rice topped with crispy fried onions",
-    warak_enab: "stuffed grape vine leaves rolled with rice",
-    kofta_tahini: "kofta meat baked in a tray with tahini sauce and potatoes",
-    chicken_shawarma_wrap: "a chicken shawarma wrap sandwich in thin bread",
-    ruz_shaariyeh: "a plate of white rice with toasted vermicelli",
-    hummus: "hummus, a creamy chickpea dip with olive oil",
-    mutabbal: "mutabbal, a smoky grey eggplant dip with tahini",
-    tabbouleh: "tabbouleh, a finely chopped parsley salad with tomato and bulgur",
-    fattoush: "fattoush, a green salad with fried pita chips and sumac",
-    falafel: "falafel, fried brown chickpea balls",
-    foul: "foul mudammas, mashed fava beans with olive oil",
-    manakish_zaatar: "manakish, a flatbread topped with green za'atar and olive oil",
-    fatayer_spinach: "fatayer, triangular baked pastries filled with spinach",
-    knafeh: "knafeh, an orange shredded pastry dessert with melted cheese and syrup",
-    basbousa: "basbousa, semolina cake squares soaked in syrup",
-    freekeh_chicken: "freekeh, green smoked wheat with chicken",
-    fattet_hummus: "fatteh, chickpeas and toasted bread under yogurt tahini sauce with pine nuts",
+    maqluba: ["an upside-down rice cake turned out on a platter, layered with fried eggplant, cauliflower and chicken",
+              "a dome of rice with fried eggplant slices and chicken on top, Palestinian maqluba",
+              "a large tray of rice with fried vegetables and chicken pieces, garnished with nuts"],
+    mansaf: ["a large round platter of yellow rice topped with big chunks of lamb on the bone, pine nuts and almonds",
+             "Jordanian mansaf: lamb meat with bones on yellow rice garnished with toasted pine nuts and parsley",
+             "a festive tray of rice and boiled lamb pieces with fried nuts, served with white yogurt sauce"],
+    musakhan: ["roasted chicken on flatbread covered with purple sumac onions",
+               "musakhan: taboon bread topped with caramelised red onions, sumac and roast chicken"],
+    mulukhiyah: ["a bowl of dark green jute leaf stew", "mulukhiyah: a glossy green leafy stew served with rice and chicken"],
+    kabsa: ["orange spiced rice with roasted chicken quarters, raisins and nuts", "Gulf kabsa: reddish-orange rice with a whole roasted chicken on top"],
+    mujaddara: ["brown lentils and rice topped with crispy dark fried onions", "a plate of mujaddara, beige lentil rice with caramelised onions"],
+    warak_enab: ["rolled stuffed grape vine leaves arranged in rows", "dark green cylinders of stuffed vine leaves with lemon"],
+    kofta_tahini: ["kofta meat fingers baked in a tray with white tahini sauce and potatoes", "minced meat patties baked under a creamy tahini sauce"],
+    chicken_shawarma_wrap: ["a chicken shawarma wrap sandwich rolled in thin bread", "a toasted pita wrap filled with sliced chicken, garlic sauce and pickles"],
+    ruz_shaariyeh: ["a plate of plain white rice with toasted vermicelli noodles", "fluffy white rice mixed with golden brown vermicelli"],
+    hummus: ["a plate of smooth creamy beige chickpea dip with olive oil and paprika", "hummus spread in a shallow bowl with a swirl of olive oil"],
+    mutabbal: ["a bowl of smoky grey eggplant dip with tahini", "baba ghanoush, a pale grey-beige mashed eggplant dip with pomegranate seeds"],
+    tabbouleh: ["a finely chopped green parsley salad with tomato and bulgur", "tabbouleh, a bright green herb salad with diced tomatoes"],
+    fattoush: ["a mixed green salad with fried pita bread chips and sumac", "fattoush salad with lettuce, tomato, cucumber, radish and crispy bread"],
+    falafel: ["fried brown chickpea balls", "a plate of crispy round falafel with tahini"],
+    foul: ["mashed brown fava beans with olive oil in a bowl", "foul mudammas, a brown bean stew topped with olive oil, tomato and parsley"],
+    manakish_zaatar: ["a round flatbread topped with green za'atar and olive oil", "manakish, a baked pizza-like bread covered with dark green thyme mix"],
+    fatayer_spinach: ["triangular baked pastries filled with spinach", "small golden triangle pies stuffed with spinach"],
+    knafeh: ["an orange shredded pastry dessert with melted white cheese and syrup", "knafeh, a bright orange cheese dessert topped with crushed green pistachios"],
+    basbousa: ["semolina cake squares soaked in syrup with almonds", "golden yellow diamond-cut semolina cake pieces"],
+    freekeh_chicken: ["green smoked cracked wheat with chicken", "a plate of freekeh, greenish-brown grain with chicken and nuts"],
+    fattet_hummus: ["chickpeas and toasted bread under white yogurt tahini sauce with pine nuts", "fatteh in a bowl: creamy white yogurt topping with chickpeas, fried bread and pine nuts"],
   };
   const NOT_FOOD = "something that is not food";
   const STYLE_PROMPTS = {light: "a light, lean home-made plate with very little oil",
@@ -168,12 +174,14 @@
       const clf = await classifier();
       status(T.recognising);
       const url = $("#preview").src;
-      const codes = DISHES.map(d => d.code);
-      const labels = codes.map(c => LOOKS[c] || byCode[c].en).concat([NOT_FOOD]);
+      const codes = DISHES.map(d => d.code), labels = [], owner = [];
+      codes.forEach(c => (LOOKS[c] || [byCode[c].en]).forEach(t => { labels.push(t); owner.push(c); }));
+      labels.push(NOT_FOOD); owner.push(null);
       const res = await clf(url, labels, {hypothesis_template: "a photo of {}."});
-      const score = Object.fromEntries(res.map(r => [r.label, r.score]));
-      if ((score[NOT_FOOD] || 0) > 0.5) { status(T.notFood, true); return; }
-      const ranked = codes.map(c => ({dish_id: c, confidence: score[LOOKS[c] || byCode[c].en] || 0})).sort((a, b) => b.confidence - a.confidence);
+      const score = {}; let notFood = 0;
+      res.forEach(r => { const c = owner[labels.indexOf(r.label)]; if (c) score[c] = (score[c] || 0) + r.score; else notFood = r.score; });
+      if (notFood > 0.5) { status(T.notFood, true); return; }
+      const ranked = codes.map(c => ({dish_id: c, confidence: score[c] || 0})).sort((a, b) => b.confidence - a.confidence);
       const norm = ranked.reduce((a, r) => a + r.confidence, 0) || 1;
       ranked.forEach(r => r.confidence /= norm);
       const st = await clf(url, Object.values(STYLE_PROMPTS), {hypothesis_template: "{}."});
