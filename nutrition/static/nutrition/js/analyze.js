@@ -138,16 +138,20 @@
   let clfPromise = null;
   async function classifier() {
     if (!clfPromise) clfPromise = (async () => {
-      const T = await import(window.ANV.vendor + "transformers.min.js");
-      T.env.allowLocalModels = false;
-      T.env.backends.onnx.wasm.wasmPaths = window.ANV.vendor;
-      T.env.backends.onnx.wasm.numThreads = 1;
-      const bar = $("#dlBar"), fill = bar.querySelector(".progress-bar"); bar.hidden = false;
+      const TF = await import(window.ANV.vendor + "transformers.min.js");
+      TF.env.allowLocalModels = false;
+      TF.env.backends.onnx.wasm.wasmPaths = window.ANV.vendor;
+      TF.env.backends.onnx.wasm.numThreads = 1;
+      const bar = $("#dlBar"), barFill = bar.querySelector(".progress-bar"); bar.hidden = false;
       const files = {};
-      const clf = await T.pipeline("zero-shot-image-classification", "Xenova/clip-vit-base-patch32", {
-        progress_callback: p => { if (p.status === "progress" && p.file) { files[p.file] = p.progress || 0;
-          const v = Object.values(files); fill.style.width = (v.reduce((a, b) => a + b, 0) / v.length) + "%";
-          status(fill(T.download, Math.round(v.reduce((a, b) => a + b, 0) / v.length), "")); } } });
+      const clf = await TF.pipeline("zero-shot-image-classification", "Xenova/clip-vit-base-patch32", {
+        progress_callback: p => {
+          if (p.status !== "progress" || !p.file) return;
+          files[p.file] = p.progress || 0;
+          const v = Object.values(files), pct = Math.round(v.reduce((a, b) => a + b, 0) / v.length);
+          barFill.style.width = pct + "%";
+          status(fill(T.download, pct, ""));
+        } });
       bar.hidden = true; return clf;
     })().catch(e => { clfPromise = null; throw e; });
     return clfPromise;
