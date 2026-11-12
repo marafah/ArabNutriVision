@@ -269,6 +269,7 @@
       if (error) { $("#recErr").textContent = error.message || T.saveFail; return; }
       location.href = url(U.record, data.id);
     };
+    await bodyPanel(part);
     twice($("#delPart"), async () => { check(await sb.from("participants").delete().eq("id", id)); location.href = U.participants; });
   };
 
@@ -404,6 +405,137 @@
       location.href = url(U.record, rec.id);
     };
   };
+
+
+  // ---- InBody import (Excel/CSV export from Lookin'Body or LookinBody Web; no API)
+  const IB_FIELDS = [   // [db column, label key, header prefixes after removing spaces/punctuation]
+    ["code", "ibCode", ["id", "userid", "memberid", "participant", "code", "idnumber"]],
+    ["measured_at", "ibDate", ["testdatetime", "testdate", "datetime", "date", "measurementdate", "testtime"]],
+    ["weight_kg", "ibWeight", ["weight", "bodyweight"]],
+    ["height_cm", "ibHeight", ["height"]],
+    ["bmi", "ibBmi", ["bmi", "bodymassindex"]],
+    ["pbf_pct", "ibPbf", ["pbf", "percentbodyfat", "bodyfatpercent", "bodyfat%"]],
+    ["bfm_kg", "ibBfm", ["bfm", "bodyfatmass"]],
+    ["smm_kg", "ibSmm", ["smm", "skeletalmusclemass"]],
+    ["ffm_kg", "ibFfm", ["ffm", "fatfreemass"]],
+    ["tbw_l", "ibTbw", ["tbw", "totalbodywater"]],
+    ["bmr_kcal", "ibBmr", ["bmr", "basalmetabolicrate"]],
+    ["vfl", "ibVfl", ["vfl", "visceralfatlevel"]],
+    ["whr", "ibWhr", ["whr", "waisthipratio"]],
+  ];
+  const normHead = h => String(h ?? "").toLowerCase().replace(/[\s_\-\.\/()\[\]:]+/g, "");
+  function autoMap(head) {
+    const used = new Set(), map = {};
+    IB_FIELDS.forEach(([col, , keys]) => {
+      const i = head.findIndex((h, j) => !used.has(j) && keys.some(k => normHead(h) === k || normHead(h).startsWith(k)));
+      if (i >= 0) { map[col] = i; used.add(i); }
+    });
+    return map;
+  }
+  function parseIbDate(v) {
+    if (v == null || v === "") return null;
+    if (v instanceof Date && !isNaN(v)) return v;
+    if (typeof v === "number" && v > 20000 && v < 80000) return new Date(Math.round((v - 25569) * 864e5));   // Excel serial date
+    const s = String(v).trim();
+    let m = s.match(/^(\d{4})(\d{2})(\d{2})(\d{2})?(\d{2})?(\d{2})?$/);                                     // 20261112143000
+    if (!m) m = s.match(/^(\d{4})[.\-\/](\d{1,2})[.\-\/](\d{1,2})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?/);       // 2026.11.12 14:30
+    if (m) return new Date(+m[1], +m[2] - 1, +m[3], +(m[4] || 12), +(m[5] || 0), +(m[6] || 0));
+    m = s.match(/^(\d{1,2})[.\-\/](\d{1,2})[.\-\/](\d{4})(?:[ T](\d{1,2}):(\d{2})(?::(\d{2}))?)?/);               // 12/11/2026 (day first)
+    if (m) return new Date(+m[3], +m[2] - 1, +m[1], +(m[4] || 12), +(m[5] || 0), +(m[6] || 0));
+    return null;
+  }
+  const ibNum = v => { if (v === "" || v == null) return null; const x = parseFloat(String(v).replace(",", ".").replace(/[^\d.\-]/g, "")); return isNaN(x) ? null : x; };
+
+  pages.inbody = async () => {
+    let parts = check(await sb.from("participants").select("id,code").order("code"));
+    const psel = $("#ib_part"); parts.forEach(p => psel.append(new Option(p.code, p.id)));
+    if (qs("participant")) { psel.value = qs("participant"); $("#ib_mode_one").checked = true; }
+    const syncMode = () => { const one = $("#ib_mode_one").checked; $("#ib_partBox").hidden = !one; $("#ib_create").closest(".form-check").hidden = one; };
+    document.querySelectorAll("[name=mode]").forEach(r => r.onchange = () => { syncMode(); preview(); }); syncMode();
+    let table = null, fileName = "";
+    const mapSel = () => Object.fromEntries([...document.querySelectorAll("#ibMap select")].filter(s => s.value !== "").map(s => [s.dataset.col, +s.value]));
+    function build() {
+      const map = mapSel(), one = $("#ib_mode_one").checked, rows = [], errors = [];
+      table.slice(1).forEach((r, i) => {
+        const n = i + 2, at = parseIbDate(r[map.measured_at]);
+        if (!at) { errors.push(pf(T.ibBadDate, {n, v: r[map.measured_at] ?? ""})); return; }
+        const row = {measured_at: at.toISOString(), code: one ? null : String(r[map.code] ?? "").trim()};
+        IB_FIELDS.slice(2).forEach(([col]) => { if (col in map) row[col] = ibNum(r[map[col]]); });
+        rows.push(row);
+      });
+      return {rows, errors, map};
+    }
+    function preview() {
+      if (!table) return;
+      const {rows, map} = build(), cols = IB_FIELDS.filter(([c]) => c in map || (c === "code" && !$("#ib_mode_one").checked));
+      $("#ibHead").innerHTML = `<tr>${cols.map(([, k]) => `<th class="small">${esc(T[k])}</th>`).join("")}</tr>`;
+      $("#ibRows").innerHTML = rows.slice(0, 8).map(r => `<tr>${cols.map(([c]) => `<td class="small">${c === "measured_at" ? esc(new Date(r[c]).toLocaleString(AR ? "ar-u-nu-latn" : "en-GB")) : esc(r[c] ?? "–")}</td>`).join("")}</tr>`).join("");
+    }
+    $("#ib_file").onchange = async e => {
+      const file = e.target.files[0]; if (!file) return; fileName = file.name; $("#ibErr").classList.add("d-none"); $("#ibStatus").textContent = "";
+      try {
+        if (/\.(xlsx|xls|xlsm)$/i.test(file.name)) { const wb = XLSX.read(await file.arrayBuffer(), {type: "array", cellDates: true}); table = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {header: 1, defval: "", raw: true}); }
+        else table = parseCSV((await file.text()).replace(/^﻿/, ""));
+        table = table.filter(r => r.some(v => String(v).trim() !== ""));
+      } catch (err) { $("#ibErr").textContent = err.message; $("#ibErr").classList.remove("d-none"); return; }
+      if (!table || table.length < 2) { $("#ibErr").textContent = T.ffqEmpty; $("#ibErr").classList.remove("d-none"); return; }
+      const head = table[0].map(h => String(h).trim()), auto = autoMap(head);
+      $("#ibMap").innerHTML = IB_FIELDS.map(([col, k]) => `<div class="col-sm-6"><label class="form-label small d-block w-100">${esc(T[k])}<select class="form-select form-select-sm" data-col="${col}"><option value="">— ${esc(T.ibNotUsed)} —</option>${head.map((h, i) => `<option value="${i}" ${auto[col] === i ? "selected" : ""}>${esc(h || "#" + (i + 1))}</option>`).join("")}</select></label></div>`).join("");
+      document.querySelectorAll("#ibMap select").forEach(s => s.onchange = preview);
+      $("#ibMapPanel").hidden = false; preview();
+    };
+    $("#ibImport").onclick = async () => {
+      const box = $("#ibErr"), fail = list => { box.innerHTML = `<b>${esc(T.ffqFix)}</b><ul class="mb-0">${list.slice(0, 15).map(x => `<li>${esc(x)}</li>`).join("")}</ul>`; box.classList.remove("d-none"); };
+      box.classList.add("d-none");
+      const {rows, errors, map} = build(), one = $("#ib_mode_one").checked;
+      if (!("measured_at" in map) || !IB_FIELDS.slice(2).some(([c]) => c in map)) { fail([T.ibNeed]); return; }
+      if (one ? !psel.value : !("code" in map)) { fail([T.ibNeedId]); return; }
+      if (errors.length) { fail(errors); return; }
+      const byCode = Object.fromEntries(parts.map(p => [p.code.toLowerCase(), p.id]));
+      if (!one) {
+        const missing = [...new Set(rows.map(r => r.code).filter(c => c && !byCode[c.toLowerCase()]))];
+        if (missing.length && $("#ib_create").checked) {
+          const made = check(await sb.from("participants").insert(missing.map(c => ({code: c.slice(0, 30)}))).select("id,code"));
+          made.forEach(p => byCode[p.code.toLowerCase()] = p.id); parts = parts.concat(made);
+        }
+        const bad = rows.map((r, i) => (!r.code || !byCode[r.code.toLowerCase()]) ? pf(T.ibNoPart, {n: i + 2, v: r.code || ""}) : null).filter(Boolean);
+        if (bad.length) { fail(bad); return; }
+      }
+      const out = rows.map(r => { const {code, ...x} = r; return {...x, participant_id: one ? +psel.value : byCode[code.toLowerCase()], source_file: fileName.slice(0, 120)}; });
+      const ids = [...new Set(out.map(r => r.participant_id))];
+      const have = new Set(check(await sb.from("body_measurements").select("participant_id,measured_at").in("participant_id", ids)).map(r => r.participant_id + "|" + new Date(r.measured_at).toISOString()));
+      const seen = new Set(), fresh = out.filter(r => { const k = r.participant_id + "|" + r.measured_at; if (have.has(k) || seen.has(k)) return false; seen.add(k); return true; });
+      if (fresh.length) { const {error} = await sb.from("body_measurements").insert(fresh); if (error) { fail([error.message || T.saveFail]); return; } }
+      $("#ibStatus").innerHTML = `<i class="bi bi-check-circle text-success me-1"></i>${esc(pf(T.ibDone, {n: fresh.length, d: out.length - fresh.length}))}` + (ids.length === 1 ? ` <a href="${url(U.participant, ids[0])}">${esc(parts.find(p => p.id === ids[0]).code)}</a>` : "");
+    };
+  };
+
+  async function bodyPanel(part) {
+    $("#ibLink").href += "?participant=" + part.id;
+    const rows = check(await sb.from("body_measurements").select("*").eq("participant_id", part.id).order("measured_at"));
+    if (!rows.length) { $("#bodyEmpty").textContent = T.ibNoRows; return; }
+    $("#bodyEmpty").hidden = true; $("#bodyBox").hidden = false;
+    const last = rows[rows.length - 1], prev = rows.length > 1 ? rows[rows.length - 2] : null;
+    $("#bodyDate").textContent = fdate(last.measured_at.slice(0, 10));
+    const stat = (col, k, d = 1) => last[col] == null ? "" : `<div class="col-6 col-md-3"><div class="border rounded-3 p-2 h-100"><div class="small text-secondary">${esc(T[k])}</div><div class="fs-5 fw-semibold num">${(+last[col]).toFixed(d)}</div>${prev && prev[col] != null ? `<div class="small ${(last[col] - prev[col] > 0) === ["smm_kg", "tbw_l", "bmr_kcal", "ffm_kg"].includes(col) ? "text-success" : "text-rose"}">${LTR((last[col] - prev[col] > 0 ? "+" : "") + (last[col] - prev[col]).toFixed(d))}</div>` : ""}</div></div>`;
+    $("#bodyStats").innerHTML = [["weight_kg", "ibWeight"], ["pbf_pct", "ibPbf"], ["smm_kg", "ibSmm"], ["bfm_kg", "ibBfm"], ["bmi", "ibBmi"], ["vfl", "ibVfl", 0], ["bmr_kcal", "ibBmr", 0], ["tbw_l", "ibTbw"]].map(a => stat(...a)).join("");
+    if (rows.length > 1) {
+      const lab = rows.map(r => r.measured_at.slice(0, 10)), ds = [];
+      [["weight_kg", "ibWeight", COL.navy, "y"], ["smm_kg", "ibSmm", COL.olive, "y"], ["pbf_pct", "ibPbf", COL.rose, "y1"]].forEach(([c, k, col, ax]) => {
+        if (rows.some(r => r[c] != null)) ds.push({type: "line", label: T[k], data: rows.map(r => r[c]), borderColor: col, backgroundColor: col, yAxisID: ax, tension: .2}); });
+      chart("bodyTrend", {type: "line", data: {labels: lab, datasets: ds}, options: {maintainAspectRatio: false, layout: {padding: {left: 12, right: 12}}, plugins: {legend: {position: "bottom"}},
+        scales: {x: {reverse: AR}, y: {position: yPos}, y1: {position: AR ? "left" : "right", grid: {drawOnChartArea: false}}}}});
+    } else $("#bodyTrendBox").hidden = true;
+    if (last.bmr_kcal) {
+      $("#bmrBox").hidden = false;
+      $("#bmrBtn").onclick = async () => {
+        const f = +$("#actSel").value, k = Math.round(last.bmr_kcal * f / 10) * 10;
+        const {error} = await sb.from("participants").update({energy_target_kcal: k}).eq("id", part.id);
+        $("#bmrStatus").innerHTML = error ? `<span class="text-danger">${esc(error.message)}</span>` : `<i class="bi bi-check-circle text-success me-1"></i>${esc(pf(T.ibTarget, {k, f}))}`;
+        if (!error) setTimeout(() => location.reload(), 1200);
+      };
+    }
+  }
 
   // ---- validation lab
   pages.validation = async () => {

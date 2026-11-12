@@ -35,4 +35,5 @@ if settings.STATIC_SITE:   # static edition: researcher pages are client-side (S
         if _u.name in _swap:
             _u.callback = _swap[_u.name]
     urlpatterns += [path("participants/view/", sv.participant_view, name="participant_view"),
-                    path("records/view/", sv.record_view, name="record_view")]
+                    path("records/view/", sv.record_view, name="record_view"),
+                    path("inbody/", sv.inbody, name="inbody")]

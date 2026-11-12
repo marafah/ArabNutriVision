@@ -40,7 +40,21 @@ def reference_data() -> dict:
 
 # Strings used by workspace.js. Most msgids are shared with the server edition, so one translation serves both.
 JS_MSGIDS = {
-    "totalFood": gettext_noop("Total (food)"), "kcal": gettext_noop("kcal"), "g": gettext_noop("g"), "mg": gettext_noop("mg"), "saveFail": gettext_noop("Could not save."), "saved": gettext_noop("Saved."), "deleted": gettext_noop("Deleted."),
+    "totalFood": gettext_noop("Total (food)"),
+    # InBody import
+    "ibCode": gettext_noop("ID / participant code"), "ibDate": gettext_noop("Test date and time"),
+    "ibWeight": gettext_noop("Weight (kg)"), "ibHeight": gettext_noop("Height (cm)"), "ibBmi": gettext_noop("BMI (kg/m²)"),
+    "ibPbf": gettext_noop("Percent body fat (%)"), "ibBfm": gettext_noop("Body fat mass (kg)"),
+    "ibSmm": gettext_noop("Skeletal muscle mass (kg)"), "ibFfm": gettext_noop("Fat-free mass (kg)"),
+    "ibTbw": gettext_noop("Total body water (L)"), "ibBmr": gettext_noop("Basal metabolic rate (kcal)"),
+    "ibVfl": gettext_noop("Visceral fat level"), "ibWhr": gettext_noop("Waist–hip ratio"),
+    "ibNotUsed": gettext_noop("not used"), "ibNeed": gettext_noop("Map at least the date column and one measurement."),
+    "ibNeedId": gettext_noop("Map the ID column, or choose one participant for all rows."),
+    "ibBadDate": gettext_noop("Row %(n)s: cannot read the date '%(v)s'"),
+    "ibNoPart": gettext_noop("Row %(n)s: no participant with code '%(v)s'"),
+    "ibDone": gettext_noop("Imported %(n)s measurements; %(d)s already present were skipped."),
+    "ibNoRows": gettext_noop("No measurements yet. Import an InBody export to see body composition here."),
+    "ibTarget": gettext_noop("Energy target set to %(k)s kcal/day (BMR × %(f)s)."), "kcal": gettext_noop("kcal"), "g": gettext_noop("g"), "mg": gettext_noop("mg"), "saveFail": gettext_noop("Could not save."), "saved": gettext_noop("Saved."), "deleted": gettext_noop("Deleted."),
     "confirmDel": gettext_noop("Press again to delete"), "loading": gettext_noop("Loading…"), "signInFail": gettext_noop("Email or password is incorrect."),
     "notConfigured": gettext_noop("The online database is not configured yet. See the README (GitHub Pages + Supabase)."),
     "noParticipants": gettext_noop("No participants yet. Add one with a pseudonymous code such as P001."),
@@ -113,6 +127,10 @@ def record_view(request):
 
 def ffq(request):
     return _page(request, "static_site/ffq.html", "ffq")
+
+
+def inbody(request):
+    return _page(request, "static_site/inbody.html", "inbody")
 
 
 def validation(request):

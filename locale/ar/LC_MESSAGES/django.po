@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 14:08+0300\n"
+"POT-Creation-Date: 2026-11-12 14:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,7 +59,7 @@ msgstr "هدف الطاقة (سعرة/يوم)"
 
 #: nutrition/forms.py:26 nutrition/forms.py:38
 #: nutrition/templates/nutrition/participant_list.html:9
-#: nutrition/templates/static_site/participant.html:31
+#: nutrition/templates/static_site/participant.html:47
 #: nutrition/templates/static_site/participants.html:10
 #: nutrition/templates/static_site/participants.html:20
 msgid "Notes"
@@ -67,15 +67,15 @@ msgstr "ملاحظات"
 
 #: nutrition/forms.py:38
 #: nutrition/templates/nutrition/participant_detail.html:17
-#: nutrition/templates/static_site/participant.html:21
-#: nutrition/templates/static_site/participant.html:29
+#: nutrition/templates/static_site/participant.html:37
+#: nutrition/templates/static_site/participant.html:45
 msgid "Date"
 msgstr "التاريخ"
 
 #: nutrition/forms.py:38
 #: nutrition/templates/nutrition/participant_detail.html:17
-#: nutrition/templates/static_site/participant.html:21
-#: nutrition/templates/static_site/participant.html:30
+#: nutrition/templates/static_site/participant.html:37
+#: nutrition/templates/static_site/participant.html:46
 msgid "Method"
 msgstr "الطريقة"
 
@@ -111,15 +111,15 @@ msgstr "الوجبة"
 msgid "Dish"
 msgstr "الطبق"
 
-#: nutrition/forms.py:65 nutrition/static_views.py:50
+#: nutrition/forms.py:65 nutrition/static_views.py:64
 msgid "Choose a dish or an ingredient."
 msgstr "اختر طبقاً أو مكوّناً."
 
-#: nutrition/forms.py:67 nutrition/static_views.py:51
+#: nutrition/forms.py:67 nutrition/static_views.py:65
 msgid "Enter a portion between 1 and 3000 g."
 msgstr "أدخل حصة بين 1 و3000 غ."
 
-#: nutrition/forms.py:75 nutrition/static_views.py:63
+#: nutrition/forms.py:75 nutrition/static_views.py:77
 #: nutrition/templates/nutrition/record_detail.html:38
 #: nutrition/templates/nutrition/record_detail.html:61
 #: nutrition/templates/static_site/record.html:48
@@ -132,6 +132,7 @@ msgid "Doses"
 msgstr "عدد الجرعات"
 
 #: nutrition/forms.py:84 nutrition/templates/static_site/ffq.html:11
+#: nutrition/templates/static_site/inbody.html:17
 #: nutrition/templates/static_site/participant.html:2
 msgid "Participant"
 msgstr "المشارك"
@@ -373,35 +374,35 @@ msgstr "نوع قطعة اللحم وكميتها"
 msgid "Other ingredients and yield"
 msgstr "مكوّنات أخرى والمردود"
 
-#: nutrition/services/estimate.py:102 nutrition/static_views.py:72
+#: nutrition/services/estimate.py:102 nutrition/static_views.py:86
 #, python-format
 msgid "Fat supplies %(p).0f%% of energy, above the 20–35%% range."
 msgstr ""
 "توفّر الدهون %(p).0f%% من الطاقة، وهذا أعلى من النطاق الموصى به 20–35%%."
 
-#: nutrition/services/estimate.py:104 nutrition/static_views.py:73
+#: nutrition/services/estimate.py:104 nutrition/static_views.py:87
 #, python-format
 msgid ""
 "Saturated fat is %(p).1f%% of energy; the WHO recommends less than 10%%."
 msgstr ""
 "الدهون المشبعة %(p).1f%% من الطاقة، وتوصي منظمة الصحة العالمية بأقل من 10%%."
 
-#: nutrition/services/estimate.py:106 nutrition/static_views.py:74
+#: nutrition/services/estimate.py:106 nutrition/static_views.py:88
 #, python-format
 msgid "Sodium is %(v).0f mg, above the 2,300 mg upper limit."
 msgstr "الصوديوم %(v).0f ملغ، وهذا أعلى من الحد الأعلى 2,300 ملغ."
 
-#: nutrition/services/estimate.py:108 nutrition/static_views.py:75
+#: nutrition/services/estimate.py:108 nutrition/static_views.py:89
 #, python-format
 msgid "Fibre is %(v).0f g; adults are advised 25–30 g a day."
 msgstr "الألياف %(v).0f غ، ويُنصح البالغون بـ 25–30 غ يومياً."
 
-#: nutrition/services/estimate.py:110 nutrition/static_views.py:76
+#: nutrition/services/estimate.py:110 nutrition/static_views.py:90
 #, python-format
 msgid "Daily glycaemic load is %(v).0f (above 120 is considered high)."
 msgstr "الحمل السكري اليومي %(v).0f (أكثر من 120 يُعدّ مرتفعاً)."
 
-#: nutrition/services/estimate.py:114 nutrition/static_views.py:77
+#: nutrition/services/estimate.py:114 nutrition/static_views.py:91
 #, python-format
 msgid ""
 "%(n)d dish(es) are recorded as restaurant or unknown preparation (%(k).0f "
@@ -410,25 +411,25 @@ msgstr ""
 "عدد الأطباق المسجّلة بتحضير مطاعم أو غير معروف: %(n)d (%(k).0f سعرة). تأكيد "
 "طريقة التحضير هو أكثر ما يضيّق نطاق الدهون المخفية."
 
-#: nutrition/services/estimate.py:119 nutrition/static_views.py:78
+#: nutrition/services/estimate.py:119 nutrition/static_views.py:92
 #, python-format
 msgid "Largest energy sources: %(names)s."
 msgstr "أكبر مصادر الطاقة: %(names)s."
 
-#: nutrition/services/estimate.py:120 nutrition/static_views.py:79
+#: nutrition/services/estimate.py:120 nutrition/static_views.py:93
 msgid "Iron"
 msgstr "الحديد"
 
-#: nutrition/services/estimate.py:120 nutrition/static_views.py:79
+#: nutrition/services/estimate.py:120 nutrition/static_views.py:93
 msgid "Calcium"
 msgstr "الكالسيوم"
 
-#: nutrition/services/estimate.py:123 nutrition/static_views.py:79
+#: nutrition/services/estimate.py:123 nutrition/static_views.py:93
 #, python-format
 msgid "%(label)s is %(v).0f mg (%(p).0f%% of the reference value)."
 msgstr "%(label)s %(v).0f ملغ (%(p).0f%% من القيمة المرجعية)."
 
-#: nutrition/services/estimate.py:125 nutrition/static_views.py:80
+#: nutrition/services/estimate.py:125 nutrition/static_views.py:94
 msgid "No nutrient exceeded the limits checked here."
 msgstr "لم يتجاوز أي عنصر غذائي الحدود التي تم فحصها هنا."
 
@@ -437,7 +438,96 @@ msgstr "لم يتجاوز أي عنصر غذائي الحدود التي تم ف
 msgid "Total (food)"
 msgstr "المجموع (الطعام)"
 
-#: nutrition/static_views.py:43 nutrition/templates/nutrition/analyze.html:108
+#: nutrition/static_views.py:45
+msgid "ID / participant code"
+msgstr "الرقم / رمز المشارك"
+
+#: nutrition/static_views.py:45
+msgid "Test date and time"
+msgstr "تاريخ ووقت القياس"
+
+#: nutrition/static_views.py:46
+msgid "Weight (kg)"
+msgstr "الوزن (كغ)"
+
+#: nutrition/static_views.py:46
+msgid "Height (cm)"
+msgstr "الطول (سم)"
+
+#: nutrition/static_views.py:46
+msgid "BMI (kg/m²)"
+msgstr "مؤشر كتلة الجسم (كغ/م²)"
+
+#: nutrition/static_views.py:47
+msgid "Percent body fat (%)"
+msgstr "نسبة الدهون في الجسم (%)"
+
+#: nutrition/static_views.py:47
+msgid "Body fat mass (kg)"
+msgstr "كتلة الدهون (كغ)"
+
+#: nutrition/static_views.py:48
+msgid "Skeletal muscle mass (kg)"
+msgstr "كتلة العضلات الهيكلية (كغ)"
+
+#: nutrition/static_views.py:48
+msgid "Fat-free mass (kg)"
+msgstr "الكتلة الخالية من الدهون (كغ)"
+
+#: nutrition/static_views.py:49
+msgid "Total body water (L)"
+msgstr "إجمالي ماء الجسم (لتر)"
+
+#: nutrition/static_views.py:49
+msgid "Basal metabolic rate (kcal)"
+msgstr "معدل الأيض الأساسي (سعرة)"
+
+#: nutrition/static_views.py:50
+msgid "Visceral fat level"
+msgstr "مستوى الدهون الحشوية"
+
+#: nutrition/static_views.py:50
+msgid "Waist–hip ratio"
+msgstr "نسبة الخصر إلى الورك"
+
+#: nutrition/static_views.py:51
+msgid "not used"
+msgstr "غير مستخدم"
+
+#: nutrition/static_views.py:51
+msgid "Map at least the date column and one measurement."
+msgstr "حدّد عمود التاريخ وقياساً واحداً على الأقل."
+
+#: nutrition/static_views.py:52
+msgid "Map the ID column, or choose one participant for all rows."
+msgstr "حدّد عمود الرقم، أو اختر مشاركاً واحداً لكل الصفوف."
+
+#: nutrition/static_views.py:53
+#, python-format
+msgid "Row %(n)s: cannot read the date '%(v)s'"
+msgstr "الصف %(n)s: تعذّرت قراءة التاريخ '%(v)s'"
+
+#: nutrition/static_views.py:54
+#, python-format
+msgid "Row %(n)s: no participant with code '%(v)s'"
+msgstr "الصف %(n)s: لا يوجد مشارك بالرمز '%(v)s'"
+
+#: nutrition/static_views.py:55
+#, python-format
+msgid "Imported %(n)s measurements; %(d)s already present were skipped."
+msgstr "تم استيراد %(n)s قياس؛ وتم تجاهل %(d)s موجودة مسبقاً."
+
+#: nutrition/static_views.py:56
+msgid ""
+"No measurements yet. Import an InBody export to see body composition here."
+msgstr "لا توجد قياسات بعد. استورد ملفاً من InBody لعرض تركيب الجسم هنا."
+
+#: nutrition/static_views.py:57
+#, python-format
+msgid "Energy target set to %(k)s kcal/day (BMR × %(f)s)."
+msgstr "تم تحديد هدف الطاقة بـ %(k)s سعرة/يوم (معدل الأيض الأساسي × %(f)s)."
+
+#: nutrition/static_views.py:57 nutrition/templates/nutrition/analyze.html:108
 #: nutrition/templates/nutrition/analyze.html:135
 #: nutrition/templates/nutrition/dish_detail.html:72
 #: nutrition/templates/nutrition/dish_detail.html:94
@@ -451,12 +541,12 @@ msgstr "المجموع (الطعام)"
 #: nutrition/templates/nutrition/recipe_builder.html:22
 #: nutrition/templates/nutrition/record_detail.html:27
 #: nutrition/templates/nutrition/validation.html:73
-#: nutrition/templates/static_site/participant.html:21
+#: nutrition/templates/static_site/participant.html:37
 #: nutrition/templates/static_site/record.html:27
 msgid "kcal"
 msgstr "سعرة"
 
-#: nutrition/static_views.py:43 nutrition/templates/nutrition/analyze.html:33
+#: nutrition/static_views.py:57 nutrition/templates/nutrition/analyze.html:33
 #: nutrition/templates/nutrition/analyze.html:135
 #: nutrition/templates/nutrition/dish_detail.html:72
 #: nutrition/templates/nutrition/dish_detail.html:96
@@ -471,37 +561,37 @@ msgstr "سعرة"
 msgid "g"
 msgstr "غ"
 
-#: nutrition/static_views.py:43 nutrition/templates/nutrition/analyze.html:135
+#: nutrition/static_views.py:57 nutrition/templates/nutrition/analyze.html:135
 msgid "mg"
 msgstr "ملغ"
 
-#: nutrition/static_views.py:43 nutrition/templates/nutrition/analyze.html:155
+#: nutrition/static_views.py:57 nutrition/templates/nutrition/analyze.html:155
 msgid "Could not save."
 msgstr "تعذّر الحفظ."
 
-#: nutrition/static_views.py:43
+#: nutrition/static_views.py:57
 msgid "Saved."
 msgstr "تم الحفظ."
 
-#: nutrition/static_views.py:43
+#: nutrition/static_views.py:57
 msgid "Deleted."
 msgstr "تم الحذف."
 
-#: nutrition/static_views.py:44
+#: nutrition/static_views.py:58
 #: nutrition/templates/nutrition/record_detail.html:11
 msgid "Press again to delete"
 msgstr "اضغط مرة أخرى للحذف"
 
-#: nutrition/static_views.py:44
+#: nutrition/static_views.py:58
 #: nutrition/templates/static_site/_ws_notice.html:2
 msgid "Loading…"
 msgstr "جارٍ التحميل…"
 
-#: nutrition/static_views.py:44
+#: nutrition/static_views.py:58
 msgid "Email or password is incorrect."
 msgstr "البريد الإلكتروني أو كلمة المرور غير صحيحة."
 
-#: nutrition/static_views.py:45
+#: nutrition/static_views.py:59
 msgid ""
 "The online database is not configured yet. See the README (GitHub Pages + "
 "Supabase)."
@@ -509,33 +599,33 @@ msgstr ""
 "لم تُهيّأ قاعدة البيانات الإلكترونية بعد. راجع ملف README (GitHub Pages + "
 "Supabase)."
 
-#: nutrition/static_views.py:46
+#: nutrition/static_views.py:60
 #: nutrition/templates/nutrition/dashboard.html:22
 msgid "No participants yet. Add one with a pseudonymous code such as P001."
 msgstr "لا يوجد مشاركون بعد. أضف مشاركاً برمز مستعار مثل P001."
 
-#: nutrition/static_views.py:47
+#: nutrition/static_views.py:61
 #: nutrition/templates/nutrition/dashboard.html:26
 msgid "No records yet."
 msgstr "لا توجد سجلات بعد."
 
-#: nutrition/static_views.py:47
+#: nutrition/static_views.py:61
 #: nutrition/templates/nutrition/participant_detail.html:14
-#: nutrition/templates/static_site/participant.html:18
+#: nutrition/templates/static_site/participant.html:19
 msgid "No records yet. Create the first one with the form."
 msgstr "لا توجد سجلات بعد. أنشئ أول سجل من النموذج."
 
-#: nutrition/static_views.py:48
+#: nutrition/static_views.py:62
 #: nutrition/templates/nutrition/record_detail.html:37
 msgid "No foods yet. Add the first item with the form below, or from a photo."
 msgstr "لا توجد أطعمة بعد. أضف أول عنصر من النموذج في الأسفل أو من صورة."
 
-#: nutrition/static_views.py:49
+#: nutrition/static_views.py:63
 #: nutrition/templates/nutrition/validation.html:46
 msgid "No plates yet."
 msgstr "لا توجد أطباق بعد."
 
-#: nutrition/static_views.py:49
+#: nutrition/static_views.py:63
 #: nutrition/templates/nutrition/validation.html:30
 msgid ""
 "No plates with recognition outputs yet. Add a plate with the form, or from "
@@ -544,240 +634,240 @@ msgstr ""
 "لا توجد أطباق بنتائج تعرّف بعد. أضف طبقاً من النموذج أو من صفحة التحليل بعد "
 "الوزن."
 
-#: nutrition/static_views.py:50 nutrition/views.py:146
+#: nutrition/static_views.py:64 nutrition/views.py:146
 msgid "You already have a participant with this code."
 msgstr "لديك مشارك بهذا الرمز مسبقاً."
 
-#: nutrition/static_views.py:51
+#: nutrition/static_views.py:65
 msgid "Fill in the required fields."
 msgstr "املأ الحقول المطلوبة."
 
-#: nutrition/static_views.py:52 nutrition/views.py:195
+#: nutrition/static_views.py:66 nutrition/views.py:195
 #, python-format
 msgid "Added %(food)s (%(g).0f g)."
 msgstr "تمت إضافة %(food)s (%(g).0f غ)."
 
-#: nutrition/static_views.py:52 nutrition/views.py:275
+#: nutrition/static_views.py:66 nutrition/views.py:275
 #, python-format
 msgid "Added %(food)s (%(g).0f g) to the record of %(p)s, %(d)s."
 msgstr "تمت إضافة %(food)s (%(g).0f غ) إلى سجل %(p)s بتاريخ %(d)s."
 
-#: nutrition/static_views.py:53 nutrition/templates/nutrition/analyze.html:155
+#: nutrition/static_views.py:67 nutrition/templates/nutrition/analyze.html:155
 msgid "Open record"
 msgstr "فتح السجل"
 
-#: nutrition/static_views.py:53 nutrition/views.py:390
+#: nutrition/static_views.py:67 nutrition/views.py:390
 #, python-format
 msgid "Plate %(f)s saved."
 msgstr "تم حفظ الطبق %(f)s."
 
-#: nutrition/static_views.py:53 nutrition/views.py:149
+#: nutrition/static_views.py:67 nutrition/views.py:149
 #, python-format
 msgid "Participant %(code)s added."
 msgstr "تمت إضافة المشارك %(code)s."
 
-#: nutrition/static_views.py:54 nutrition/views.py:293
+#: nutrition/static_views.py:68 nutrition/views.py:293
 #, python-format
 msgid "Imported %(n)d FFQ items as average daily intake."
 msgstr "تم استيراد %(n)d عنصراً من الاستبيان كمتوسط مأخوذ يومي."
 
-#: nutrition/static_views.py:54
+#: nutrition/static_views.py:68
 #: nutrition/templates/nutrition/ffq_import.html:14
 msgid "Fix these rows and upload again:"
 msgstr "صحّح هذه الصفوف ثم ارفع الملف مجدداً:"
 
-#: nutrition/static_views.py:55
+#: nutrition/static_views.py:69
 #, python-format
 msgid "Row %(n)s: food '%(f)s' is not in the composition table"
 msgstr "الصف %(n)s: الطعام '%(f)s' غير موجود في جدول التركيب"
 
-#: nutrition/static_views.py:56
+#: nutrition/static_views.py:70
 #, python-format
 msgid "Row %(n)s: cannot read frequency '%(f)s'"
 msgstr "الصف %(n)s: تعذّرت قراءة التكرار '%(f)s'"
 
-#: nutrition/static_views.py:56
+#: nutrition/static_views.py:70
 msgid "The file has no readable rows."
 msgstr "لا يحتوي الملف على صفوف قابلة للقراءة."
 
-#: nutrition/static_views.py:57
+#: nutrition/static_views.py:71
 #, python-format
 msgid "FFQ import: %(f)s"
 msgstr "استيراد استبيان تكرار الطعام: %(f)s"
 
-#: nutrition/static_views.py:58
+#: nutrition/static_views.py:72
 #: nutrition/templates/nutrition/participant_detail.html:7
 #, python-format
 msgid "%(a)s years"
 msgstr "%(a)s سنة"
 
-#: nutrition/static_views.py:58
+#: nutrition/static_views.py:72
 #: nutrition/templates/nutrition/dashboard.html:22
 #, python-format
 msgid "%(a)s y"
 msgstr "%(a)s سنة"
 
-#: nutrition/static_views.py:58
+#: nutrition/static_views.py:72
 #: nutrition/templates/nutrition/participant_detail.html:7
 #, python-format
 msgid "target %(t)s kcal/day"
 msgstr "الهدف %(t)s سعرة/يوم"
 
-#: nutrition/static_views.py:58
+#: nutrition/static_views.py:72
 #: nutrition/templates/nutrition/participant_detail.html:7
 #, python-format
 msgid "Participant %(c)s"
 msgstr "المشارك %(c)s"
 
-#: nutrition/static_views.py:59
+#: nutrition/static_views.py:73
 #, python-format
 msgid "%(n)s records"
 msgstr "عدد السجلات: %(n)s"
 
-#: nutrition/static_views.py:59
+#: nutrition/static_views.py:73
 #, python-format
 msgid "%(n)s items"
 msgstr "عدد العناصر: %(n)s"
 
-#: nutrition/static_views.py:59
+#: nutrition/static_views.py:73
 #, python-format
 msgid "%(n)s recall/record days"
 msgstr "أيام الاسترجاع/التسجيل: %(n)s"
 
-#: nutrition/static_views.py:60
+#: nutrition/static_views.py:74
 #, python-format
 msgid "Usual intake · mean of %(n)s days incl. supplements"
 msgstr "المأخوذ المعتاد · متوسط %(n)s يوم مع المكمّلات"
 
-#: nutrition/static_views.py:61
+#: nutrition/static_views.py:75
 #: nutrition/templates/nutrition/record_detail.html:16
 #, python-format
 msgid "kcal · target %(t)s"
 msgstr "سعرة · الهدف %(t)s"
 
-#: nutrition/static_views.py:61
+#: nutrition/static_views.py:75
 #: nutrition/templates/nutrition/record_detail.html:17
 #, python-format
 msgid "protein · %(p)s%% of energy"
 msgstr "بروتين · %(p)s%% من الطاقة"
 
-#: nutrition/static_views.py:62
+#: nutrition/static_views.py:76
 #: nutrition/templates/nutrition/record_detail.html:18
 #, python-format
 msgid "fat · %(p)s%% of energy · SFA %(f)s%%"
 msgstr "دهون · %(p)s%% من الطاقة · مشبعة %(f)s%%"
 
-#: nutrition/static_views.py:62
+#: nutrition/static_views.py:76
 #: nutrition/templates/nutrition/record_detail.html:19
 #, python-format
 msgid "glycaemic load · carbohydrate %(c)s g"
 msgstr "الحمل السكري · كربوهيدرات %(c)s غ"
 
-#: nutrition/static_views.py:63
+#: nutrition/static_views.py:77
 #: nutrition/templates/nutrition/record_detail.html:33
 #, python-format
 msgid "image-only estimate: %(k)s kcal"
 msgstr "تقدير من الصورة فقط: %(k)s سعرة"
 
-#: nutrition/static_views.py:63
+#: nutrition/static_views.py:77
 #: nutrition/templates/nutrition/record_detail.html:36
 msgid "Remove"
 msgstr "حذف"
 
-#: nutrition/static_views.py:64
+#: nutrition/static_views.py:78
 #: nutrition/templates/nutrition/participant_detail.html:45
 msgid "Energy (kcal)"
 msgstr "الطاقة (سعرة)"
 
-#: nutrition/static_views.py:64
+#: nutrition/static_views.py:78
 #: nutrition/templates/nutrition/participant_detail.html:45
 msgid "Fat (g)"
 msgstr "الدهون (غ)"
 
-#: nutrition/static_views.py:64 nutrition/templates/nutrition/analyze.html:136
+#: nutrition/static_views.py:78 nutrition/templates/nutrition/analyze.html:136
 #: nutrition/templates/nutrition/record_detail.html:103
 msgid "Protein"
 msgstr "البروتين"
 
-#: nutrition/static_views.py:64 nutrition/templates/nutrition/analyze.html:136
+#: nutrition/static_views.py:78 nutrition/templates/nutrition/analyze.html:136
 #: nutrition/templates/nutrition/record_detail.html:27
 #: nutrition/templates/nutrition/record_detail.html:103
 #: nutrition/templates/static_site/record.html:27
 msgid "Fat"
 msgstr "الدهون"
 
-#: nutrition/static_views.py:64 nutrition/templates/nutrition/analyze.html:136
+#: nutrition/static_views.py:78 nutrition/templates/nutrition/analyze.html:136
 #: nutrition/templates/nutrition/record_detail.html:103
 msgid "Carbohydrate"
 msgstr "الكربوهيدرات"
 
-#: nutrition/static_views.py:65 nutrition/templates/nutrition/analyze.html:137
+#: nutrition/static_views.py:79 nutrition/templates/nutrition/analyze.html:137
 #: nutrition/templates/nutrition/record_detail.html:104
 msgid "of energy"
 msgstr "من الطاقة"
 
-#: nutrition/static_views.py:65
+#: nutrition/static_views.py:79
 #: nutrition/templates/nutrition/validation.html:40
 #: nutrition/templates/nutrition/validation.html:73
 #: nutrition/templates/static_site/validation.html:36
 msgid "Plates"
 msgstr "الأطباق"
 
-#: nutrition/static_views.py:65
+#: nutrition/static_views.py:79
 #: nutrition/templates/nutrition/validation.html:73
 msgid "Bias"
 msgstr "الانحياز"
 
-#: nutrition/static_views.py:65
+#: nutrition/static_views.py:79
 #: nutrition/templates/nutrition/validation.html:74
 msgid "Mean of estimate and truth (kcal)"
 msgstr "متوسط التقدير والحقيقة (سعرة)"
 
-#: nutrition/static_views.py:66
+#: nutrition/static_views.py:80
 #: nutrition/templates/nutrition/validation.html:74
 msgid "Estimate − truth (kcal)"
 msgstr "التقدير − الحقيقة (سعرة)"
 
-#: nutrition/static_views.py:66
+#: nutrition/static_views.py:80
 #, python-format
 msgid "plates · %(n)s cooking sessions"
 msgstr "طبق · جلسات الطبخ: %(n)s"
 
-#: nutrition/static_views.py:66
+#: nutrition/static_views.py:80
 #: nutrition/templates/nutrition/validation.html:43
 msgid "demo"
 msgstr "تجريبي"
 
-#: nutrition/static_views.py:67 nutrition/views.py:373
+#: nutrition/static_views.py:81 nutrition/views.py:373
 msgid "Image-only AI (zero-shot)"
 msgstr "ذكاء اصطناعي من الصورة فقط (دون تدريب)"
 
-#: nutrition/static_views.py:67 nutrition/views.py:373
+#: nutrition/static_views.py:81 nutrition/views.py:373
 msgid "An external model's own kcal estimate from pixels"
 msgstr "تقدير نموذج خارجي للسعرات من الصورة مباشرة"
 
-#: nutrition/static_views.py:68 nutrition/views.py:374
+#: nutrition/static_views.py:82 nutrition/views.py:374
 msgid "Recipe-aware (AI dish + grams + style)"
 msgstr "مبني على الوصفة (طبق النموذج + الغرامات + النمط)"
 
-#: nutrition/static_views.py:68 nutrition/views.py:374
+#: nutrition/static_views.py:82 nutrition/views.py:374
 msgid "ArabNutriVision pipeline"
 msgstr "منهجية ArabNutriVision"
 
-#: nutrition/static_views.py:69 nutrition/views.py:375
+#: nutrition/static_views.py:83 nutrition/views.py:375
 msgid "Recipe-aware, true dish"
 msgstr "مبني على الوصفة، الطبق الحقيقي"
 
-#: nutrition/static_views.py:69 nutrition/views.py:375
+#: nutrition/static_views.py:83 nutrition/views.py:375
 msgid "Upper bound for recognition errors"
 msgstr "الحد الأعلى لأداء التعرّف"
 
-#: nutrition/static_views.py:70 nutrition/templates/nutrition/dashboard.html:6
+#: nutrition/static_views.py:84 nutrition/templates/nutrition/dashboard.html:6
 #, python-format
 msgid "Welcome, %(n)s"
 msgstr "مرحباً، %(n)s"
 
-#: nutrition/static_views.py:70
+#: nutrition/static_views.py:84
 #, python-format
 msgid "Signed in as %(n)s"
 msgstr "مسجّل الدخول باسم %(n)s"
@@ -1086,7 +1176,7 @@ msgstr "مساحة عمل الباحث"
 #: nutrition/templates/nutrition/participant_list.html:6
 #: nutrition/templates/nutrition/record_detail.html:5
 #: nutrition/templates/static_site/dashboard.html:10
-#: nutrition/templates/static_site/dashboard.html:23
+#: nutrition/templates/static_site/dashboard.html:24
 #: nutrition/templates/static_site/participant.html:5
 #: nutrition/templates/static_site/participants.html:2
 #: nutrition/templates/static_site/participants.html:6
@@ -1096,7 +1186,7 @@ msgstr "المشاركون"
 
 #: nutrition/templates/nutrition/dashboard.html:9
 #: nutrition/templates/nutrition/dashboard.html:25
-#: nutrition/templates/static_site/dashboard.html:27
+#: nutrition/templates/static_site/dashboard.html:28
 msgid "Recent records"
 msgstr "أحدث السجلات"
 
@@ -1158,7 +1248,7 @@ msgid "Weighed plates → paper metrics"
 msgstr "أطباق موزونة ← مؤشرات الورقة البحثية"
 
 #: nutrition/templates/nutrition/dashboard.html:21
-#: nutrition/templates/static_site/dashboard.html:23
+#: nutrition/templates/static_site/dashboard.html:24
 msgid "Add"
 msgstr "إضافة"
 
@@ -1362,13 +1452,13 @@ msgstr "النطاق (سعرة)"
 
 #: nutrition/templates/nutrition/dish_list.html:18
 #: nutrition/templates/nutrition/participant_detail.html:17
-#: nutrition/templates/static_site/participant.html:21
+#: nutrition/templates/static_site/participant.html:37
 msgid "Protein g"
 msgstr "بروتين (غ)"
 
 #: nutrition/templates/nutrition/dish_list.html:18
 #: nutrition/templates/nutrition/participant_detail.html:17
-#: nutrition/templates/static_site/participant.html:21
+#: nutrition/templates/static_site/participant.html:37
 msgid "Fat g"
 msgstr "دهون (غ)"
 
@@ -1767,7 +1857,7 @@ msgid "A collaboration between computer science and clinical nutrition."
 msgstr "تعاون بين علوم الحاسوب والتغذية السريرية."
 
 #: nutrition/templates/nutrition/participant_detail.html:13
-#: nutrition/templates/static_site/participant.html:16
+#: nutrition/templates/static_site/participant.html:17
 msgid "Energy and fat by day"
 msgstr "الطاقة والدهون حسب اليوم"
 
@@ -1783,33 +1873,33 @@ msgstr[4] "%(n)s يوم استرجاع/تسجيل"
 msgstr[5] "%(n)s يوم استرجاع/تسجيل"
 
 #: nutrition/templates/nutrition/participant_detail.html:14
-#: nutrition/templates/static_site/participant.html:17
+#: nutrition/templates/static_site/participant.html:18
 msgid "Energy by day"
 msgstr "الطاقة حسب اليوم"
 
 #: nutrition/templates/nutrition/participant_detail.html:17
-#: nutrition/templates/static_site/participant.html:21
+#: nutrition/templates/static_site/participant.html:37
 msgid "Items"
 msgstr "العناصر"
 
 #: nutrition/templates/nutrition/participant_detail.html:17
-#: nutrition/templates/static_site/participant.html:21
+#: nutrition/templates/static_site/participant.html:37
 #, python-format
 msgid "SFA %% kcal"
 msgstr "الدهون المشبعة %% من السعرات"
 
 #: nutrition/templates/nutrition/participant_detail.html:17
-#: nutrition/templates/static_site/participant.html:21
+#: nutrition/templates/static_site/participant.html:37
 msgid "Sodium mg"
 msgstr "الصوديوم (ملغ)"
 
 #: nutrition/templates/nutrition/participant_detail.html:23
-#: nutrition/templates/static_site/participant.html:27
+#: nutrition/templates/static_site/participant.html:43
 msgid "New record"
 msgstr "سجل جديد"
 
 #: nutrition/templates/nutrition/participant_detail.html:26
-#: nutrition/templates/static_site/participant.html:33
+#: nutrition/templates/static_site/participant.html:49
 msgid "Create record"
 msgstr "إنشاء سجل"
 
@@ -1826,13 +1916,13 @@ msgstr[5] "المأخوذ المعتاد · متوسط %(n)s يوم مع الم�
 
 #: nutrition/templates/nutrition/participant_detail.html:32
 #: nutrition/templates/nutrition/record_detail.html:87
-#: nutrition/templates/static_site/participant.html:38
+#: nutrition/templates/static_site/participant.html:54
 #: nutrition/templates/static_site/record.html:69
 msgid "Share of reference values"
 msgstr "النسبة من القيم المرجعية"
 
 #: nutrition/templates/nutrition/participant_detail.html:34
-#: nutrition/templates/static_site/participant.html:40
+#: nutrition/templates/static_site/participant.html:56
 msgid ""
 "Energy against the participant target; others against US FDA Daily Values "
 "(sodium, SFA and cholesterol are upper limits)."
@@ -2524,6 +2614,84 @@ msgstr ""
 msgid "Foods recorded"
 msgstr "الأطعمة المسجّلة"
 
+#: nutrition/templates/static_site/dashboard.html:20
+#: nutrition/templates/static_site/inbody.html:2
+#: nutrition/templates/static_site/participant.html:11
+msgid "Import InBody"
+msgstr "استيراد InBody"
+
+#: nutrition/templates/static_site/dashboard.html:20
+msgid "Body composition from Excel or CSV"
+msgstr "تركيب الجسم من ملف Excel أو CSV"
+
+#: nutrition/templates/static_site/inbody.html:5
+msgid "Body composition"
+msgstr "تركيب الجسم"
+
+#: nutrition/templates/static_site/inbody.html:6
+msgid "Import InBody measurements"
+msgstr "استيراد قياسات InBody"
+
+#: nutrition/templates/static_site/inbody.html:7
+msgid ""
+"Export the results from Lookin'Body or LookinBody Web as Excel or CSV and "
+"upload the file here. No InBody account key or API is needed."
+msgstr ""
+"صدّر النتائج من برنامج Lookin'Body أو LookinBody Web بصيغة Excel أو CSV "
+"وارفع الملف هنا. لا حاجة إلى مفتاح حساب InBody أو أي API."
+
+#: nutrition/templates/static_site/inbody.html:12
+msgid "InBody export file"
+msgstr "ملف التصدير من InBody"
+
+#: nutrition/templates/static_site/inbody.html:12
+msgid "Excel (.xlsx, .xls) or CSV, one row per measurement."
+msgstr "ملف Excel ‏(.xlsx أو .xls) أو CSV، صف لكل قياس."
+
+#: nutrition/templates/static_site/inbody.html:13
+msgid "Assign rows to participants"
+msgstr "ربط الصفوف بالمشاركين"
+
+#: nutrition/templates/static_site/inbody.html:14
+msgid "By the ID column (InBody ID = participant code)"
+msgstr "حسب عمود ID (رقم InBody = رمز المشارك)"
+
+#: nutrition/templates/static_site/inbody.html:15
+msgid "All rows belong to one participant"
+msgstr "كل الصفوف لمشارك واحد"
+
+#: nutrition/templates/static_site/inbody.html:18
+msgid "Create participants for new IDs"
+msgstr "إنشاء مشاركين للأرقام الجديدة"
+
+#: nutrition/templates/static_site/inbody.html:20
+msgid ""
+"Only the measurement columns you map are saved. Names, phone numbers and "
+"other identifying columns in the file are ignored. Use pseudonymous IDs "
+"(e.g. P001) on the InBody device."
+msgstr ""
+"تُحفظ أعمدة القياسات التي تحددها فقط، وتُتجاهل الأسماء وأرقام الهواتف وأي "
+"أعمدة تعريفية أخرى في الملف. استخدم أرقاماً مستعارة (مثل P001) على جهاز "
+"InBody."
+
+#: nutrition/templates/static_site/inbody.html:24
+msgid "Check the columns"
+msgstr "راجع الأعمدة"
+
+#: nutrition/templates/static_site/inbody.html:25
+msgid ""
+"Columns were matched automatically from their headers. Correct any match "
+"before importing."
+msgstr "طوبقت الأعمدة تلقائياً من عناوينها. صحّح أي مطابقة قبل الاستيراد."
+
+#: nutrition/templates/static_site/inbody.html:27
+msgid "Preview"
+msgstr "معاينة"
+
+#: nutrition/templates/static_site/inbody.html:30
+msgid "Import measurements"
+msgstr "استيراد القياسات"
+
 #: nutrition/templates/static_site/login.html:9
 #: templates/registration/login.html:9
 msgid "Dietary records and the validation lab are private to each researcher."
@@ -2547,9 +2715,49 @@ msgstr ""
 "يُنشئ مسؤول المشروع الحسابات. تُحفظ البيانات في قاعدة بيانات Supabase الخاصة"
 " بالمشروع، ولا يرى كل باحث إلا سجلاته."
 
-#: nutrition/templates/static_site/participant.html:11
+#: nutrition/templates/static_site/participant.html:12
 msgid "Delete participant"
 msgstr "حذف المشارك"
+
+#: nutrition/templates/static_site/participant.html:22
+msgid "Body composition (InBody)"
+msgstr "تركيب الجسم (InBody)"
+
+#: nutrition/templates/static_site/participant.html:26
+msgid "Body composition over time"
+msgstr "تركيب الجسم عبر الزمن"
+
+#: nutrition/templates/static_site/participant.html:28
+msgid "Activity factor"
+msgstr "معامل النشاط"
+
+#: nutrition/templates/static_site/participant.html:29
+msgid "1.2 · sedentary"
+msgstr "1.2 · خامل"
+
+#: nutrition/templates/static_site/participant.html:29
+msgid "1.375 · lightly active"
+msgstr "1.375 · نشاط خفيف"
+
+#: nutrition/templates/static_site/participant.html:29
+msgid "1.55 · moderately active"
+msgstr "1.55 · نشاط متوسط"
+
+#: nutrition/templates/static_site/participant.html:29
+msgid "1.725 · very active"
+msgstr "1.725 · نشاط عالٍ"
+
+#: nutrition/templates/static_site/participant.html:30
+msgid "Set energy target from BMR"
+msgstr "حدّد هدف الطاقة من معدل الأيض الأساسي"
+
+#: nutrition/templates/static_site/participant.html:33
+msgid ""
+"Values as exported by the InBody device (bioelectrical impedance). The "
+"energy target is an estimate: BMR × activity factor."
+msgstr ""
+"القيم كما صدّرها جهاز InBody (المعاوقة الكهربائية الحيوية). هدف الطاقة "
+"تقدير: معدل الأيض الأساسي × معامل النشاط."
 
 #: nutrition/templates/static_site/record.html:55
 msgid "computed in your browser, no external AI"

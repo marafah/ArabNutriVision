@@ -1,0 +1,37 @@
+{% extends "base.html" %}{% load static i18n %}
+{% block title %}{% translate "Import InBody" %}{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="eyebrow">{% translate "Body composition" %}</div>
+  <h1 class="h2 mb-1">{% translate "Import InBody measurements" %}</h1>
+  <p class="text-secondary small mb-3">{% translate "Export the results from Lookin'Body or LookinBody Web as Excel or CSV and upload the file here. No InBody account key or API is needed." %}</p>
+  {% include "static_site/_ws_notice.html" %}
+  <div class="row g-4" id="wsBody" hidden>
+    <div class="col-lg-5"><div class="panel">
+      <form id="ibForm" novalidate>
+        <div class="mb-3"><label class="form-label small" for="ib_file">{% translate "InBody export file" %}</label><input class="form-control" type="file" id="ib_file" accept=".csv,.xlsx,.xls,.xlsm" required><div class="form-text">{% translate "Excel (.xlsx, .xls) or CSV, one row per measurement." %}</div></div>
+        <div class="mb-2"><label class="form-label small d-block">{% translate "Assign rows to participants" %}</label>
+          <div class="form-check"><input class="form-check-input" type="radio" name="mode" id="ib_mode_id" value="id" checked><label class="form-check-label small" for="ib_mode_id">{% translate "By the ID column (InBody ID = participant code)" %}</label></div>
+          <div class="form-check"><input class="form-check-input" type="radio" name="mode" id="ib_mode_one" value="one"><label class="form-check-label small" for="ib_mode_one">{% translate "All rows belong to one participant" %}</label></div>
+        </div>
+        <div class="mb-3" id="ib_partBox" hidden><select class="form-select" id="ib_part" aria-label="{% translate 'Participant' %}"></select></div>
+        <div class="form-check mb-3"><input class="form-check-input" type="checkbox" id="ib_create" checked><label class="form-check-label small" for="ib_create">{% translate "Create participants for new IDs" %}</label></div>
+      </form>
+      <div class="alert alert-light border small mb-0"><i class="bi bi-shield-lock me-1"></i>{% translate "Only the measurement columns you map are saved. Names, phone numbers and other identifying columns in the file are ignored. Use pseudonymous IDs (e.g. P001) on the InBody device." %}</div>
+    </div></div>
+    <div class="col-lg-7 min-w-0">
+      <div class="panel" id="ibMapPanel" hidden>
+        <h2 class="h5">{% translate "Check the columns" %}</h2>
+        <p class="small text-secondary">{% translate "Columns were matched automatically from their headers. Correct any match before importing." %}</p>
+        <div class="row g-2" id="ibMap"></div>
+        <h3 class="h6 fw-semibold mt-3">{% translate "Preview" %}</h3>
+        <div class="table-responsive" style="max-height:280px"><table class="table table-anv table-sm align-middle mb-2"><thead id="ibHead"></thead><tbody id="ibRows"></tbody></table></div>
+        <div class="alert alert-warning small d-none" id="ibErr"></div>
+        <button class="btn btn-primary" id="ibImport"><i class="bi bi-upload me-1"></i>{% translate "Import measurements" %}</button>
+        <span class="small ms-2" id="ibStatus" role="status"></span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{% static 'vendor/xlsx/xlsx.full.min.js' %}"></script>{% include "static_site/_ws_scripts.html" %}{% endblock %}

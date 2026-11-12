@@ -71,11 +71,35 @@ create table if not exists public.validation_samples (
   created_at timestamptz not null default now()
 );
 
+-- Body composition imported from InBody exports (Lookin'Body / LookinBody Web Excel or CSV files).
+create table if not exists public.body_measurements (
+  id bigint generated always as identity primary key,
+  owner uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  participant_id bigint not null references public.participants (id) on delete cascade,
+  measured_at timestamptz not null,
+  weight_kg real check (weight_kg between 2 and 400),
+  height_cm real check (height_cm between 40 and 250),
+  bmi real,
+  pbf_pct real check (pbf_pct between 0 and 80),
+  bfm_kg real,
+  smm_kg real,
+  ffm_kg real,
+  tbw_l real,
+  bmr_kcal real check (bmr_kcal between 300 and 5000),
+  vfl real,
+  whr real,
+  device text not null default 'InBody',
+  source_file text not null default '',
+  created_at timestamptz not null default now(),
+  unique (participant_id, measured_at)
+);
+
 create index if not exists records_participant_idx on public.records (participant_id);
 create index if not exists items_record_idx on public.items (record_id);
 create index if not exists supp_record_idx on public.supplement_intakes (record_id);
 create index if not exists records_owner_idx on public.records (owner);
 create index if not exists validation_owner_idx on public.validation_samples (owner);
+create index if not exists body_participant_idx on public.body_measurements (participant_id);
 
 -- Row-level security: a researcher sees and changes only rows they own, and can only attach
 -- records to their own participants and items to their own records.
@@ -84,6 +108,7 @@ alter table public.records enable row level security;
 alter table public.items enable row level security;
 alter table public.supplement_intakes enable row level security;
 alter table public.validation_samples enable row level security;
+alter table public.body_measurements enable row level security;
 
 drop policy if exists own_rows on public.participants;
 create policy own_rows on public.participants for all to authenticated
@@ -111,10 +136,17 @@ drop policy if exists own_rows on public.validation_samples;
 create policy own_rows on public.validation_samples for all to authenticated
   using (owner = (select auth.uid())) with check (owner = (select auth.uid()));
 
+drop policy if exists own_rows on public.body_measurements;
+create policy own_rows on public.body_measurements for all to authenticated
+  using (owner = (select auth.uid()))
+  with check (owner = (select auth.uid()) and exists (
+    select 1 from public.participants p where p.id = participant_id and p.owner = (select auth.uid())));
+
 -- Only signed-in researchers may use the tables; anonymous visitors get nothing.
-revoke all on public.participants, public.records, public.items, public.supplement_intakes, public.validation_samples from anon;
+revoke all on public.participants, public.records, public.items, public.supplement_intakes, public.validation_samples,
+  public.body_measurements from anon;
 grant select, insert, update, delete on public.participants, public.records, public.items, public.supplement_intakes,
-  public.validation_samples to authenticated;
+  public.validation_samples, public.body_measurements to authenticated;
 
 -- Tiny function for the keep-alive workflow (.github/workflows/keepalive.yml). It touches the database
 -- once a day so the free project is not paused for inactivity. It reveals no data.

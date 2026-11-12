@@ -8,6 +8,7 @@
   <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
     <div><div class="eyebrow" id="pMeta"></div><h1 class="h2 mb-0" id="pTitle"></h1></div>
     <div class="d-flex gap-2"><a href="{% url 'nutrition:ffq' %}" class="btn btn-outline-primary btn-sm" id="ffqLink"><i class="bi bi-file-earmark-spreadsheet me-1"></i>{% translate "Import FFQ" %}</a>
+    <a href="{% url 'nutrition:inbody' %}" class="btn btn-outline-primary btn-sm" id="ibLink"><i class="bi bi-person-bounding-box me-1"></i>{% translate "Import InBody" %}</a>
     <button class="btn btn-sm btn-outline-danger" id="delPart"><i class="bi bi-trash me-1"></i>{% translate "Delete participant" %}</button></div>
   </div>
   <div class="row g-4">
@@ -16,6 +17,21 @@
         <div class="d-flex justify-content-between align-items-center"><h2 class="h5 mb-0">{% translate "Energy and fat by day" %}</h2><span class="small text-secondary" id="nDays"></span></div>
         <div style="height:240px" class="mt-2" id="trendBox"><canvas id="trend" role="img" aria-label="{% translate 'Energy by day' %}"></canvas></div>
         <p class="text-secondary mt-2 mb-0" id="noDays" hidden>{% translate "No records yet. Create the first one with the form." %}</p>
+      </div>
+      <div class="panel mb-4" id="bodyPanel">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2"><h2 class="h5 mb-0"><i class="bi bi-person-bounding-box me-2"></i>{% translate "Body composition (InBody)" %}</h2><span class="small text-secondary" id="bodyDate"></span></div>
+        <p class="text-secondary small mt-2 mb-0" id="bodyEmpty"></p>
+        <div id="bodyBox" hidden>
+          <div class="row g-2 mt-1" id="bodyStats"></div>
+          <div style="height:220px" class="mt-3" id="bodyTrendBox"><canvas id="bodyTrend" role="img" aria-label="{% translate 'Body composition over time' %}"></canvas></div>
+          <div class="d-flex flex-wrap align-items-end gap-2 mt-3" id="bmrBox" hidden>
+            <div><label class="form-label small mb-1" for="actSel">{% translate "Activity factor" %}</label>
+              <select class="form-select form-select-sm" id="actSel"><option value="1.2">{% translate "1.2 · sedentary" %}</option><option value="1.375" selected>{% translate "1.375 · lightly active" %}</option><option value="1.55">{% translate "1.55 · moderately active" %}</option><option value="1.725">{% translate "1.725 · very active" %}</option></select></div>
+            <button class="btn btn-sm btn-outline-primary" id="bmrBtn"><i class="bi bi-bullseye me-1"></i>{% translate "Set energy target from BMR" %}</button>
+            <span class="small" id="bmrStatus" role="status"></span>
+          </div>
+          <p class="small text-secondary mt-2 mb-0">{% translate "Values as exported by the InBody device (bioelectrical impedance). The energy target is an estimate: BMR × activity factor." %}</p>
+        </div>
       </div>
       <div class="panel p-0"><div class="table-responsive"><table class="table table-anv table-hover align-middle mb-0">
         <thead><tr><th class="ps-3">{% translate "Date" %}</th><th>{% translate "Method" %}</th><th class="n">{% translate "Items" %}</th><th class="n">{% translate "kcal" %}</th><th class="n">{% translate "Protein g" %}</th><th class="n">{% translate "Fat g" %}</th><th class="n">{% translate "SFA % kcal" %}</th><th class="n pe-3">{% translate "Sodium mg" %}</th></tr></thead>
