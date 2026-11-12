@@ -9,6 +9,7 @@ from django.db.models import Count
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from .forms import (CustomDishForm, FFQUploadForm, ItemForm, ParticipantForm, RecordForm, SupplementIntakeForm,
@@ -20,6 +21,7 @@ from .services import ffq
 from .services import metrics as M
 from .services.composition import all_profiles, gap_decomposition, invalidate, profile_for
 from .services.estimate import estimate, insights, record_summary
+from .templatetags.anv import cat, dish_name, fat_source, is_ar
 
 DATA = Path(__file__).resolve().parent / "data"
 
@@ -27,16 +29,17 @@ DATA = Path(__file__).resolve().parent / "data"
 def _profiles_json():
     out = []
     for p in sorted(all_profiles().values(), key=lambda p: (p.category, p.name)):
-        out.append({"code": p.code, "en": p.name, "ar": p.name_ar, "cat": p.category, "srv": p.serving_g,
+        out.append({"code": p.code, "en": p.name, "ar": p.name_ar or p.name, "cat": cat(p.category), "srv": p.serving_g,
                     "m": [round(p.mean[k], 3) for k in KEYS], "lo": [round(p.low[k], 3) for k in KEYS],
                     "hi": [round(p.high[k], 3) for k in KEYS],
                     "v": {s: [round(v[k], 3) for k in KEYS] for s, v in p.variants.items()},
-                    "gi": p.gi, "fat": p.hidden_fat})
+                    "gi": p.gi, "fat": [fat_source(f) for f in p.hidden_fat]})
     return out
 
 
 def _nutrient_meta():
-    return [{"key": n.key, "label": n.label, "ar": n.label_ar, "unit": n.unit, "group": n.group} for n in NUTRIENTS]
+    ar = is_ar()
+    return [{"key": n.key, "label": n.label_ar if ar else n.label, "ar": n.label if ar else n.label_ar, "unit": n.unit, "group": n.group} for n in NUTRIENTS]
 
 
 def _analysis():
@@ -67,7 +70,7 @@ def research(request):
         gap = list(csv.DictReader(open(DATA / "table2_gap_decomposition.csv", encoding="utf-8")))
     except OSError:
         pass
-    names = {p.code: p.name.split(" (")[0] for p in all_profiles().values()}
+    names = {p.code: dish_name(p) for p in all_profiles().values()}
     for g in gap:
         g["name"] = names.get(g["dish"], g["dish"])
     gap.sort(key=lambda g: -float(g["gap_kcal_per100"]))
@@ -92,7 +95,7 @@ def dish_detail(request, code):
     dish = get_object_or_404(Dish.objects.prefetch_related("variants__lines__ingredient"), code=code)
     p = profile_for(code)
     if p is None:
-        messages.warning(request, "This dish has no recipe yet.")
+        messages.warning(request, _("This dish has no recipe yet."))
         return redirect("nutrition:dishes")
     groups = []
     for g, label in GROUP_LABELS.items():
@@ -135,10 +138,10 @@ def participant_list(request):
         obj = form.save(commit=False)
         obj.owner = request.user
         if Participant.objects.filter(owner=request.user, code=obj.code).exists():
-            form.add_error("code", "You already have a participant with this code.")
+            form.add_error("code", _("You already have a participant with this code."))
         else:
             obj.save()
-            messages.success(request, f"Participant {obj.code} added.")
+            messages.success(request, _("Participant %(code)s added.") % {"code": obj.code})
             return redirect(obj)
     parts = Participant.objects.filter(owner=request.user).annotate(n=Count("records"))
     return render(request, "nutrition/participant_list.html", {"participants": parts, "form": form})
@@ -152,7 +155,7 @@ def participant_detail(request, pk):
         rec = form.save(commit=False)
         rec.participant = part
         rec.save()
-        messages.success(request, "Record created. Add the foods eaten.")
+        messages.success(request, _("Record created. Add the foods eaten."))
         return redirect(rec)
     recs = list(part.records.all())
     days = [(r, record_summary(r)) for r in recs]
@@ -184,13 +187,13 @@ def record_detail(request, pk):
             if item.ingredient_id and item.dish_id:
                 item.ingredient = None
             item.save()
-            messages.success(request, f"Added {item.food_name} ({item.grams:.0f} g).")
+            messages.success(request, _("Added %(food)s (%(g).0f g).") % {"food": dish_name(item.dish) if item.dish else item.food_name, "g": item.grams})
             return redirect(rec)
         if request.POST.get("action") == "supp" and sform.is_valid():
             s = sform.save(commit=False)
             s.record = rec
             s.save()
-            messages.success(request, "Supplement added.")
+            messages.success(request, _("Supplement added."))
             return redirect(rec)
     s = record_summary(rec)
     chart = {"macro": s["macro_pct"], "fa": s["fa_pct_energy"],
@@ -205,7 +208,7 @@ def item_delete(request, pk):
     item = get_object_or_404(IntakeItem, pk=pk, record__participant__owner=request.user)
     rec = item.record
     item.delete()
-    messages.info(request, "Item removed.")
+    messages.info(request, _("Item removed."))
     return redirect(rec)
 
 
@@ -224,7 +227,7 @@ def record_delete(request, pk):
     rec = get_object_or_404(IntakeRecord, pk=pk, participant__owner=request.user)
     part = rec.participant
     rec.delete()
-    messages.info(request, "Record deleted.")
+    messages.info(request, _("Record deleted."))
     return redirect(part)
 
 
@@ -258,13 +261,13 @@ def api_add_item(request):
         grams = float(request.POST.get("grams"))
         ai_kcal = float(request.POST["ai_kcal"]) if request.POST.get("ai_kcal") else None
     except (TypeError, ValueError):
-        return JsonResponse({"error": "Invalid portion."}, status=400)
+        return JsonResponse({"error": _("Invalid portion.")}, status=400)
     style = request.POST.get("style", "mean")
     meal = request.POST.get("meal", "lunch")
     item = IntakeItem.objects.create(record=rec, dish=dish, grams=grams, style=style if style in ("mean", "home", "restaurant", "light") else "mean",
                                      meal=meal if meal in dict(MEALS) else "lunch", source=request.POST.get("source", "manual")[:20],
                                      ai_image_only_kcal=ai_kcal)
-    return JsonResponse({"ok": True, "message": f"Added {dish.short_name} ({grams:.0f} g) to {rec}.", "url": reverse("nutrition:record_detail", args=[rec.pk]), "id": item.pk})
+    return JsonResponse({"ok": True, "message": _("Added %(food)s (%(g).0f g) to the record of %(p)s, %(d)s.") % {"food": dish_name(dish), "g": grams, "p": rec.participant.code, "d": rec.date}, "url": reverse("nutrition:record_detail", args=[rec.pk]), "id": item.pk})
 
 
 @login_required
@@ -282,7 +285,7 @@ def ffq_import(request):
                 for ln in lines:
                     IntakeItem.objects.create(record=rec, dish=ln["dish"], ingredient=ln["ingredient"], grams=ln["grams_per_day"],
                                               meal="snack", style="mean", source="ffq")
-            messages.success(request, f"Imported {len(lines)} FFQ items as average daily intake.")
+            messages.success(request, _("Imported %(n)d FFQ items as average daily intake.") % {"n": len(lines)})
             return redirect(rec)
         preview = lines
     return render(request, "nutrition/ffq_import.html", {"form": form, "errors": errors, "preview": preview})
@@ -303,7 +306,7 @@ def recipe_builder(request):
         grams = request.POST.getlist("grams")
         pairs = [(c, float(g)) for c, g in zip(codes, grams) if c and g and float(g) > 0]
         if not pairs:
-            form.add_error(None, "Add at least one ingredient with a weight.")
+            form.add_error(None, _("Add at least one ingredient with a weight."))
         else:
             from django.utils.text import slugify
             base = slugify(form.cleaned_data["name_en"])[:40] or "dish"
@@ -319,7 +322,7 @@ def recipe_builder(request):
                 lookup = {i.code: i for i in Ingredient.objects.filter(code__in=[c for c, _ in pairs])}
                 RecipeLine.objects.bulk_create([RecipeLine(variant=v, ingredient=lookup[c], grams=g) for c, g in pairs if c in lookup])
             invalidate()
-            messages.success(request, f"{d.name_en} added to the composition table.")
+            messages.success(request, _("%(name)s added to the composition table.") % {"name": dish_name(d)})
             return redirect(d)
     ing_json = json.dumps([{"code": i.code, "name": i.name, "kcal": i.kcal, "fat": i.fat_g, "protein": i.protein_g, "carb": i.carb_g}
                            for i in ings], ensure_ascii=False)
@@ -362,9 +365,9 @@ def _evaluate(samples):
         "coverage": M.coverage([r["recipe"]["lo"] for r in rows if "recipe" in r], [r["recipe"]["hi"] for r in rows if "recipe" in r],
                                [r["truth"]["kcal"] for r in rows if "recipe" in r]),
     }
-    for key, label, desc in [("image_only", "Image-only AI (zero-shot)", "The vision model's own kcal estimate from pixels"),
-                             ("recipe", "Recipe-aware (AI dish + AI grams + style)", "ArabNutriVision pipeline"),
-                             ("oracle_dish", "Recipe-aware, true dish", "Upper bound for recognition errors")]:
+    for key, label, desc in [("image_only", _("Image-only AI (zero-shot)"), _("An external model's own kcal estimate from pixels")),
+                             ("recipe", _("Recipe-aware (AI dish + grams + style)"), _("ArabNutriVision pipeline")),
+                             ("oracle_dish", _("Recipe-aware, true dish"), _("Upper bound for recognition errors"))]:
         e, f = sys_metrics(key, "kcal"), sys_metrics(key, "fat_g")
         if e:
             res["systems"].append({"key": key, "label": label, "desc": desc, "e": e, "f": f})
@@ -379,7 +382,7 @@ def validation_lab(request):
         v = form.save(commit=False)
         v.owner = request.user
         v.save()
-        messages.success(request, f"Plate {v.image_file} saved.")
+        messages.success(request, _("Plate %(f)s saved.") % {"f": v.image_file})
         return redirect("nutrition:validation")
     split = request.GET.get("split", "")
     if split:

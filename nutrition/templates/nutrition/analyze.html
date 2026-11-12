@@ -1,65 +1,65 @@
-{% extends "base.html" %}{% load static %}
-{% block title %}Analyze a dish{% endblock %}
+{% extends "base.html" %}{% load static i18n %}
+{% block title %}{% translate "Analyze a dish" %}{% endblock %}
 {% block content %}
 <div class="container py-4">
   <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
-    <div><div class="eyebrow">Photo → dish → grams → recipe</div><h1 class="h2 mb-0">Analyze a dish <span class="text-secondary fs-5" lang="ar">· تحليل طبق</span></h1></div>
-    <span class="pill pill-good" title="Open-source CLIP model executed in your browser; no external AI service"><i class="bi bi-cpu me-1"></i>On-device AI · no API</span>
+    <div><div class="eyebrow">{% translate "Photo → dish → grams → recipe" %}</div><h1 class="h2 mb-0">{% translate "Analyze a dish" %}</h1></div>
+    <span class="pill pill-good" title="{% translate 'Open-source CLIP model executed in your browser; no external AI service' %}"><i class="bi bi-cpu me-1"></i>{% translate "On-device AI · no API" %}</span>
   </div>
   <div class="row g-4">
     <div class="col-lg-5">
       <div class="panel">
-        <div class="eyebrow mb-2">Step 1 · Photo</div>
-        <div class="dropzone" id="drop" tabindex="0" role="button" aria-label="Choose or drop a food photo">
-          <div id="dropHint"><i class="bi bi-cloud-arrow-up fs-1 text-secondary"></i><div class="fw-semibold mt-1">Drop a photo of the plate</div><div class="small text-secondary">or click to choose. Top-down works best; a bank card beside the plate improves the portion estimate.</div></div>
-          <img id="preview" alt="Selected food photo" hidden>
+        <div class="eyebrow mb-2">{% translate "Step 1 · Photo" %}</div>
+        <div class="dropzone" id="drop" tabindex="0" role="button" aria-label="{% translate 'Choose or drop a food photo' %}">
+          <div id="dropHint"><i class="bi bi-cloud-arrow-up fs-1 text-secondary"></i><div class="fw-semibold mt-1">{% translate "Drop a photo of the plate" %}</div><div class="small text-secondary">{% translate "or click to choose. Top-down works best; a bank card beside the plate improves the portion estimate." %}</div></div>
+          <img id="preview" alt="{% translate 'Selected food photo' %}" hidden>
         </div>
         <input type="file" id="file" accept="image/jpeg,image/png,image/webp" hidden>
         <div class="d-flex gap-2 mt-3 align-items-center">
-          <button class="btn btn-rose" id="analyzeBtn" disabled><span class="spinner-border spinner-border-sm me-2" id="spin" hidden></span><i class="bi bi-cpu me-1"></i>Recognise dish</button>
-          <span class="small text-secondary"><i class="bi bi-shield-check me-1"></i>The photo never leaves your device: an open-source model runs in this browser.</span>
+          <button class="btn btn-rose text-nowrap" id="analyzeBtn" disabled><span class="spinner-border spinner-border-sm me-2" id="spin" hidden></span><i class="bi bi-cpu me-1"></i>{% translate "Recognise dish" %}</button>
+          <span class="small text-secondary"><i class="bi bi-shield-check me-1"></i>{% translate "The photo never leaves your device: an open-source model runs in this browser." %}</span>
         </div>
         <div class="progress progress-thin mt-2" id="dlBar" hidden><div class="progress-bar" style="width:0%"></div></div>
-        <div class="small mt-2" id="status" role="status">Choose a photo, or set the dish and grams by hand below. The first recognition downloads the model once (about 90 MB), after which it is cached.</div>
+        <div class="small mt-2" id="status" role="status">{% translate "Choose a photo, or set the dish and grams by hand below. The first recognition downloads the model once (about 90 MB), after which it is cached." %}</div>
 
         <hr>
-        <div class="eyebrow mb-2">Step 2 · Check and correct</div>
-        <label class="form-label small" for="dishSel">Dish · الطبق</label>
+        <div class="eyebrow mb-2">{% translate "Step 2 · Check and correct" %}</div>
+        <label class="form-label small" for="dishSel">{% translate "Dish" %}</label>
         <select id="dishSel" class="form-select"></select>
         <div class="d-flex flex-wrap gap-1 mt-2" id="alts"></div>
-        <label class="form-label small mt-3" for="grams">Portion on the plate</label>
+        <label class="form-label small mt-3" for="grams">{% translate "Portion on the plate" %}</label>
         <div class="d-flex gap-2 align-items-center">
           <input type="range" class="form-range flex-grow-1" id="grams" min="30" max="900" step="5" value="400">
-          <div class="input-group input-group-sm" style="width:7.5rem"><input type="number" class="form-control" id="gramsN" min="1" max="3000" value="400" aria-label="Portion in grams"><span class="input-group-text">g</span></div>
+          <div class="input-group input-group-sm" style="width:7.5rem"><input type="number" class="form-control" id="gramsN" min="1" max="3000" value="400" aria-label="{% translate 'Portion in grams' %}"><span class="input-group-text">{% translate "g" %}</span></div>
         </div>
-        <label class="form-label small mt-3 d-block">Preparation · طريقة التحضير</label>
+        <label class="form-label small mt-3 d-block">{% translate "Preparation" %}</label>
         <div class="btn-group flex-wrap style-chips gap-1" role="group" id="styles">
-          <button type="button" class="btn btn-sm btn-outline-primary active" data-style="mean">Average</button>
-          <button type="button" class="btn btn-sm btn-outline-primary" data-style="light">Light · خفيف</button>
-          <button type="button" class="btn btn-sm btn-outline-primary" data-style="home">Home · بيتي</button>
-          <button type="button" class="btn btn-sm btn-outline-primary" data-style="restaurant">Restaurant · مطاعم</button>
+          <button type="button" class="btn btn-sm btn-outline-primary active" data-style="mean">{% translate "Average" %}</button>
+          <button type="button" class="btn btn-sm btn-outline-primary" data-style="light">{% translate "Light" %}</button>
+          <button type="button" class="btn btn-sm btn-outline-primary" data-style="home">{% translate "Home" %}</button>
+          <button type="button" class="btn btn-sm btn-outline-primary" data-style="restaurant">{% translate "Restaurant" %}</button>
         </div>
 
         <hr>
-        <div class="eyebrow mb-2">Step 3 · Save</div>
+        <div class="eyebrow mb-2">{% translate "Step 3 · Save" %}</div>
         {% if user.is_authenticated %}
           {% if records %}
           <div class="row g-2">
-            <div class="col-sm-7"><label class="form-label small" for="recSel">Dietary record</label><select id="recSel" class="form-select form-select-sm">{% for r in records %}<option value="{{ r.pk }}">{{ r.participant.code }} · {{ r.date|date:"d M Y" }} · {{ r.get_method_display }}</option>{% endfor %}</select></div>
-            <div class="col-sm-5"><label class="form-label small" for="mealSel">Meal</label><select id="mealSel" class="form-select form-select-sm">{% for k, v in meals %}<option value="{{ k }}" {% if k == 'lunch' %}selected{% endif %}>{{ v }}</option>{% endfor %}</select></div>
+            <div class="col-sm-7"><label class="form-label small" for="recSel">{% translate "Dietary record" %}</label><select id="recSel" class="form-select form-select-sm">{% for r in records %}<option value="{{ r.pk }}">{{ r.participant.code }} · {{ r.date|date:"d M Y" }} · {{ r.get_method_display }}</option>{% endfor %}</select></div>
+            <div class="col-sm-5"><label class="form-label small" for="mealSel">{% translate "Meal" %}</label><select id="mealSel" class="form-select form-select-sm">{% for k, v in meals %}<option value="{{ k }}" {% if k == 'lunch' %}selected{% endif %}>{{ v }}</option>{% endfor %}</select></div>
           </div>
           <div class="d-flex flex-wrap gap-2 mt-2">
-            <button class="btn btn-primary btn-sm" id="addBtn"><i class="bi bi-plus-circle me-1"></i>Add to record</button>
-            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#valBox" aria-expanded="false"><i class="bi bi-bullseye me-1"></i>Save as weighed validation plate</button>
+            <button class="btn btn-primary btn-sm" id="addBtn"><i class="bi bi-plus-circle me-1"></i>{% translate "Add to record" %}</button>
+            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#valBox" aria-expanded="false"><i class="bi bi-bullseye me-1"></i>{% translate "Save as weighed validation plate" %}</button>
           </div>
           {% else %}
-          <p class="small text-secondary mb-2">Create a participant and a record first to save foods.</p>
-          <a class="btn btn-sm btn-outline-primary" href="{% url 'nutrition:participants' %}">Go to participants</a>
+          <p class="small text-secondary mb-2">{% translate "Create a participant and a record first to save foods." %}</p>
+          <a class="btn btn-sm btn-outline-primary" href="{% url 'nutrition:participants' %}">{% translate "Go to participants" %}</a>
           {% endif %}
           <div class="small mt-2" id="saveStatus" role="status"></div>
           <div class="collapse mt-3" id="valBox">
             <form method="post" action="{% url 'nutrition:validation' %}" class="border rounded-3 p-3 bg-light" id="valForm">{% csrf_token %}
-              <div class="small text-secondary mb-2">Ground truth from the scale, plus this photo's AI outputs (filled in automatically).</div>
+              <div class="small text-secondary mb-2">{% translate "Ground truth from the scale, plus this photo's recognition outputs (filled in automatically)." %}</div>
               <div class="row g-2">
                 <div class="col-6">{{ vform.session_id.label_tag }}{{ vform.session_id }}</div>
                 <div class="col-6">{{ vform.plate_no.label_tag }}{{ vform.plate_no }}</div>
@@ -69,14 +69,14 @@
                 <div class="col-6">{{ vform.view.label_tag }}{{ vform.view }}</div>
                 <div class="col-6">{{ vform.phone.label_tag }}{{ vform.phone }}</div>
                 <div class="col-6">{{ vform.split.label_tag }}{{ vform.split }}</div>
-                <div class="col-12 form-check ms-2">{{ vform.reference_card }} <label class="form-check-label" for="id_reference_card">Reference card in photo</label></div>
+                <div class="col-12 form-check ms-2">{{ vform.reference_card }} <label class="form-check-label" for="id_reference_card">{% translate "Reference card in photo" %}</label></div>
               </div>
               <div class="d-none">{{ vform.ai_dish }}{{ vform.ai_grams }}{{ vform.ai_style }}{{ vform.ai_direct_kcal }}{{ vform.ai_direct_fat_g }}</div>
-              <button class="btn btn-sm btn-primary mt-2">Save plate</button>
+              <button class="btn btn-sm btn-primary mt-2">{% translate "Save plate" %}</button>
             </form>
           </div>
         {% else %}
-          <p class="small text-secondary mb-0"><a href="{% url 'login' %}?next={{ request.path }}">Sign in</a> to add foods to a participant's record or to the validation set.</p>
+          <p class="small text-secondary mb-0"><a href="{% url 'login' %}?next={{ request.path }}">{% translate "Sign in" %}</a> {% translate "to add foods to a participant's record or to the validation set." %}</p>
         {% endif %}
       </div>
     </div>
@@ -84,23 +84,23 @@
     <div class="col-lg-7">
       <div class="panel" id="result" aria-live="polite">
         <div class="d-flex justify-content-between gap-2 flex-wrap">
-          <div><div class="eyebrow" id="resEyebrow">Example result</div><h2 class="h3 mb-0" id="resEn"></h2><div class="fs-5 text-secondary" id="resAr" lang="ar" dir="rtl"></div></div>
-          <span class="pill pill-demo align-self-start" id="resTag">Example</span>
+          <div><div class="eyebrow" id="resEyebrow"></div><h2 class="h3 mb-0" id="resEn"></h2><div class="fs-6 text-secondary" id="resAr"></div></div>
+          <span class="pill pill-demo align-self-start" id="resTag"></span>
         </div>
-        <div class="d-flex align-items-baseline gap-2 mt-3"><span class="kcal-big" id="kcal">0</span><span class="text-secondary">kcal</span></div>
-        <div class="mono small text-secondary" id="kcalRange"></div>
+        <div class="d-flex align-items-baseline gap-2 mt-3"><span class="kcal-big num" id="kcal">0</span><span class="text-secondary">{% translate "kcal" %}</span></div>
+        <div class="small text-secondary" id="kcalRange"></div>
         <div class="row g-3 align-items-center mt-1">
-          <div class="col-sm-5"><div style="max-width:220px;margin:auto"><canvas id="donut" aria-label="Energy split by macronutrient" role="img"></canvas></div></div>
+          <div class="col-sm-5"><div style="max-width:220px;margin:auto"><canvas id="donut" aria-label="{% translate 'Energy split by macronutrient' %}" role="img"></canvas></div></div>
           <div class="col-sm-7">
-            <h3 class="h6 fw-semibold">Where the energy comes from</h3>
+            <h3 class="h6 fw-semibold">{% translate "Where the energy comes from" %}</h3>
             <div id="legend" class="small"></div>
             <div class="mt-2 small" id="glLine"></div>
           </div>
         </div>
         <div class="nlabel mt-3" id="labelBox"></div>
         <div class="row g-2 mt-3">
-          <div class="col-6"><div class="border rounded-3 p-2 h-100"><div class="small text-secondary">Recipe-aware (this tool)</div><div class="fs-4 fw-semibold num" id="cmpRecipe">–</div><div class="small text-secondary" id="cmpRecipeFat"></div></div></div>
-          <div class="col-6"><div class="border rounded-3 p-2 h-100"><div class="small text-secondary">Average-recipe estimate (preparation unknown)</div><div class="fs-4 fw-semibold num" id="cmpAI">–</div><div class="small text-secondary" id="cmpAIFat"></div></div></div>
+          <div class="col-6"><div class="border rounded-3 p-2 h-100"><div class="small text-secondary">{% translate "Recipe-aware (this tool)" %}</div><div class="fs-4 fw-semibold num" id="cmpRecipe">–</div><div class="small text-secondary" id="cmpRecipeFat"></div></div></div>
+          <div class="col-6"><div class="border rounded-3 p-2 h-100"><div class="small text-secondary">{% translate "Average-recipe estimate (preparation unknown)" %}</div><div class="fs-4 fw-semibold num" id="cmpAI">–</div><div class="small text-secondary" id="cmpAIFat"></div></div></div>
         </div>
         <div class="alert alert-light border mt-3 mb-0 small" id="hidden"></div>
       </div>
@@ -112,7 +112,30 @@
 {% endblock %}
 {% block scripts %}
 <script>
-  window.ANV = {addUrl: "{% url 'nutrition:api_add_item' %}", csrf: "{{ csrf_token }}", vendor: "{% static 'vendor/transformers/' %}"};
+  window.ANV = {addUrl: "{% url 'nutrition:api_add_item' %}", csrf: "{{ csrf_token }}", vendor: "{% static 'vendor/transformers/' %}",
+    T: {
+      kcal: "{% translate 'kcal' %}", g: "{% translate 'g' %}", mg: "{% translate 'mg' %}", ug: "{% translate 'µg' %}", fat: "{% translate 'fat' %}",
+      protein: "{% translate 'Protein' %}", fatName: "{% translate 'Fat' %}", carb: "{% translate 'Carbohydrate' %}",
+      ofEnergy: "{% translate 'of energy' %}",
+      example: "{% translate 'Example' %}", exampleEyebrow: "{% translate 'Example result · not your photo' %}",
+      fromPhoto: "{% translate 'From photo' %}", recognised: "{% translate 'Recognised · {c}% confidence' %}",
+      corrected: "{% translate 'Corrected' %}", correctedEyebrow: "{% translate 'AI result, corrected by you' %}",
+      manual: "{% translate 'Manual' %}", manualEyebrow: "{% translate 'Manual entry' %}",
+      likely: "{% translate 'Likely range' %}", avg3: "{% translate 'average of 3 recipes' %}",
+      styleRecipe: {light: "{% translate 'light recipe' %}", home: "{% translate 'home recipe' %}", restaurant: "{% translate 'restaurant recipe' %}"},
+      styleName: {mean: "{% translate 'Average' %}", light: "{% translate 'Light' %}", home: "{% translate 'Home' %}", restaurant: "{% translate 'Restaurant' %}"},
+      gl: "{% translate 'estimated glycaemic load (dish GI ≈ {v}, carbohydrate-weighted)' %}",
+      nutrient: "{% translate 'Nutrient' %}", portion: "{% translate 'This portion' %}", range: "{% translate 'Range' %}",
+      hidden: "{% translate 'Hidden-fat sources in this recipe:' %}", none: "{% translate 'none listed' %}", note: "{% translate 'Note:' %}",
+      ready: "{% translate 'Photo ready. Press Recognise dish.' %}",
+      loading: "{% translate 'Loading the on-device model…' %}", download: "{% translate 'Downloading the open-source model once ({v}%)…' %}",
+      recognising: "{% translate 'Recognising the dish on this device…' %}",
+      notFood: "{% translate 'This does not look like food. Try a clearer top-down photo.' %}",
+      done: "{% translate 'Done: {v} ({c}%). Check the dish, then weigh or adjust the portion; it starts at the typical serving.' %}",
+      styleNote: "{% translate 'Preparation suggested from appearance: {v} ({c}%). Confirm it if you know how the dish was cooked.' %}",
+      failed: "{% translate 'The on-device model could not run in this browser. Choose the dish and portion by hand.' %}",
+      saveFail: "{% translate 'Could not save.' %}", openRecord: "{% translate 'Open record' %}"
+    }};
 </script>
 <script src="{% static 'nutrition/js/analyze.js' %}"></script>
 {% endblock %}

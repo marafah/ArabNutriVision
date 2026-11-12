@@ -26,6 +26,8 @@ photo ─► (1) recognise dish + preparation style ─► (2) portion in grams 
 
 This repository holds the **web application** (Django + Bootstrap) and the **research code** behind the accompanying paper.
 
+The interface is fully **bilingual (English / العربية)** with right-to-left layout for Arabic; switch language from the top bar. Translations live in `locale/ar/LC_MESSAGES/django.po` (compile with `python manage.py compilemessages`).
+
 | | |
 |---|---|
 | ![Home](docs/screenshots/home.png) | ![Analyze](docs/screenshots/analyze.png) |

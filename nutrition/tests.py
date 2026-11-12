@@ -146,3 +146,22 @@ class ViewTests(ReferenceDataMixin, TestCase):
         rec = IntakeRecord.objects.filter(participant__owner=self.user).first()
         self.assertEqual(self.client.get(rec.get_absolute_url()).status_code, 404)
         self.assertFalse(IntakeItem.objects.filter(record__participant__owner=other).exists())
+
+
+class LanguageTests(ReferenceDataMixin, TestCase):
+    def test_arabic_interface_is_rtl_and_translated(self):
+        self.client.cookies["anv_lang"] = "ar"
+        r = self.client.get(reverse("nutrition:analyze"))
+        self.assertContains(r, 'dir="rtl"')
+        self.assertContains(r, "تحليل طبق")
+        self.assertContains(r, "bootstrap.rtl.min.css")
+        r = self.client.get(reverse("nutrition:dish_detail", args=["maqluba"]))
+        self.assertContains(r, "مقلوبة")
+
+    def test_english_default_and_switch(self):
+        r = self.client.get(reverse("nutrition:home"))
+        self.assertContains(r, 'dir="ltr"')
+        self.assertContains(r, "Seeing beneath the rice.")
+        r = self.client.post(reverse("set_language"), {"language": "ar", "next": "/"})
+        self.assertEqual(r.status_code, 302)
+        self.assertContains(self.client.get("/"), "ما تحت الأرز.")

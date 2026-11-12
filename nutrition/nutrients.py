@@ -1,6 +1,8 @@
 """Nutrient catalogue shared by models, services, templates and exports."""
 from dataclasses import dataclass
 
+from django.utils.translation import gettext_lazy as _
+
 
 @dataclass(frozen=True)
 class Nutrient:
@@ -36,11 +38,11 @@ KEYS = [n.key for n in NUTRIENTS]
 BY_KEY = {n.key: n for n in NUTRIENTS}
 CORE = ["kcal", "protein_g", "fat_g", "carb_g", "fiber_g", "sodium_mg", "iron_mg", "calcium_mg"]
 GROUP_LABELS = {
-    "energy": "Energy", "macro": "Macronutrients", "fatty_acids": "Fatty acids & cholesterol",
-    "minerals": "Minerals", "vitamins": "Vitamins",
+    "energy": _("Energy"), "macro": _("Macronutrients"), "fatty_acids": _("Fatty acids & cholesterol"),
+    "minerals": _("Minerals"), "vitamins": _("Vitamins"),
 }
-STYLES = [("home", "Home · بيتي"), ("restaurant", "Restaurant · مطاعم"), ("light", "Light · خفيف")]
-MEALS = [("breakfast", "Breakfast · فطور"), ("lunch", "Lunch · غداء"), ("dinner", "Dinner · عشاء"), ("snack", "Snack · وجبة خفيفة")]
+STYLES = [("home", _("Home")), ("restaurant", _("Restaurant")), ("light", _("Light"))]
+MEALS = [("breakfast", _("Breakfast")), ("lunch", _("Lunch")), ("dinner", _("Dinner")), ("snack", _("Snack"))]
 ADDED_FAT = {"veg_oil", "olive_oil", "ghee", "butter"}
 FAT_RICH = {"tahini", "almonds", "pine_nuts", "coconut", "white_cheese"}
 MEAT = {"chicken_skin_raw", "chicken_breast_raw", "chicken_thigh_raw", "lamb_raw", "beef_ground_raw", "lamb_ground_raw"}

@@ -140,3 +140,18 @@ footer.anv-foot img { height: 34px; }
 .form-control:focus, .form-select:focus { border-color: #6d84ad; box-shadow: 0 0 0 .2rem rgba(21,48,94,.15); }
 .form-check-input:checked { background-color: var(--anv-navy); border-color: var(--anv-navy); }
 .nav-pills { --bs-nav-pills-link-active-bg: var(--anv-navy); }
+/* ---- Arabic / RTL ---- */
+html[dir="rtl"] body { font-family: "IBM Plex Sans Arabic", "IBM Plex Sans", system-ui, sans-serif; }
+html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3, html[dir="rtl"] .display-serif, html[dir="rtl"] .kcal-big,
+html[dir="rtl"] .stat .v, html[dir="rtl"] .brand-text b, html[dir="rtl"] .team-card .avatar { font-family: "IBM Plex Sans Arabic", "Source Serif 4", serif; letter-spacing: 0; }
+html[dir="rtl"] .eyebrow { letter-spacing: 0; text-transform: none; font-family: "IBM Plex Sans Arabic", sans-serif; font-size: .8rem; }
+html[dir="rtl"] .table-anv thead th { letter-spacing: 0; text-transform: none; font-family: "IBM Plex Sans Arabic", sans-serif; font-size: .78rem; }
+html[dir="rtl"] .table-anv td.n, html[dir="rtl"] .table-anv th.n, html[dir="rtl"] .nlabel .v, html[dir="rtl"] .nlabel .r, html[dir="rtl"] .dv-row .pct { text-align: left; }
+html[dir="rtl"] .nlabel .ln.sub span:first-child { padding-left: 0; padding-right: 1rem; }
+html[dir="rtl"] .hero::after { inset: auto auto -45% -10%; }
+html[dir="rtl"] .chat-msg.q { margin-left: 0; margin-right: 15%; }
+html[dir="rtl"] .num { direction: ltr; unicode-bidi: isolate; }
+.lang-switch button { font-size: .82rem; font-weight: 600; }
+html[dir="rtl"] .pill { font-family: "IBM Plex Sans Arabic", "IBM Plex Mono", sans-serif; letter-spacing: 0; font-size: .74rem; }
+html[dir="rtl"] .nlabel .r, html[dir="rtl"] .mono { unicode-bidi: plaintext; }
+html[dir="rtl"] .nlabel .r { direction: ltr; text-align: left; }

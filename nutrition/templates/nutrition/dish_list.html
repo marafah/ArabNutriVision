@@ -1,37 +1,37 @@
-{% extends "base.html" %}
-{% block title %}Arabic Recipe Composition Table{% endblock %}
+{% extends "base.html" %}{% load i18n anv %}
+{% block title %}{% translate "Arabic Recipe Composition Table" %}{% endblock %}
 {% block content %}
 <div class="container py-4">
   <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
-    <div><div class="eyebrow">Arabic Recipe Composition Table · draft v0.1</div><h1 class="h2 mb-0">Nutrients per 100 g of cooked dish</h1>
-      <p class="text-secondary small mb-0">Mean of three recipe variants; the bar shows the light-to-restaurant range, the tick the mean.</p></div>
-    {% if user.is_authenticated %}<a href="{% url 'nutrition:recipe_builder' %}" class="btn btn-primary"><i class="bi bi-journal-plus me-1"></i>Add a recipe</a>{% endif %}
+    <div><div class="eyebrow">{% translate "Arabic Recipe Composition Table · draft v0.1" %}</div><h1 class="h2 mb-0">{% translate "Nutrients per 100 g of cooked dish" %}</h1>
+      <p class="text-secondary small mb-0">{% translate "Mean of three recipe variants; the bar shows the light-to-restaurant range, the tick the mean." %}</p></div>
+    {% if user.is_authenticated %}<a href="{% url 'nutrition:recipe_builder' %}" class="btn btn-primary"><i class="bi bi-journal-plus me-1"></i>{% translate "Add a recipe" %}</a>{% endif %}
   </div>
   <form class="row g-2 mb-3" method="get">
-    <div class="col-sm-6 col-md-5"><input class="form-control" type="search" name="q" value="{{ q }}" placeholder="Search a dish · ابحث عن طبق" aria-label="Search dishes"></div>
-    <div class="col-sm-4 col-md-3"><select class="form-select" name="cat" aria-label="Category" onchange="this.form.submit()"><option value="">All categories</option>{% for c in cats %}<option {% if c == cat %}selected{% endif %}>{{ c }}</option>{% endfor %}</select></div>
-    <div class="col-auto"><button class="btn btn-outline-primary"><i class="bi bi-search"></i> Search</button></div>
+    <div class="col-sm-6 col-md-5"><input class="form-control" type="search" name="q" value="{{ q }}" placeholder="{% translate 'Search a dish (English or Arabic)' %}" aria-label="{% translate 'Search dishes' %}"></div>
+    <div class="col-sm-4 col-md-3"><select class="form-select" name="cat" aria-label="{% translate 'Category' %}" onchange="this.form.submit()"><option value="">{% translate "All categories" %}</option>{% for c in cats %}<option value="{{ c }}" {% if c == cat %}selected{% endif %}>{{ c|cat }}</option>{% endfor %}</select></div>
+    <div class="col-auto"><button class="btn btn-outline-primary"><i class="bi bi-search"></i> {% translate "Search" %}</button></div>
   </form>
   <div class="panel p-0">
     <div class="table-responsive">
       <table class="table table-anv table-hover align-middle mb-0">
-        <thead><tr><th class="ps-3">Dish</th><th>Category</th><th class="n">kcal</th><th style="min-width:130px">Range (kcal)</th><th class="n">Protein g</th><th class="n">Fat g</th><th class="n">SFA g</th><th class="n">Carb g</th><th class="n">Fibre g</th><th class="n">Na mg</th><th class="n">GI</th><th class="n pe-3">% kcal fat</th></tr></thead>
+        <thead><tr><th class="ps-3">{% translate "Dish" %}</th><th>{% translate "Category" %}</th><th class="n">{% translate "kcal" %}</th><th style="min-width:130px">{% translate "Range (kcal)" %}</th><th class="n">{% translate "Protein g" %}</th><th class="n">{% translate "Fat g" %}</th><th class="n">{% translate "SFA g" %}</th><th class="n">{% translate "Carb g" %}</th><th class="n">{% translate "Fibre g" %}</th><th class="n">{% translate "Na mg" %}</th><th class="n">{% translate "GI" %}</th><th class="n pe-3">{% translate "% kcal fat" %}</th></tr></thead>
         <tbody>
         {% for p in profiles %}
           <tr style="cursor:pointer" onclick="location.href='{% url 'nutrition:dish_detail' p.code %}'">
-            <td class="ps-3"><a href="{% url 'nutrition:dish_detail' p.code %}" class="fw-semibold text-decoration-none">{{ p.name|truncatechars:40 }}</a><div class="small text-secondary" lang="ar">{{ p.name_ar }}</div>{% if p.has_estimates %}<span class="pill pill-est mt-1">placeholder ingredient</span>{% endif %}</td>
-            <td class="small">{{ p.category }}</td>
+            <td class="ps-3"><a href="{% url 'nutrition:dish_detail' p.code %}" class="fw-semibold text-decoration-none">{{ p|dish_name_full|truncatechars:40 }}</a><div class="small text-secondary">{{ p|dish_alt }}</div>{% if p.has_estimates %}<span class="pill pill-est mt-1">{% translate "placeholder ingredient" %}</span>{% endif %}</td>
+            <td class="small">{{ p.category|cat }}</td>
             <td class="n fw-semibold">{{ p.mean.kcal|floatformat:0 }}</td>
-            <td><div class="range-bar" title="{{ p.low.kcal|floatformat:0 }}–{{ p.high.kcal|floatformat:0 }} kcal"><span style="left:{{ p.bar.left }}%;width:{{ p.bar.width }}%"></span><i style="left:{{ p.bar.mean }}%"></i></div><div class="small mono text-secondary mt-1">{{ p.low.kcal|floatformat:0 }}–{{ p.high.kcal|floatformat:0 }}</div></td>
+            <td><div class="range-bar" title="{{ p.low.kcal|floatformat:0 }}–{{ p.high.kcal|floatformat:0 }}"><span style="inset-inline-start:{{ p.bar.left }}%;width:{{ p.bar.width }}%"></span><i style="inset-inline-start:{{ p.bar.mean }}%"></i></div><div class="small mono text-secondary mt-1" dir="ltr" style="text-align:start">{{ p.low.kcal|floatformat:0 }}–{{ p.high.kcal|floatformat:0 }}</div></td>
             <td class="n">{{ p.mean.protein_g|floatformat:1 }}</td><td class="n">{{ p.mean.fat_g|floatformat:1 }}</td><td class="n">{{ p.mean.sfa_g|floatformat:1 }}</td>
             <td class="n">{{ p.mean.carb_g|floatformat:1 }}</td><td class="n">{{ p.mean.fiber_g|floatformat:1 }}</td><td class="n">{{ p.mean.sodium_mg|floatformat:0 }}</td>
             <td class="n">{{ p.gi|default:"–" }}</td><td class="n pe-3"><span class="pill {% if p.energy_from_fat_pct > 35 %}pill-rose{% else %}pill-good{% endif %}">{{ p.energy_from_fat_pct|floatformat:0 }}%</span></td>
           </tr>
-        {% empty %}<tr><td colspan="12" class="text-center text-secondary py-4">No dishes match. Run <code>python manage.py load_reference_data</code> to load the table.</td></tr>{% endfor %}
+        {% empty %}<tr><td colspan="12" class="text-center text-secondary py-4">{% translate "No dishes match your search." %}</td></tr>{% endfor %}
         </tbody>
       </table>
     </div>
   </div>
-  <p class="small text-secondary mt-2">Ingredient values are USDA-based approximations; rows marked placeholder (jameed, white cheese) await reference-book or laboratory values. % kcal fat above 35% is flagged against the WHO upper range for total fat.</p>
+  <p class="small text-secondary mt-2">{% translate "Ingredient values are USDA-based approximations; rows marked placeholder (jameed, white cheese) await reference-book or laboratory values. % kcal fat above 35% is flagged against the WHO upper range for total fat." %}</p>
 </div>
 {% endblock %}

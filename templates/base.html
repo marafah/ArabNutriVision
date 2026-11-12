@@ -1,55 +1,61 @@
-{% load static %}<!doctype html>
-<html lang="en">
+{% load static i18n anv %}{% get_current_language as LANG %}{% get_current_language_bidi as RTL %}<!doctype html>
+<html lang="{{ LANG }}" dir="{% if RTL %}rtl{% else %}ltr{% endif %}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}ArabNutriVision{% endblock %} · University of Petra</title>
-  <meta name="description" content="Recipe-aware computer vision for nutrient estimation of Arabic composite dishes — University of Petra.">
-  <!-- Bootstrap 5.3.3, Bootstrap Icons 1.11.3, Chart.js 4.4.1 and fonts are vendored in static/vendor (works offline) -->
+  <title>{% block title %}ArabNutriVision{% endblock %} · {% translate "University of Petra" %}</title>
+  <meta name="description" content="{% translate 'Recipe-aware computer vision for nutrient estimation of Arabic composite dishes, University of Petra.' %}">
+  <!-- Bootstrap 5.3.3 (LTR and RTL), Bootstrap Icons 1.11.3, Chart.js 4.4.1 and fonts are vendored in static/vendor -->
   <link rel="stylesheet" href="{% static 'vendor/fonts/fonts.css' %}">
-  <link rel="stylesheet" href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% if RTL %}{% static 'vendor/bootstrap/bootstrap.rtl.min.css' %}{% else %}{% static 'vendor/bootstrap/bootstrap.min.css' %}{% endif %}">
   <link rel="stylesheet" href="{% static 'vendor/bootstrap-icons/bootstrap-icons.min.css' %}">
   <link rel="stylesheet" href="{% static 'nutrition/css/anv.css' %}">
   <link rel="icon" href="{% static 'nutrition/img/uop_crest_white.png' %}">
   {% block head %}{% endblock %}
 </head>
 <body>
-<a class="visually-hidden-focusable" href="#main">Skip to content</a>
+<a class="visually-hidden-focusable" href="#main">{% translate "Skip to content" %}</a>
 <div class="uop-band py-1">
-  <div class="container d-flex flex-wrap justify-content-between gap-2">
-    <span><i class="bi bi-mortarboard me-1"></i>University of Petra · Faculty of Information Technology · Amman, Jordan</span>
-    <span lang="ar" dir="rtl">جامعة البترا · مشروع بحثي في التغذية والذكاء الاصطناعي</span>
+  <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+    <span><i class="bi bi-mortarboard me-1"></i>{% translate "University of Petra · Faculty of Information Technology · Amman, Jordan" %}</span>
+    {% other_language as other %}
+    <form action="{% url 'set_language' %}" method="post" class="d-flex align-items-center gap-2 lang-switch">{% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <input type="hidden" name="language" value="{{ other.0 }}">
+      <i class="bi bi-translate" aria-hidden="true"></i>
+      <button type="submit" class="btn btn-link p-0 text-white text-decoration-none" lang="{{ other.0 }}" aria-label="{% translate 'Switch language' %}">{{ other.1 }}</button>
+    </form>
   </div>
 </div>
 <nav class="navbar navbar-expand-xl navbar-dark anv-nav sticky-top">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center gap-3" href="{% url 'nutrition:home' %}">
-      <img src="{% static 'nutrition/img/uop_logo_white.png' %}" alt="University of Petra" width="185" height="38">
+      <img src="{% static 'nutrition/img/uop_logo_white.png' %}" alt="{% translate 'University of Petra' %}" width="185" height="38">
       <span class="brand-divider d-none d-sm-block"></span>
-      <span class="brand-text d-none d-sm-block"><b>ArabNutriVision</b><br><small>Recipe-aware dietary assessment</small></span>
+      <span class="brand-text d-none d-sm-block"><b>ArabNutriVision</b><br><small>{% translate "Recipe-aware dietary assessment" %}</small></span>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Menu">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="{% translate 'Menu' %}">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="nav">
       {% with u=request.resolver_match.url_name %}
       <ul class="navbar-nav ms-auto me-xl-3 gap-xl-1">
-        <li class="nav-item"><a class="nav-link {% if u == 'analyze' %}active{% endif %}" href="{% url 'nutrition:analyze' %}"><i class="bi bi-camera me-1"></i>Analyze</a></li>
-        <li class="nav-item"><a class="nav-link {% if u == 'dishes' or u == 'dish_detail' or u == 'recipe_builder' %}active{% endif %}" href="{% url 'nutrition:dishes' %}"><i class="bi bi-table me-1"></i>Composition table</a></li>
+        <li class="nav-item"><a class="nav-link {% if u == 'analyze' %}active{% endif %}" href="{% url 'nutrition:analyze' %}"><i class="bi bi-camera me-1"></i>{% translate "Analyze" %}</a></li>
+        <li class="nav-item"><a class="nav-link {% if u == 'dishes' or u == 'dish_detail' or u == 'recipe_builder' %}active{% endif %}" href="{% url 'nutrition:dishes' %}"><i class="bi bi-table me-1"></i>{% translate "Composition table" %}</a></li>
         {% if user.is_authenticated %}
-        <li class="nav-item"><a class="nav-link {% if u == 'dashboard' or u == 'participants' or u == 'participant_detail' or u == 'record_detail' or u == 'ffq' %}active{% endif %}" href="{% url 'nutrition:dashboard' %}"><i class="bi bi-clipboard2-pulse me-1"></i>Dietary records</a></li>
-        <li class="nav-item"><a class="nav-link {% if u == 'validation' %}active{% endif %}" href="{% url 'nutrition:validation' %}"><i class="bi bi-bullseye me-1"></i>Validation lab</a></li>
+        <li class="nav-item"><a class="nav-link {% if u == 'dashboard' or u == 'participants' or u == 'participant_detail' or u == 'record_detail' or u == 'ffq' %}active{% endif %}" href="{% url 'nutrition:dashboard' %}"><i class="bi bi-clipboard2-pulse me-1"></i>{% translate "Dietary records" %}</a></li>
+        <li class="nav-item"><a class="nav-link {% if u == 'validation' %}active{% endif %}" href="{% url 'nutrition:validation' %}"><i class="bi bi-bullseye me-1"></i>{% translate "Validation lab" %}</a></li>
         {% endif %}
-        <li class="nav-item"><a class="nav-link {% if u == 'research' %}active{% endif %}" href="{% url 'nutrition:research' %}"><i class="bi bi-journal-text me-1"></i>Research</a></li>
+        <li class="nav-item"><a class="nav-link {% if u == 'research' %}active{% endif %}" href="{% url 'nutrition:research' %}"><i class="bi bi-journal-text me-1"></i>{% translate "Research" %}</a></li>
       </ul>
       {% endwith %}
       {% if user.is_authenticated %}
         <form method="post" action="{% url 'logout' %}" class="d-flex align-items-center gap-2">{% csrf_token %}
           <span class="text-white-50 small d-none d-xl-inline"><i class="bi bi-person-circle me-1"></i>{{ user.get_full_name|default:user.username }}</span>
-          <button class="btn btn-sm btn-outline-light">Sign out</button>
+          <button class="btn btn-sm btn-outline-light">{% translate "Sign out" %}</button>
         </form>
       {% else %}
-        <a class="btn btn-sm btn-login btn-outline-light" href="{% url 'login' %}?next={{ request.path }}"><i class="bi bi-box-arrow-in-right me-1"></i>Researcher sign-in</a>
+        <a class="btn btn-sm btn-login btn-outline-light" href="{% url 'login' %}?next={{ request.path }}"><i class="bi bi-box-arrow-in-right me-1"></i>{% translate "Researcher sign-in" %}</a>
       {% endif %}
     </div>
   </div>
@@ -60,7 +66,7 @@
   <div class="container mt-3">
     {% for m in messages %}
     <div class="alert alert-{% if m.tags == 'error' %}danger{% else %}{{ m.tags|default:'info' }}{% endif %} alert-dismissible fade show py-2" role="alert">
-      {{ m }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      {{ m }}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{% translate 'Close' %}"></button>
     </div>
     {% endfor %}
   </div>
@@ -72,31 +78,38 @@
   <div class="container">
     <div class="row g-4 align-items-start">
       <div class="col-lg-5">
-        <img src="{% static 'nutrition/img/uop_logo_white.png' %}" alt="University of Petra" class="mb-2" width="165" height="34">
-        <p class="mb-1">ArabNutriVision v{{ ANV_VERSION }} — a research prototype for recipe-aware nutrient estimation of Arabic composite dishes.</p>
-        <p class="small mb-0 text-white-50">Values come from provisional standard recipes and USDA-based ingredient data. Not for clinical decisions until validated.</p>
+        <img src="{% static 'nutrition/img/uop_logo_white.png' %}" alt="{% translate 'University of Petra' %}" class="mb-2" width="165" height="34">
+        <p class="mb-1">{% blocktranslate with v=ANV_VERSION %}ArabNutriVision v{{ v }}, a research prototype for recipe-aware nutrient estimation of Arabic composite dishes.{% endblocktranslate %}</p>
+        <p class="small mb-0 text-white-50">{% translate "Values come from provisional standard recipes and USDA-based ingredient data. Not for clinical decisions until validated." %}</p>
       </div>
       <div class="col-sm-6 col-lg-4">
-        <div class="eyebrow text-white-50 mb-2">Research team</div>
-        {% for m in TEAM %}<div class="mb-1"><b class="text-white">{{ m.name }}</b> <span lang="ar">· {{ m.name_ar }}</span><br><span class="small">{{ m.role }}</span></div>{% endfor %}
+        <div class="eyebrow text-white-50 mb-2">{% translate "Research team" %}</div>
+        {% for m in TEAM %}<div class="mb-1"><b class="text-white">{% if RTL %}{{ m.name_ar }}{% else %}{{ m.name }}{% endif %}</b><br><span class="small">{{ m.role }}</span></div>{% endfor %}
       </div>
       <div class="col-sm-6 col-lg-3">
-        <div class="eyebrow text-white-50 mb-2">Project</div>
+        <div class="eyebrow text-white-50 mb-2">{% translate "Project" %}</div>
         <ul class="list-unstyled small mb-0">
-          <li><a href="{% url 'nutrition:research' %}">Paper and method</a></li>
-          <li><a href="{% url 'nutrition:dishes' %}">Arabic Recipe Composition Table</a></li>
-          <li><a href="https://www.uop.edu.jo/" target="_blank" rel="noopener">University of Petra <i class="bi bi-box-arrow-up-right"></i></a></li>
+          <li><a href="{% url 'nutrition:research' %}">{% translate "Paper and method" %}</a></li>
+          <li><a href="{% url 'nutrition:dishes' %}">{% translate "Arabic Recipe Composition Table" %}</a></li>
+          <li><a href="https://github.com/marafah/ArabNutriVision" target="_blank" rel="noopener">{% translate "Source code on GitHub" %} <i class="bi bi-box-arrow-up-right"></i></a></li>
+          <li><a href="https://www.uop.edu.jo/" target="_blank" rel="noopener">{% translate "University of Petra" %} <i class="bi bi-box-arrow-up-right"></i></a></li>
         </ul>
       </div>
     </div>
     <hr class="border-secondary">
-    <div class="small text-white-50 d-flex flex-wrap justify-content-between gap-2"><span>© {% now "Y" %} University of Petra · ArabNutriVision research group</span><span>Code: MIT licence · Data: CC BY 4.0</span></div>
+    <div class="small text-white-50 d-flex flex-wrap justify-content-between gap-2"><span>© {% now "Y" %} {% translate "University of Petra · ArabNutriVision research group" %}</span><span>{% translate "Code: MIT licence · Data: CC BY 4.0" %}</span></div>
   </div>
 </footer>
 <script src="{% static 'vendor/bootstrap/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'vendor/chartjs/chart.umd.min.js' %}"></script>
 <script>
-  if (window.Chart) { Chart.defaults.font.family = '"IBM Plex Sans", system-ui, sans-serif'; Chart.defaults.color = '#5c6678'; Chart.defaults.borderColor = '#e6eaf0'; }
+  window.ANV_RTL = {{ RTL|yesno:"true,false" }};
+  window.ANV_LANG = "{{ LANG }}";
+  if (window.Chart) {
+    Chart.defaults.font.family = window.ANV_RTL ? '"IBM Plex Sans Arabic", "IBM Plex Sans", system-ui, sans-serif' : '"IBM Plex Sans", system-ui, sans-serif';
+    Chart.defaults.color = '#5c6678'; Chart.defaults.borderColor = '#e6eaf0';
+    if (window.ANV_RTL) { Chart.defaults.plugins.legend.rtl = true; Chart.defaults.plugins.tooltip.rtl = true; }
+  }
   window.ANV_COLORS = {navy:'#15305e', rose:'#b0413e', gold:'#c3922e', blue:'#2f6f9f', olive:'#5d7a2b', grey:'#9aa3b2'};
 </script>
 {% block scripts %}{% endblock %}

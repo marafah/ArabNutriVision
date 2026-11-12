@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from .nutrients import MEALS, STYLES
 
@@ -75,7 +76,7 @@ class Dish(models.Model):
 
 
 class RecipeVariant(models.Model):
-    STYLE_CHOICES = STYLES + [("custom", "Custom")]
+    STYLE_CHOICES = STYLES + [("custom", _("Custom"))]
     dish = models.ForeignKey(Dish, related_name="variants", on_delete=models.CASCADE)
     style = models.CharField(max_length=20, choices=STYLE_CHOICES)
     cooked_g = models.FloatField(help_text="Weight of the whole cooked batch (g)")
@@ -99,9 +100,9 @@ class RecipeLine(models.Model):
 
 
 class Participant(models.Model):
-    SEX = [("F", "Female"), ("M", "Male"), ("X", "Not recorded")]
+    SEX = [("F", _("Female")), ("M", _("Male")), ("X", _("Not recorded"))]
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="participants")
-    code = models.CharField(max_length=30, help_text="Pseudonymous code only (e.g. P001). Never store names.")
+    code = models.CharField(max_length=30, help_text=_("Pseudonymous code only (e.g. P001). Never store names."))
     sex = models.CharField(max_length=1, choices=SEX, default="X")
     age_years = models.PositiveIntegerField(null=True, blank=True)
     energy_target_kcal = models.PositiveIntegerField(default=2000)
@@ -120,7 +121,7 @@ class Participant(models.Model):
 
 
 class IntakeRecord(models.Model):
-    METHODS = [("recall", "24-hour recall"), ("record", "Food record (weighed/estimated)"), ("menu", "Menu / meal plan"), ("ffq", "FFQ (daily average)")]
+    METHODS = [("recall", _("24-hour recall")), ("record", _("Food record (weighed/estimated)")), ("menu", _("Menu / meal plan")), ("ffq", _("FFQ (daily average)"))]
     participant = models.ForeignKey(Participant, related_name="records", on_delete=models.CASCADE)
     date = models.DateField()
     method = models.CharField(max_length=10, choices=METHODS, default="recall")
@@ -138,7 +139,7 @@ class IntakeRecord(models.Model):
 
 
 class IntakeItem(models.Model):
-    SOURCES = [("manual", "Manual"), ("photo", "Photo + AI"), ("photo_corrected", "Photo, corrected"), ("ffq", "FFQ import")]
+    SOURCES = [("manual", _("Manual")), ("photo", _("Photo + AI")), ("photo_corrected", _("Photo, corrected")), ("ffq", _("FFQ import"))]
     record = models.ForeignKey(IntakeRecord, related_name="items", on_delete=models.CASCADE)
     meal = models.CharField(max_length=12, choices=MEALS, default="lunch")
     dish = models.ForeignKey(Dish, null=True, blank=True, on_delete=models.PROTECT)
@@ -173,7 +174,7 @@ class SupplementIntake(models.Model):
 
 class ValidationSample(models.Model):
     """One weighed plate of the ArabFood-N validation set, with the AI system outputs for that photo."""
-    VIEWS = [("top", "Top-down"), ("45deg", "45°")]
+    VIEWS = [("top", _("Top-down")), ("45deg", "45°")]
     SPLITS = [("train", "train"), ("val", "val"), ("test", "test")]
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     session_id = models.CharField(max_length=20, help_text="Cooking session (split unit; never split a session)")

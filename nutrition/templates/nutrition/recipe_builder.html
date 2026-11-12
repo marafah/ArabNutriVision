@@ -1,28 +1,28 @@
-{% extends "base.html" %}
-{% block title %}Recipe builder{% endblock %}
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% translate "Recipe builder" %}{% endblock %}
 {% block content %}
 <div class="container py-4">
-  <nav aria-label="breadcrumb"><ol class="breadcrumb small"><li class="breadcrumb-item"><a href="{% url 'nutrition:dishes' %}">Composition table</a></li><li class="breadcrumb-item active">New recipe</li></ol></nav>
-  <div class="eyebrow">Recipe calculation with yield</div>
-  <h1 class="h2 mb-3">Add a weighed recipe</h1>
+  <nav aria-label="breadcrumb"><ol class="breadcrumb small"><li class="breadcrumb-item"><a href="{% url 'nutrition:dishes' %}">{% translate "Composition table" %}</a></li><li class="breadcrumb-item active">{% translate "New recipe" %}</li></ol></nav>
+  <div class="eyebrow">{% translate "Recipe calculation with yield" %}</div>
+  <h1 class="h2 mb-3">{% translate "Add a weighed recipe" %}</h1>
   <form method="post" id="recipeForm">{% csrf_token %}
   <div class="row g-4">
     <div class="col-lg-4"><div class="panel">
       {% for e in form.non_field_errors %}<div class="alert alert-danger py-2 small">{{ e }}</div>{% endfor %}
       {% for f in form %}{% if f.name == 'is_raw' %}<div class="form-check my-2">{{ f }} <label class="form-check-label" for="{{ f.id_for_label }}">{{ f.label }}</label></div>{% else %}<div class="mb-2"><label class="form-label small" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}{% if f.help_text %}<div class="form-text">{{ f.help_text }}</div>{% endif %}{% for e in f.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}</div>{% endif %}{% endfor %}
-      <button class="btn btn-primary mt-2 w-100"><i class="bi bi-check2-circle me-1"></i>Save to composition table</button>
+      <button class="btn btn-primary mt-2 w-100"><i class="bi bi-check2-circle me-1"></i>{% translate "Save to composition table" %}</button>
     </div></div>
     <div class="col-lg-8 min-w-0"><div class="panel">
-      <div class="d-flex justify-content-between align-items-center mb-2"><h2 class="h5 mb-0">Raw ingredients in the pot</h2><button type="button" class="btn btn-sm btn-outline-primary" id="addRow"><i class="bi bi-plus"></i> Add ingredient</button></div>
+      <div class="d-flex justify-content-between align-items-center mb-2"><h2 class="h5 mb-0">{% translate "Raw ingredients in the pot" %}</h2><button type="button" class="btn btn-sm btn-outline-primary" id="addRow"><i class="bi bi-plus"></i> {% translate "Add ingredient" %}</button></div>
       <datalist id="ingList">{% for i in ings %}<option value="{{ i.code }}">{{ i.name }}</option>{% endfor %}</datalist>
-      <div class="table-responsive"><table class="table table-anv align-middle"><thead><tr><th>Ingredient</th><th class="n" style="width:8rem">Raw g</th><th class="n">kcal</th><th class="n">fat g</th><th></th></tr></thead><tbody id="rows"></tbody>
-        <tfoot><tr class="fw-semibold"><td>Batch total</td><td class="n" id="tg">0</td><td class="n" id="tk">0</td><td class="n" id="tf">0</td><td></td></tr></tfoot></table></div>
+      <div class="table-responsive"><table class="table table-anv align-middle"><thead><tr><th>{% translate "Ingredient" %}</th><th class="n" style="width:8rem">{% translate "Raw g" %}</th><th class="n">{% translate "kcal" %}</th><th class="n">{% translate "fat g" %}</th><th></th></tr></thead><tbody id="rows"></tbody>
+        <tfoot><tr class="fw-semibold"><td>{% translate "Batch total" %}</td><td class="n" id="tg">0</td><td class="n" id="tk">0</td><td class="n" id="tf">0</td><td></td></tr></tfoot></table></div>
       <div class="row g-3 mt-1">
-        <div class="col-sm-4"><div class="stat"><div class="v" id="p100">–</div><div class="l">kcal per 100 g cooked</div></div></div>
-        <div class="col-sm-4"><div class="stat"><div class="v" id="f100">–</div><div class="l">fat g per 100 g cooked</div></div></div>
-        <div class="col-sm-4"><div class="stat"><div class="v" id="yield">–</div><div class="l">yield (cooked / raw weight)</div></div></div>
+        <div class="col-sm-4"><div class="stat"><div class="v" id="p100">–</div><div class="l">{% translate "kcal per 100 g cooked" %}</div></div></div>
+        <div class="col-sm-4"><div class="stat"><div class="v" id="f100">–</div><div class="l">{% translate "fat g per 100 g cooked" %}</div></div></div>
+        <div class="col-sm-4"><div class="stat"><div class="v" id="yield">–</div><div class="l">{% translate "yield (cooked / raw weight)" %}</div></div></div>
       </div>
-      <p class="small text-secondary mt-3 mb-0">Per-100 g values = 100 × Σ(raw grams × nutrient density) / cooked batch weight. Water absorbed or evaporated is captured by the cooked weight, so always weigh the whole pot after cooking.</p>
+      <p class="small text-secondary mt-3 mb-0">{% translate "Per-100 g values = 100 × Σ(raw grams × nutrient density) / cooked batch weight. Water absorbed or evaporated is captured by the cooked weight, so always weigh the whole pot after cooking." %}</p>
     </div></div>
   </div>
   </form>
@@ -35,9 +35,9 @@
   const ING = JSON.parse(JSON.parse(document.getElementById("anv-ings").textContent)), by = Object.fromEntries(ING.map(i=>[i.code,i]));
   const rows = document.getElementById("rows"), cooked = document.getElementById("id_cooked_g");
   function row(code="", g=""){ const tr = document.createElement("tr");
-    tr.innerHTML = `<td><select name="ing" class="form-select form-select-sm"><option value="">Choose…</option>${ING.map(i=>`<option value="${i.code}" ${i.code===code?"selected":""}>${i.name}</option>`).join("")}</select></td>
-      <td><input name="grams" type="number" min="0" step="1" class="form-control form-control-sm text-end" value="${g}" aria-label="Raw grams"></td><td class="n k">0</td><td class="n f">0</td>
-      <td><button type="button" class="btn btn-sm btn-link text-secondary p-0" aria-label="Remove ingredient"><i class="bi bi-x-lg"></i></button></td>`;
+    tr.innerHTML = `<td><select name="ing" class="form-select form-select-sm"><option value="">{% translate "Choose…" %}</option>${ING.map(i=>`<option value="${i.code}" ${i.code===code?"selected":""}>${i.name}</option>`).join("")}</select></td>
+      <td><input name="grams" type="number" min="0" step="1" class="form-control form-control-sm text-end" value="${g}" aria-label="{% translate 'Raw grams' %}"></td><td class="n k">0</td><td class="n f">0</td>
+      <td><button type="button" class="btn btn-sm btn-link text-secondary p-0" aria-label="{% translate 'Remove ingredient' %}"><i class="bi bi-x-lg"></i></button></td>`;
     tr.querySelector("button").onclick = () => { tr.remove(); calc(); }; tr.addEventListener("input", calc); tr.addEventListener("change", calc); rows.append(tr); }
   function calc(){ let tg=0, tk=0, tf=0;
     rows.querySelectorAll("tr").forEach(tr => { const i = by[tr.querySelector("select").value], g = +tr.querySelector("input").value || 0;

@@ -1,65 +1,66 @@
-{% extends "base.html" %}
-{% block title %}Research{% endblock %}
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% translate "Research" %}{% endblock %}
 {% block content %}
 <section class="hero py-5">
   <div class="container position-relative" style="z-index:1">
-    <div class="eyebrow mb-2" style="color:#b9c5da">Research article · manuscript in preparation</div>
-    <h1 class="mb-3" style="max-width:24ch">Seeing beneath the rice: recipe-aware estimation of hidden fat in Arabic composite dishes</h1>
-    <p class="lead mb-3">Mohammad Arafah<sup>1</sup> · Amna Zaytoun<sup>2</sup><br><span class="small"><sup>1</sup>Faculty of Information Technology, University of Petra, Amman, Jordan · <sup>2</sup>Clinical nutrition, MSc</span></p>
-    <div class="d-flex flex-wrap gap-2"><span class="badge badge-soft rounded-pill">Food composition</span><span class="badge badge-soft rounded-pill">Image-based dietary assessment</span><span class="badge badge-soft rounded-pill">Vision–language models</span><span class="badge badge-soft rounded-pill">Uncertainty</span></div>
+    <div class="eyebrow mb-2" style="color:#b9c5da">{% translate "Research article · manuscript in preparation" %}</div>
+    <h1 class="mb-3" style="max-width:26ch">{% translate "Seeing beneath the rice: recipe-aware estimation of hidden fat in Arabic composite dishes" %}</h1>
+    <p class="lead mb-3">{% if LANGUAGE_BIDI %}د. محمد عرفه<sup>1</sup> · آمنة زيتون<sup>2</sup>{% else %}Mohammad Arafah<sup>1</sup> · Amna Zaytoun<sup>2</sup>{% endif %}<br><span class="small"><sup>1</sup>{% translate "Faculty of Information Technology, University of Petra, Amman, Jordan" %} · <sup>2</sup>{% translate "Clinical nutrition, MSc" %}</span></p>
+    <div class="d-flex flex-wrap gap-2"><span class="badge badge-soft rounded-pill">{% translate "Food composition" %}</span><span class="badge badge-soft rounded-pill">{% translate "Image-based dietary assessment" %}</span><span class="badge badge-soft rounded-pill">{% translate "Computer vision" %}</span><span class="badge badge-soft rounded-pill">{% translate "Uncertainty" %}</span></div>
   </div>
 </section>
 <div class="container py-4">
   <div class="row g-4">
     <div class="col-lg-8 min-w-0">
       <div class="panel">
-        <h2 class="h4">The gap</h2>
-        <p>Food-image systems have learned to name Middle Eastern dishes with high accuracy, but none reports a validated nutrient error for Levantine composite dishes. In these dishes the energy-dense components (frying oil, ghee, tahini, fatty meat) are mixed into or hidden beneath rice and bread. A camera sees the dish; it cannot see how it was cooked. Generic multimodal AI models therefore fail silently: recent evaluations report the largest errors for fat and for complex meals.</p>
-        <h2 class="h4 mt-4">The idea</h2>
-        <p class="mb-2">Make the <b>recipe</b> the unit of estimation, and report preparation as an interval rather than hide it in the error:</p>
-        <div class="cite mb-3">E&#770; = m&#770; × e<sub>d,s</sub> / 100 &nbsp;&nbsp; e<sub>d,s</sub> = 100 · Σ<sub>k</sub> w<sub>dsk</sub> · r<sub>k</sub> · e<sub>k</sub> / Y<sub>ds</sub><br>m&#770; portion (g) · d dish · s preparation style · w raw ingredient grams · r retention · e ingredient nutrient density · Y cooked yield</div>
+        <h2 class="h4">{% translate "The gap" %}</h2>
+        <p>{% translate "Food-image systems have learned to name Middle Eastern dishes with high accuracy, but none reports a validated nutrient error for Levantine composite dishes. In these dishes the energy-dense components (frying oil, ghee, tahini, fatty meat) are mixed into or hidden beneath rice and bread. A camera sees the dish; it cannot see how it was cooked. Generic multimodal AI models therefore fail silently: recent evaluations report the largest errors for fat and for complex meals." %}</p>
+        <h2 class="h4 mt-4">{% translate "The idea" %}</h2>
+        <p class="mb-2">{% translate "Make the recipe the unit of estimation, and report preparation as an interval rather than hide it in the error:" %}</p>
+        <div class="cite mb-3" dir="ltr">E&#770; = m&#770; × e<sub>d,s</sub> / 100 &nbsp;&nbsp; e<sub>d,s</sub> = 100 · Σ<sub>k</sub> w<sub>dsk</sub> · r<sub>k</sub> · e<sub>k</sub> / Y<sub>ds</sub></div>
+        <p class="small text-secondary">{% translate "m̂ portion (g) · d dish · s preparation style · w raw ingredient grams · r retention · e ingredient nutrient density · Y cooked yield" %}</p>
         {% if a %}
-        <h2 class="h4 mt-4">What the composition table already shows</h2>
+        <h2 class="h4 mt-4">{% translate "What the composition table already shows" %}</h2>
         <div class="row g-3 mb-2">
-          <div class="col-sm-6 col-xl-3"><div class="stat"><div class="v">{{ a.restaurant_vs_light_pct.mean|floatformat:1 }}%</div><div class="l">mean energy gap, restaurant vs light (95% CI {{ a.restaurant_vs_light_pct.ci95.0 }}–{{ a.restaurant_vs_light_pct.ci95.1 }})</div></div></div>
-          <div class="col-sm-6 col-xl-3"><div class="stat"><div class="v">{{ a.gap_share_added_fat_pct.mean|floatformat:1 }}%</div><div class="l">of that gap from added oil, ghee or butter alone</div></div></div>
-          <div class="col-sm-6 col-xl-3"><div class="stat"><div class="v">{{ a.preparation_blind_floor_ape.kcal.mean|floatformat:1 }}%</div><div class="l">energy error floor when preparation is unknown (perfect dish and grams)</div></div></div>
-          <div class="col-sm-6 col-xl-3"><div class="stat"><div class="v text-rose">{{ a.preparation_blind_floor_ape.fat_g.mean|floatformat:1 }}%</div><div class="l">fat error floor under the same conditions</div></div></div>
+          <div class="col-sm-6 col-xl-3"><div class="stat"><div class="v">{{ a.restaurant_vs_light_pct.mean|floatformat:1 }}%</div><div class="l">{% blocktranslate with lo=a.restaurant_vs_light_pct.ci95.0 hi=a.restaurant_vs_light_pct.ci95.1 %}mean energy gap, restaurant vs light (95% CI {{ lo }}–{{ hi }}){% endblocktranslate %}</div></div></div>
+          <div class="col-sm-6 col-xl-3"><div class="stat"><div class="v">{{ a.gap_share_added_fat_pct.mean|floatformat:1 }}%</div><div class="l">{% translate "of that gap from added oil, ghee or butter alone" %}</div></div></div>
+          <div class="col-sm-6 col-xl-3"><div class="stat"><div class="v">{{ a.preparation_blind_floor_ape.kcal.mean|floatformat:1 }}%</div><div class="l">{% translate "energy error floor when preparation is unknown (perfect dish and grams)" %}</div></div></div>
+          <div class="col-sm-6 col-xl-3"><div class="stat"><div class="v text-rose">{{ a.preparation_blind_floor_ape.fat_g.mean|floatformat:1 }}%</div><div class="l">{% translate "fat error floor under the same conditions" %}</div></div></div>
         </div>
-        <p class="small text-secondary">Computed from {{ a.n_dishes }} dishes × 3 provisional standard recipes ({{ a.n_ingredients }} ingredients). Values will be recomputed after weighed recipes and laboratory analyses replace the drafts.</p>
-        <h3 class="h5 mt-4">Error budget: portion error vs knowledge of preparation</h3>
-        <p class="small text-secondary mb-2">Monte Carlo simulation ({{ a.montecarlo.settings.N_per_seed }} plates × {{ a.montecarlo.settings.seeds|length }} seeds). Even a perfect portion estimate leaves ≈18% energy error and ≈55% fat error if the preparation is unknown.</p>
-        <ul class="nav nav-pills nav-sm mb-2" id="ebTabs"><li class="nav-item"><button class="nav-link active btn-sm" data-k="e">Energy MAPE</button></li><li class="nav-item"><button class="nav-link btn-sm" data-k="f">Fat MAPE</button></li></ul>
-        <div style="height:300px"><canvas id="ebChart" role="img" aria-label="Error budget chart"></canvas></div>
-        <h3 class="h5 mt-4">Where the gap comes from</h3>
-        <div style="height:560px"><canvas id="gapChart" role="img" aria-label="Gap decomposition by dish"></canvas></div>
+        <p class="small text-secondary">{% blocktranslate with n=a.n_dishes k=a.n_ingredients %}Computed from {{ n }} dishes × 3 provisional standard recipes ({{ k }} ingredients). Values will be recomputed after weighed recipes and laboratory analyses replace the drafts.{% endblocktranslate %}</p>
+        <h3 class="h5 mt-4">{% translate "Error budget: portion error vs knowledge of preparation" %}</h3>
+        <p class="small text-secondary mb-2">{% blocktranslate with n=a.montecarlo.settings.N_per_seed s=a.montecarlo.settings.seeds|length %}Monte Carlo simulation ({{ n }} plates × {{ s }} seeds). Even a perfect portion estimate leaves ≈18% energy error and ≈55% fat error if the preparation is unknown.{% endblocktranslate %}</p>
+        <ul class="nav nav-pills nav-sm mb-2" id="ebTabs"><li class="nav-item"><button class="nav-link active btn-sm" data-k="e">{% translate "Energy MAPE" %}</button></li><li class="nav-item"><button class="nav-link btn-sm" data-k="f">{% translate "Fat MAPE" %}</button></li></ul>
+        <div style="height:300px"><canvas id="ebChart" role="img" aria-label="{% translate 'Error budget chart' %}"></canvas></div>
+        <h3 class="h5 mt-4">{% translate "Where the gap comes from" %}</h3>
+        <div style="height:560px"><canvas id="gapChart" role="img" aria-label="{% translate 'Gap decomposition by dish' %}"></canvas></div>
         {% endif %}
-        <h2 class="h4 mt-4">Research questions</h2>
+        <h2 class="h4 mt-4">{% translate "Research questions" %}</h2>
         <ol class="mb-0">
-          <li><b>RQ1.</b> How accurate are multimodal AI models on Arabic composite dishes against weighed ground truth, and is fat the largest error source?</li>
-          <li><b>RQ2.</b> Does recipe-aware estimation (dish + style + portion + recipe table) reduce energy and fat error relative to zero-shot image-only estimates?</li>
-          <li><b>RQ3.</b> How much of the remaining error is portion, recognition, or preparation? (error-budget decomposition)</li>
-          <li><b>RQ4.</b> Do variant-based intervals reach their nominal coverage of true values?</li>
+          <li><b>RQ1.</b> {% translate "How accurate are image-based AI models on Arabic composite dishes against weighed ground truth, and is fat the largest error source?" %}</li>
+          <li><b>RQ2.</b> {% translate "Does recipe-aware estimation (dish + style + portion + recipe table) reduce energy and fat error relative to image-only estimates?" %}</li>
+          <li><b>RQ3.</b> {% translate "How much of the remaining error is portion, recognition, or preparation? (error-budget decomposition)" %}</li>
+          <li><b>RQ4.</b> {% translate "Do variant-based intervals reach their nominal coverage of true values?" %}</li>
         </ol>
       </div>
     </div>
     <div class="col-lg-4">
       <div class="panel mb-4">
-        <div class="eyebrow mb-2">Contributions</div>
+        <div class="eyebrow mb-2">{% translate "Contributions" %}</div>
         <ul class="small ps-3 mb-0">
-          <li class="mb-1">An Arabic Recipe Composition Table with preparation variants and propagated uncertainty.</li>
-          <li class="mb-1">A quantified "preparation-blind" error floor for any image-only estimator.</li>
-          <li class="mb-1">A recipe-aware pipeline that couples a vision–language model with the table.</li>
-          <li class="mb-1">An open validation protocol (ArabFood-N) and this open-source tool.</li>
+          <li class="mb-1">{% translate "An Arabic Recipe Composition Table with preparation variants and propagated uncertainty." %}</li>
+          <li class="mb-1">{% translate "A quantified preparation-blind error floor for any image-only estimator." %}</li>
+          <li class="mb-1">{% translate "A recipe-aware pipeline that couples an on-device vision model with the table." %}</li>
+          <li class="mb-1">{% translate "An open validation protocol (ArabFood-N) and this open-source tool." %}</li>
         </ul>
       </div>
       <div class="panel mb-4">
-        <div class="eyebrow mb-2">Research team</div>
-        {% for m in TEAM %}<div class="team-card d-flex gap-3 align-items-center mb-3"><div class="avatar">{{ m.initials }}</div><div><div class="fw-semibold">{{ m.name }}</div><div class="small" lang="ar">{{ m.name_ar }}</div><div class="small text-secondary">{{ m.role }}</div></div></div>{% endfor %}
+        <div class="eyebrow mb-2">{% translate "Research team" %}</div>
+        {% for m in TEAM %}<div class="team-card d-flex gap-3 align-items-center mb-3"><div class="avatar">{{ m.initials }}</div><div><div class="fw-semibold">{% if LANGUAGE_BIDI %}{{ m.name_ar }}{% else %}{{ m.name }}{% endif %}</div><div class="small text-secondary">{{ m.role }}</div></div></div>{% endfor %}
       </div>
       <div class="panel">
-        <div class="eyebrow mb-2">How to cite (preprint form)</div>
-        <div class="cite">Arafah M, Zaytoun A. Seeing beneath the rice: recipe-aware estimation of hidden fat in Arabic composite dishes from food images. University of Petra; {% now "Y" %}. Manuscript in preparation.</div>
+        <div class="eyebrow mb-2">{% translate "How to cite (preprint form)" %}</div>
+        <div class="cite" dir="ltr">Arafah M, Zaytoun A. Seeing beneath the rice: recipe-aware estimation of hidden fat in Arabic composite dishes from food images. University of Petra; {% now "Y" %}. Manuscript in preparation.</div>
       </div>
     </div>
   </div>
@@ -71,16 +72,16 @@
 (function(){
   const C = window.ANV_COLORS, S = JSON.parse(JSON.parse(document.getElementById("anv-series").textContent));
   const G = JSON.parse(JSON.parse(document.getElementById("anv-gap").textContent));
-  const names = {mean_profile:["Preparation-blind (mean recipe)",C.rose], "style_acc0.6":["Recipe-aware, style 60% correct",C.gold], "style_acc0.8":["Recipe-aware, style 80% correct",C.blue], oracle_variant:["Recipe-aware, true style",C.olive]};
+  const names = {mean_profile:["{% translate 'Preparation-blind (mean recipe)' %}",C.rose], "style_acc0.6":["{% translate 'Recipe-aware, style 60% correct' %}",C.gold], "style_acc0.8":["{% translate 'Recipe-aware, style 80% correct' %}",C.blue], oracle_variant:["{% translate 'Recipe-aware, true style' %}",C.olive]};
   if (!Object.keys(S).length) return;
   let k = "e";
   const ds = () => Object.entries(S).map(([key, pts]) => ({label: names[key][0], borderColor: names[key][1], backgroundColor: names[key][1], tension:.25, pointRadius:2, data: pts.map(p => ({x:p.x, y:p[k]}))}));
-  const eb = new Chart(document.getElementById("ebChart"), {type:"line", data:{datasets: ds()}, options:{maintainAspectRatio:false, parsing:true,
-    scales:{x:{type:"linear", title:{display:true, text:"Portion estimation error (log-SD, %)"}}, y:{beginAtZero:true, title:{display:true, text:"MAPE (%)"}}}, plugins:{legend:{position:"bottom"}}}});
+  const eb = new Chart(document.getElementById("ebChart"), {type:"line", data:{datasets: ds()}, options:{maintainAspectRatio:false,
+    scales:{x:{type:"linear", reverse: window.ANV_RTL, title:{display:true, text:"{% translate 'Portion estimation error (log-SD, %)' %}"}}, y:{beginAtZero:true, position: window.ANV_RTL ? "right" : "left", title:{display:true, text:"{% translate 'MAPE (%)' %}"}}}, plugins:{legend:{position:"bottom"}}}});
   document.querySelectorAll("#ebTabs button").forEach(b => b.onclick = () => { k = b.dataset.k; document.querySelectorAll("#ebTabs button").forEach(x => x.classList.toggle("active", x === b)); eb.data.datasets = ds(); eb.update(); });
-  const groups = [["added_fat","Added oil / ghee / butter",C.gold],["fat_rich_ingredients","Tahini, nuts, cheese",C.rose],["meat_cut_and_amount","Meat cut and amount",C.blue],["other","Other ingredients and yield",C.grey]];
+  const groups = [["added_fat","{% translate 'Added oil / ghee / butter' %}",C.gold],["fat_rich_ingredients","{% translate 'Tahini, nuts, cheese' %}",C.rose],["meat_cut_and_amount","{% translate 'Meat cut and amount' %}",C.blue],["other","{% translate 'Other ingredients and yield' %}",C.grey]];
   new Chart(document.getElementById("gapChart"), {type:"bar", data:{labels: G.map(g => g.name), datasets: groups.map(([key,label,col]) => ({label, backgroundColor: col, data: G.map(g => +g[key])}))},
-    options:{indexAxis:"y", maintainAspectRatio:false, scales:{x:{stacked:true, title:{display:true, text:"Restaurant minus light (kcal per 100 g)"}}, y:{stacked:true}}, plugins:{legend:{position:"bottom"}}}});
+    options:{indexAxis:"y", maintainAspectRatio:false, scales:{x:{stacked:true, reverse: window.ANV_RTL, title:{display:true, text:"{% translate 'Restaurant minus light (kcal per 100 g)' %}"}}, y:{stacked:true, position: window.ANV_RTL ? "right" : "left"}}, plugins:{legend:{position:"bottom"}}}});
 })();
 </script>
 {% endblock %}

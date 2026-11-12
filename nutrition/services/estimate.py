@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from django.utils.translation import gettext as _
+
 from ..models import IntakeRecord
 from ..nutrients import KEYS, MEALS, NUTRIENTS
 
@@ -97,28 +99,28 @@ def insights(summary: dict) -> list[dict]:
         return out
     fat_pct, sfa_pct = summary["macro_pct"]["Fat"], summary["fa_pct_energy"]["SFA"]
     if fat_pct > 35:
-        out.append({"level": "warn", "icon": "droplet-half", "text": f"Fat supplies {fat_pct:.0f}% of energy, above the 20–35% range."})
+        out.append({"level": "warn", "icon": "droplet-half", "text": _("Fat supplies %(p).0f%% of energy, above the 20–35%% range.") % {"p": fat_pct}})
     if sfa_pct > 10:
-        out.append({"level": "crit", "icon": "exclamation-octagon", "text": f"Saturated fat is {sfa_pct:.1f}% of energy; the WHO recommends less than 10%."})
+        out.append({"level": "crit", "icon": "exclamation-octagon", "text": _("Saturated fat is %(p).1f%% of energy; the WHO recommends less than 10%%.") % {"p": sfa_pct}})
     if w["sodium_mg"] > 2300:
-        out.append({"level": "crit", "icon": "moisture", "text": f"Sodium is {w['sodium_mg']:,.0f} mg, above the 2,300 mg upper limit."})
+        out.append({"level": "crit", "icon": "moisture", "text": _("Sodium is %(v).0f mg, above the 2,300 mg upper limit.") % {"v": w["sodium_mg"]}})
     if t["fiber_g"] < 25 and e > 1000:
-        out.append({"level": "warn", "icon": "flower1", "text": f"Fibre is {t['fiber_g']:.0f} g; adults are advised 25–30 g a day."})
+        out.append({"level": "warn", "icon": "flower1", "text": _("Fibre is %(v).0f g; adults are advised 25–30 g a day.") % {"v": t["fiber_g"]}})
     if summary["gl_total"] > 120:
-        out.append({"level": "warn", "icon": "graph-up-arrow", "text": f"Daily glycaemic load is {summary['gl_total']:.0f} (above 120 is considered high)."})
+        out.append({"level": "warn", "icon": "graph-up-arrow", "text": _("Daily glycaemic load is %(v).0f (above 120 is considered high).") % {"v": summary["gl_total"]}})
     hidden = [r for r in summary["rows"] if r["item"].dish_id and r["item"].style in ("restaurant", "mean")]
     if hidden:
         k = sum(r["n"]["kcal"] for r in hidden)
-        out.append({"level": "warn", "icon": "eye-slash", "text": f"{len(hidden)} dish(es) are recorded as restaurant or unknown preparation ({k:,.0f} kcal). "
-                    "Confirming the preparation narrows the hidden-fat range most."})
+        out.append({"level": "warn", "icon": "eye-slash", "text": _("%(n)d dish(es) are recorded as restaurant or unknown preparation (%(k).0f kcal). Confirming the preparation narrows the hidden-fat range most.") % {"n": len(hidden), "k": k}})
     top = summary["contributors"][:3]
     if top:
-        names = ", ".join(f"{r['item'].food_name} ({100 * r['n']['kcal'] / e:.0f}%)" for r in top) if e else ""
-        out.append({"level": "info", "icon": "pie-chart", "text": f"Largest energy sources: {names}."})
-    for key, label in (("iron_mg", "Iron"), ("calcium_mg", "Calcium")):
+        from ..templatetags.anv import dish_name
+        names = "، ".join(f"{dish_name(r['item'].dish) if r['item'].dish else r['item'].food_name} ({100 * r['n']['kcal'] / e:.0f}%)" for r in top) if e else ""
+        out.append({"level": "info", "icon": "pie-chart", "text": _("Largest energy sources: %(names)s.") % {"names": names}})
+    for key, label in (("iron_mg", _("Iron")), ("calcium_mg", _("Calcium"))):
         ref = 18 if key == "iron_mg" else 1300
         if w[key] < 0.5 * ref:
-            out.append({"level": "warn", "icon": "capsule", "text": f"{label} is {w[key]:.0f} {'mg'} ({100 * w[key] / ref:.0f}% of the reference value)."})
+            out.append({"level": "warn", "icon": "capsule", "text": _("%(label)s is %(v).0f mg (%(p).0f%% of the reference value).") % {"label": label, "v": w[key], "p": 100 * w[key] / ref}})
     if not any(i["level"] in ("warn", "crit") for i in out):
-        out.insert(0, {"level": "good", "icon": "check-circle", "text": "No nutrient exceeded the limits checked here."})
+        out.insert(0, {"level": "good", "icon": "check-circle", "text": _("No nutrient exceeded the limits checked here.")})
     return out

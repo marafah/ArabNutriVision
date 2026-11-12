@@ -1,20 +1,20 @@
-{% extends "base.html" %}
-{% block title %}Participants{% endblock %}
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% translate "Participants" %}{% endblock %}
 {% block content %}
 <div class="container py-4">
-  <div class="eyebrow">Dietary records</div>
-  <h1 class="h2 mb-3">Participants</h1>
+  <div class="eyebrow">{% translate "Dietary records" %}</div>
+  <h1 class="h2 mb-3">{% translate "Participants" %}</h1>
   <div class="row g-4">
     <div class="col-lg-7"><div class="panel p-0"><div class="table-responsive"><table class="table table-anv table-hover align-middle mb-0">
-      <thead><tr><th class="ps-3">Code</th><th>Sex</th><th class="n">Age</th><th class="n">Energy target</th><th class="n">Records</th><th class="pe-3">Notes</th></tr></thead>
-      <tbody>{% for p in participants %}<tr style="cursor:pointer" onclick="location.href='{{ p.get_absolute_url }}'"><td class="ps-3"><a class="fw-semibold" href="{{ p.get_absolute_url }}">{{ p.code }}</a></td><td>{{ p.get_sex_display }}</td><td class="n">{{ p.age_years|default:"–" }}</td><td class="n">{{ p.energy_target_kcal }} kcal</td><td class="n">{{ p.n }}</td><td class="small text-secondary pe-3">{{ p.notes }}</td></tr>
-      {% empty %}<tr><td colspan="6" class="text-center text-secondary py-4">No participants yet. Add the first one with the form.</td></tr>{% endfor %}</tbody></table></div></div></div>
+      <thead><tr><th class="ps-3">{% translate "Code" %}</th><th>{% translate "Sex" %}</th><th class="n">{% translate "Age" %}</th><th class="n">{% translate "Energy target" %}</th><th class="n">{% translate "Records" %}</th><th class="pe-3">{% translate "Notes" %}</th></tr></thead>
+      <tbody>{% for p in participants %}<tr style="cursor:pointer" onclick="location.href='{{ p.get_absolute_url }}'"><td class="ps-3"><a class="fw-semibold" href="{{ p.get_absolute_url }}">{{ p.code }}</a></td><td>{{ p.get_sex_display }}</td><td class="n">{{ p.age_years|default:"–" }}</td><td class="n">{{ p.energy_target_kcal }} {% translate "kcal" %}</td><td class="n">{{ p.n }}</td><td class="small text-secondary pe-3">{{ p.notes }}</td></tr>
+      {% empty %}<tr><td colspan="6" class="text-center text-secondary py-4">{% translate "No participants yet. Add the first one with the form." %}</td></tr>{% endfor %}</tbody></table></div></div></div>
     <div class="col-lg-5"><div class="panel">
-      <h2 class="h5">Add a participant</h2>
-      <p class="small text-secondary"><i class="bi bi-shield-lock me-1"></i>Use a pseudonymous code only. Names, phone numbers and IDs must stay outside this system.</p>
+      <h2 class="h5">{% translate "Add a participant" %}</h2>
+      <p class="small text-secondary"><i class="bi bi-shield-lock me-1"></i>{% translate "Use a pseudonymous code only. Names, phone numbers and IDs must stay outside this system." %}</p>
       <form method="post" novalidate>{% csrf_token %}
         {% for f in form %}<div class="mb-2"><label class="form-label small" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}{% for e in f.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}</div>{% endfor %}
-        <button class="btn btn-primary mt-1">Add participant</button>
+        <button class="btn btn-primary mt-1">{% translate "Add participant" %}</button>
       </form>
     </div></div>
   </div>

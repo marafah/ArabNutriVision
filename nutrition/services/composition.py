@@ -11,6 +11,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 from django.core.cache import cache
+from django.utils.translation import gettext as _
 
 from ..models import Dish, RecipeVariant
 from ..nutrients import ADDED_FAT, FAT_RICH, KEYS, MEAT, VITC_RETENTION_COOKED
@@ -129,16 +130,17 @@ def gap_decomposition(dish: Dish) -> dict[str, float] | None:
     if "restaurant" not in vs or "light" not in vs:
         return None
     hi, lo = vs["restaurant"], vs["light"]
-    groups = {"Added oil / ghee / butter": 0.0, "Tahini, nuts, cheese": 0.0, "Meat cut and amount": 0.0, "Other ingredients and yield": 0.0}
+    L = {"fat": _("Added oil / ghee / butter"), "rich": _("Tahini, nuts, cheese"), "meat": _("Meat cut and amount"), "other": _("Other ingredients and yield")}
+    groups = {v: 0.0 for v in L.values()}
 
     def grp(code):
         if code in ADDED_FAT:
-            return "Added oil / ghee / butter"
+            return L["fat"]
         if code in FAT_RICH:
-            return "Tahini, nuts, cheese"
+            return L["rich"]
         if code in MEAT:
-            return "Meat cut and amount"
-        return "Other ingredients and yield"
+            return L["meat"]
+        return L["other"]
 
     lines = {}
     for v, sign in ((hi, 1), (lo, -1)):

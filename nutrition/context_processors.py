@@ -1,8 +1,10 @@
+from django.utils.translation import gettext_lazy as _
+
 TEAM = [
-    {"name": "Dr. Mohammad Arafah", "name_ar": "د. محمد عرفه", "role": "Principal investigator · computer vision, AI and software",
-     "affiliation": "Faculty of Information Technology, University of Petra, Amman, Jordan", "initials": "MA"},
-    {"name": "Amna Zaytoun, MSc", "name_ar": "آمنة زيتون", "role": "Clinical nutrition · recipes, weighing protocol and validation",
-     "affiliation": "MSc in Nutrition (graduate)", "initials": "AZ"},
+    {"name": "Dr. Mohammad Arafah", "name_ar": "د. محمد عرفه", "role": _("Principal investigator · computer vision, AI and software"),
+     "affiliation": _("Faculty of Information Technology, University of Petra, Amman, Jordan"), "initials": "MA"},
+    {"name": "Amna Zaytoun, MSc", "name_ar": "آمنة زيتون", "role": _("Clinical nutrition · recipes, weighing protocol and validation"),
+     "affiliation": _("MSc in Nutrition (graduate)"), "initials": "AZ"},
 ]
 
 
