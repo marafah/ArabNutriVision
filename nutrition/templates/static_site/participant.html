@@ -19,10 +19,14 @@
         <p class="text-secondary mt-2 mb-0" id="noDays" hidden>{% translate "No records yet. Create the first one with the form." %}</p>
       </div>
       <div class="panel mb-4" id="bodyPanel">
-        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2"><h2 class="h5 mb-0"><i class="bi bi-person-bounding-box me-2"></i>{% translate "Body composition (InBody)" %}</h2><span class="small text-secondary" id="bodyDate"></span></div>
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2"><h2 class="h5 mb-0"><i class="bi bi-person-bounding-box me-2"></i>{% translate "Body composition (InBody)" %}</h2><div class="d-flex align-items-center gap-2 flex-wrap"><span class="small text-secondary" id="bodyDate"></span><a class="btn btn-sm btn-outline-primary" id="calcLink" href="#"><i class="bi bi-rulers me-1"></i>{% translate "Add measurement" %}</a><a class="btn btn-sm btn-primary" id="reportLink" href="#"><i class="bi bi-file-earmark-medical me-1"></i>{% translate "Report" %}</a></div></div>
         <p class="text-secondary small mt-2 mb-0" id="bodyEmpty"></p>
         <div id="bodyBox" hidden>
           <div class="row g-2 mt-1" id="bodyStats"></div>
+          <div class="row g-3 mt-1">
+            <div class="col-md-7"><div class="table-responsive"><table class="table table-anv table-sm align-middle mb-0"><thead><tr><th>{% translate "Indicator" %}</th><th class="n">{% translate "Value" %}</th><th class="n">{% translate "Reference" %}</th><th>{% translate "Status" %}</th></tr></thead><tbody id="bodyRanges"></tbody></table></div></div>
+            <div class="col-md-5"><div class="border rounded-3 p-2 h-100"><div class="small fw-semibold mb-1"><i class="bi bi-link-45deg me-1"></i>{% translate "Body composition and diet" %}</div><div id="bodyLink" class="small"></div></div></div>
+          </div>
           <div style="height:220px" class="mt-3" id="bodyTrendBox"><canvas id="bodyTrend" role="img" aria-label="{% translate 'Body composition over time' %}"></canvas></div>
           <div class="d-flex flex-wrap align-items-end gap-2 mt-3" id="bmrBox" hidden>
             <div><label class="form-label small mb-1" for="actSel">{% translate "Activity factor" %}</label>

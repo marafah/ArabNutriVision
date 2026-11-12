@@ -41,7 +41,23 @@ def reference_data() -> dict:
 # Strings used by workspace.js. Most msgids are shared with the server edition, so one translation serves both.
 JS_MSGIDS = {
     "totalFood": gettext_noop("Total (food)"),
-    # InBody import
+    # body composition (calculator, report, nutrition link)
+    "bmiLabel": gettext_noop("Body mass index"), "ffmLabel": gettext_noop("Fat-free mass (kg)"), "whrLabel": gettext_noop("Waist–hip ratio"),
+    "whtrLabel": gettext_noop("Waist-to-height ratio"), "bmrMifflin": gettext_noop("BMR, Mifflin–St Jeor (kcal)"),
+    "bmrKatch": gettext_noop("Katch–McArdle"), "energyNeed": gettext_noop("Estimated energy need (kcal/day)"),
+    "stLow": gettext_noop("Below range"), "stOk": gettext_noop("In range"), "stHigh": gettext_noop("Above range"), "stObese": gettext_noop("Obesity range"),
+    "estimate": gettext_noop("estimate"), "measured": gettext_noop("measured"),
+    "mInbody": gettext_noop("InBody (entered or imported)"), "mNavy": gettext_noop("US Navy (circumferences)"), "mDeur": gettext_noop("Deurenberg (BMI, age, sex)"),
+    "rangeNote": gettext_noop("Healthy body-fat range for a %(sex)s aged %(age)s: %(lo)s–%(hi)s%% (Gallagher et al., 2000)."),
+    "rangeNA": gettext_noop("No published healthy body-fat range for this age (20–79 years only)."),
+    "male": gettext_noop("man"), "female": gettext_noop("woman"), "needHip": gettext_noop("Enter the hip circumference for women."),
+    "smmShare": gettext_noop("%(p)s%% of body weight"), "saveOk": gettext_noop("Measurement saved to %(c)s."),
+    "dupMeasure": gettext_noop("This participant already has a measurement at this date and time."),
+    "protKg": gettext_noop("Protein intake per kg body weight"), "protRef": gettext_noop("reference ≥ 0.8 g/kg/day (IOM 2005)"),
+    "eiBmr": gettext_noop("Energy intake ÷ BMR"), "eiBmrLow": gettext_noop("Reported intake is below basal metabolism: check the record for under-reporting."),
+    "eiTarget": gettext_noop("Intake minus energy target"), "linkNone": gettext_noop("Add food records and a body measurement to link intake with body composition."),
+    "indicator": gettext_noop("Indicator"), "value": gettext_noop("Value"), "healthy": gettext_noop("Reference"), "status": gettext_noop("Status"),
+    "method": gettext_noop("Method"), "device": gettext_noop("Source"), "waistLabel": gettext_noop("Waist (cm)"),
     "ibCode": gettext_noop("ID / participant code"), "ibDate": gettext_noop("Test date and time"),
     "ibWeight": gettext_noop("Weight (kg)"), "ibHeight": gettext_noop("Height (cm)"), "ibBmi": gettext_noop("BMI (kg/m²)"),
     "ibPbf": gettext_noop("Percent body fat (%)"), "ibBfm": gettext_noop("Body fat mass (kg)"),
@@ -127,6 +143,10 @@ def record_view(request):
 
 def ffq(request):
     return _page(request, "static_site/ffq.html", "ffq")
+
+
+def report(request):
+    return _page(request, "static_site/report.html", "report")
 
 
 def inbody(request):

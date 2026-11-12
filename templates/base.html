@@ -50,12 +50,13 @@
         <li class="nav-item" {% if STATIC_SITE %}data-auth="in" hidden{% endif %}><a class="nav-link {% if u == 'dashboard' or u == 'participants' or u == 'participant_detail' or u == 'record_detail' or u == 'ffq' or u == 'participant_view' or u == 'record_view' %}active{% endif %}" href="{% url 'nutrition:dashboard' %}"><i class="bi bi-clipboard2-pulse me-1"></i>{% translate "Dietary records" %}</a></li>
         <li class="nav-item" {% if STATIC_SITE %}data-auth="in" hidden{% endif %}><a class="nav-link {% if u == 'validation' %}active{% endif %}" href="{% url 'nutrition:validation' %}"><i class="bi bi-bullseye me-1"></i>{% translate "Validation lab" %}</a></li>
         {% endif %}
+        <li class="nav-item"><a class="nav-link {% if u == 'body' or u == 'inbody' or u == 'report' %}active{% endif %}" href="{% url 'nutrition:body' %}"><i class="bi bi-person-bounding-box me-1"></i>{% translate "Body composition" %}</a></li>
         <li class="nav-item"><a class="nav-link {% if u == 'research' %}active{% endif %}" href="{% url 'nutrition:research' %}"><i class="bi bi-journal-text me-1"></i>{% translate "Research" %}</a></li>
       </ul>
       {% endwith %}
       {% if STATIC_SITE %}
         <div class="d-flex align-items-center gap-2" data-auth="in" hidden>
-          <span class="text-white-50 small d-none d-xl-inline"><i class="bi bi-person-circle me-1"></i><span id="anvUser"></span></span>
+          <span class="text-white-50 small d-none d-xxl-inline"><i class="bi bi-person-circle me-1"></i><span id="anvUser"></span></span>
           <button class="btn btn-sm btn-outline-light" type="button" id="anvSignOut">{% translate "Sign out" %}</button>
         </div>
         <a class="btn btn-sm btn-login btn-outline-light" data-auth="out" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right me-1"></i>{% translate "Researcher sign-in" %}</a>

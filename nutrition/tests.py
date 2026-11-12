@@ -165,3 +165,13 @@ class LanguageTests(ReferenceDataMixin, TestCase):
         r = self.client.post(reverse("set_language"), {"language": "ar", "next": "/"})
         self.assertEqual(r.status_code, 302)
         self.assertContains(self.client.get("/"), "ما تحت الأرز.")
+
+
+class BodyCalculatorTests(TestCase):
+    def test_body_page_renders_in_both_languages(self):
+        r = self.client.get("/body/")
+        self.assertContains(r, "Body composition calculator")
+        self.assertContains(r, "Gallagher")
+        self.client.cookies["anv_lang"] = "ar"
+        r = self.client.get("/body/")
+        self.assertContains(r, "حاسبة تركيب الجسم")

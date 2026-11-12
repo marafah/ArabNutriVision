@@ -71,7 +71,8 @@ create table if not exists public.validation_samples (
   created_at timestamptz not null default now()
 );
 
--- Body composition imported from InBody exports (Lookin'Body / LookinBody Web Excel or CSV files).
+-- Body composition: imported from InBody exports (Lookin'Body / LookinBody Web Excel or CSV files)
+-- or estimated in the app from anthropometry (circumferences, BMI) when no device is available.
 create table if not exists public.body_measurements (
   id bigint generated always as identity primary key,
   owner uuid not null default auth.uid() references auth.users (id) on delete cascade,
@@ -88,7 +89,10 @@ create table if not exists public.body_measurements (
   bmr_kcal real check (bmr_kcal between 300 and 5000),
   vfl real,
   whr real,
-  device text not null default 'InBody',
+  waist_cm real check (waist_cm between 30 and 250),
+  hip_cm real check (hip_cm between 40 and 250),
+  neck_cm real check (neck_cm between 15 and 70),
+  device text not null default 'InBody',  -- 'InBody' for imported files, 'Estimate: …' for equation-based entries
   source_file text not null default '',
   created_at timestamptz not null default now(),
   unique (participant_id, measured_at)

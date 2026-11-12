@@ -155,3 +155,34 @@ html[dir="rtl"] .num { direction: ltr; unicode-bidi: isolate; }
 html[dir="rtl"] .pill { font-family: "IBM Plex Sans Arabic", "IBM Plex Mono", sans-serif; letter-spacing: 0; font-size: .74rem; }
 html[dir="rtl"] .nlabel .r, html[dir="rtl"] .mono { unicode-bidi: plaintext; }
 html[dir="rtl"] .nlabel .r { direction: ltr; text-align: left; }
+
+/* the HTML hidden attribute must win over Bootstrap display utilities (d-flex etc.) */
+[hidden] { display: none !important; }
+
+/* body-composition range badges and printable report */
+.range-chip { display: inline-block; font-size: .75rem; padding: .1rem .5rem; border-radius: 999px; font-weight: 600; }
+.range-low { background: #e7f0f8; color: #2f6f9f; }
+.range-ok { background: #e6f2e9; color: #2e7d4f; }
+.range-high { background: #fbeaea; color: #b0413e; }
+.range-na { background: #eef0f4; color: #5c6678; }
+.scale-bar { position: relative; height: 8px; border-radius: 4px; background: linear-gradient(90deg, #cfe0ee 0 33%, #cfe6d6 33% 66%, #f3d2d1 66% 100%); }
+.scale-bar i { position: absolute; top: -4px; width: 4px; height: 16px; border-radius: 2px; background: #15305e; transform: translateX(-50%); }
+[dir="rtl"] .scale-bar { transform: scaleX(-1); }
+@media print {
+  .uop-band, .anv-nav, .anv-foot, .no-print, .btn { display: none !important; }
+  body { background: #fff !important; }
+  .panel { box-shadow: none !important; border: 1px solid #d9dee6 !important; break-inside: avoid; }
+  .report-head { display: flex !important; }
+  a { color: inherit !important; text-decoration: none !important; }
+}
+.report-head { display: none; }
+@media (min-width: 1200px) and (max-width: 1499.98px) {
+  .anv-nav .navbar-nav .nav-link { padding-inline: .45rem; font-size: .92rem; }
+  .anv-nav .brand-text small { display: none; }
+  .anv-nav .navbar-brand { gap: .75rem !important; }
+  .anv-nav .navbar-brand img { width: 150px; height: auto; }
+}
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+  .anv-nav .navbar-nav .nav-link i, .anv-nav .btn-login i { display: none; }
+  .anv-nav .navbar-brand img { width: 130px; }
+}

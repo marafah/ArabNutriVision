@@ -1,0 +1,68 @@
+{% extends "base.html" %}{% load static i18n %}
+{% block title %}{% translate "Body composition" %}{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="eyebrow">{% translate "Body composition · with or without a device" %}</div>
+  <h1 class="h2 mb-1">{% translate "Body composition calculator" %}</h1>
+  <p class="text-secondary mb-3" style="max-width:62rem">{% translate "Measure with a tape and a scale, or enter the values from an InBody print-out. Equation results are estimates: bioelectrical impedance (InBody) or DXA remain more accurate." %}</p>
+  <div class="row g-4">
+    <div class="col-lg-4"><div class="panel">
+      <form id="bcForm" class="row g-2" novalidate>
+        <div class="col-6"><label class="form-label small d-block">{% translate "Sex" %}<select class="form-select" name="sex"><option value="F">{% translate "Female" %}</option><option value="M">{% translate "Male" %}</option></select></label></div>
+        <div class="col-6"><label class="form-label small d-block">{% translate "Age (years)" %}<input class="form-control" name="age" type="number" min="18" max="100" value="35"></label></div>
+        <div class="col-6"><label class="form-label small d-block">{% translate "Height (cm)" %}<input class="form-control" name="height_cm" type="number" min="100" max="230" step="0.1" value="165"></label></div>
+        <div class="col-6"><label class="form-label small d-block">{% translate "Weight (kg)" %}<input class="form-control" name="weight_kg" type="number" min="25" max="300" step="0.1" value="70"></label></div>
+        <div class="col-4"><label class="form-label small d-block">{% translate "Waist (cm)" %}<input class="form-control" name="waist_cm" type="number" min="40" max="200" step="0.1" value="82"></label></div>
+        <div class="col-4"><label class="form-label small d-block">{% translate "Neck (cm)" %}<input class="form-control" name="neck_cm" type="number" min="20" max="60" step="0.1" value="33"></label></div>
+        <div class="col-4"><label class="form-label small d-block">{% translate "Hip (cm)" %}<input class="form-control" name="hip_cm" type="number" min="50" max="200" step="0.1" value="102"></label></div>
+        <div class="col-12"><details class="small mt-1"><summary class="text-primary">{% translate "Values from an InBody print-out (optional)" %}</summary>
+          <div class="row g-2 mt-1">
+            <div class="col-6"><label class="form-label small d-block">{% translate "Percent body fat (%)" %}<input class="form-control" name="pbf_pct" type="number" min="2" max="70" step="0.1"></label></div>
+            <div class="col-6"><label class="form-label small d-block">{% translate "Skeletal muscle mass (kg)" %}<input class="form-control" name="smm_kg" type="number" min="5" max="80" step="0.1"></label></div>
+            <div class="col-6"><label class="form-label small d-block">{% translate "Visceral fat level" %}<input class="form-control" name="vfl" type="number" min="1" max="30" step="1"></label></div>
+            <div class="col-6"><label class="form-label small d-block">{% translate "Basal metabolic rate (kcal)" %}<input class="form-control" name="bmr_kcal" type="number" min="500" max="4000" step="1"></label></div>
+          </div></details></div>
+        <div class="col-12"><label class="form-label small d-block">{% translate "Activity factor" %}<select class="form-select" name="pal"><option value="1.2">{% translate "1.2 · sedentary" %}</option><option value="1.375" selected>{% translate "1.375 · lightly active" %}</option><option value="1.55">{% translate "1.55 · moderately active" %}</option><option value="1.725">{% translate "1.725 · very active" %}</option></select></label></div>
+      </form>
+      <p class="small text-secondary mt-2 mb-0"><i class="bi bi-rulers me-1"></i>{% translate "Waist at the navel level, neck below the larynx, hip at the widest point; measure twice and use the mean." %}</p>
+    </div>
+    {% if STATIC_SITE %}
+    <div class="panel mt-4" data-auth="in" hidden>
+      <h2 class="h6 fw-semibold">{% translate "Save to a participant" %}</h2>
+      <div class="row g-2">
+        <div class="col-7"><label class="form-label small d-block">{% translate "Participant" %}<select class="form-select form-select-sm" id="bcPart"></select></label></div>
+        <div class="col-5"><label class="form-label small d-block">{% translate "Date" %}<input class="form-control form-control-sm" type="date" id="bcDate"></label></div>
+      </div>
+      <button class="btn btn-primary btn-sm mt-2" id="bcSave"><i class="bi bi-save me-1"></i>{% translate "Save measurement" %}</button>
+      <div class="small mt-2" id="bcStatus" role="status"></div>
+    </div>
+    {% endif %}
+    </div>
+    <div class="col-lg-8 min-w-0">
+      <div class="row g-3" id="bcCards"></div>
+      <div class="panel mt-4">
+        <h2 class="h6 fw-semibold">{% translate "Percent body fat by method" %}</h2>
+        <div class="table-responsive"><table class="table table-anv align-middle mb-0"><thead><tr><th>{% translate "Method" %}</th><th class="n">{% translate "Body fat %" %}</th><th class="n">{% translate "Fat mass (kg)" %}</th><th class="n">{% translate "Fat-free mass (kg)" %}</th><th>{% translate "Status" %}</th></tr></thead><tbody id="bcMethods"></tbody></table></div>
+        <p class="small text-secondary mt-2 mb-0" id="bcRangeNote"></p>
+      </div>
+      <div class="panel mt-4">
+        <h2 class="h6 fw-semibold">{% translate "Sources of the equations and ranges" %}</h2>
+        <ol class="small text-secondary mb-0">
+          <li>WHO. Obesity: preventing and managing the global epidemic. Technical Report Series 894; 2000 (BMI classes).</li>
+          <li>Gallagher D, et al. Healthy percentage body fat ranges. Am J Clin Nutr. 2000;72:694–701.</li>
+          <li>WHO. Waist circumference and waist–hip ratio: report of a WHO expert consultation; 2008.</li>
+          <li>Ashwell M, Gunn P, Gibson S. Waist-to-height ratio is a better screening tool than waist circumference and BMI. Obes Rev. 2012;13:275–286.</li>
+          <li>Hodgdon JA, Beckett MB. Prediction of percent body fat for U.S. Navy men and women from body circumferences and height. Naval Health Research Center Reports 84-11 and 84-29; 1984.</li>
+          <li>Deurenberg P, Weststrate JA, Seidell JC. Body mass index as a measure of body fatness. Br J Nutr. 1991;65:105–114.</li>
+          <li>Mifflin MD, et al. A new predictive equation for resting energy expenditure in healthy individuals. Am J Clin Nutr. 1990;51:241–247.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+{{ js_json|json_script:"anv-t" }}
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'nutrition/js/body.js' %}"></script>
+<script src="{% static 'nutrition/js/body_calc.js' %}"></script>
+{% endblock %}

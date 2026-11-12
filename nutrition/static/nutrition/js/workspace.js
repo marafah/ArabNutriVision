@@ -510,15 +510,71 @@
     };
   };
 
+
+  // ---- body composition: reference ranges and the diet link (body.js)
+  const BD = window.ANVBody;
+  const ST = {low: "stLow", ok: "stOk", high: "stHigh", obese: "stObese"};
+  const chipH = st => st ? `<span class="range-chip range-${st === "obese" ? "high" : st}">${esc(T[ST[st]])}</span>` : `<span class="range-chip range-na">–</span>`;
+  const IND = {bmi: "bmiLabel", pbf_pct: "ibPbf", vfl: "ibVfl", whr: "whrLabel", whtr: "whtrLabel"};
+  function rangeRows(m, part) {
+    const a = BD.assess(m, part.sex, part.age_years);
+    return a.rows.filter(r => r.v != null).map(r => `<tr><td>${esc(T[IND[r.key]])}</td><td class="n fw-semibold">${(+r.v).toFixed(r.dec)}</td><td class="n small">${r.range ? LTR(r.range[0] == null ? "< " + r.range[1].toFixed(r.dec ? 2 : 0) : r.range[0] + "–" + r.range[1]) : "–"}</td><td>${chipH(r.st)}</td></tr>`).join("");
+  }
+  function linkHtml(mean, m, target) {
+    if (!mean || !m) return `<p class="small text-secondary mb-0">${esc(T.linkNone)}</p>`;
+    const L = BD.nutritionLink(mean[I.kcal], mean[I.protein_g], m, target), out = [];
+    if (L.protKg != null) out.push(`<div class="dv-row"><span>${esc(T.protKg)}</span><div class="progress progress-thin"><div class="progress-bar ${L.protKg < BD.PROTEIN_RDA ? "bg-warning" : "bg-primary"}" style="width:${Math.min(100, L.protKg / 1.6 * 100)}%"></div></div><span class="pct">${L.protKg.toFixed(2)}</span></div><div class="small text-secondary mb-2">g/kg · ${esc(T.protRef)}</div>`);
+    if (L.eiBmr != null) out.push(`<div class="d-flex justify-content-between border-top pt-2"><span>${esc(T.eiBmr)}</span><b class="num">${L.eiBmr.toFixed(2)}</b></div>${L.eiBmr < 1 ? `<div class="small text-warning-emphasis mb-2"><i class="bi bi-exclamation-triangle me-1"></i>${esc(T.eiBmrLow)}</div>` : ""}`);
+    if (L.eiTarget != null) out.push(`<div class="d-flex justify-content-between border-top pt-2"><span>${esc(T.eiTarget)}</span><b class="num">${LTR((L.eiTarget > 0 ? "+" : "") + Math.round(L.eiTarget))} ${esc(T.kcal)}</b></div>`);
+    return out.join("") || `<p class="small text-secondary mb-0">${esc(T.linkNone)}</p>`;
+  }
+  async function usualIntake(pid) {
+    const recs = check(await sb.from("records").select("id,method").eq("participant_id", pid));
+    const food = recs.filter(r => r.method !== "ffq"); if (!food.length) return null;
+    const {items, supps} = await loadItems(food.map(r => r.id));
+    const sums = food.map(r => summary(items.filter(x => x.record_id === r.id), supps.filter(x => x.record_id === r.id), 2000).withSupp);
+    return K.map((_, i) => sums.reduce((a, x) => a + x[i], 0) / sums.length);
+  }
+  function bodyTrend(id, rows) {
+    const ds = [];
+    [["weight_kg", "ibWeight", COL.navy, "y"], ["smm_kg", "ibSmm", COL.olive, "y"], ["pbf_pct", "ibPbf", COL.rose, "y1"]].forEach(([c, k, col, ax]) => {
+      if (rows.some(r => r[c] != null)) ds.push({type: "line", label: T[k], data: rows.map(r => r[c]), borderColor: col, backgroundColor: col, yAxisID: ax, tension: .2}); });
+    chart(id, {type: "line", data: {labels: rows.map(r => r.measured_at.slice(0, 10)), datasets: ds}, options: {maintainAspectRatio: false, layout: {padding: {left: 12, right: 12}}, plugins: {legend: {position: "bottom"}},
+      scales: {x: {reverse: AR}, y: {position: yPos}, y1: {position: AR ? "left" : "right", grid: {drawOnChartArea: false}}}}});
+  }
+
+  pages.report = async () => {
+    const id = +qs("id");
+    const part = check(await sb.from("participants").select("*").eq("id", id).maybeSingle());
+    if (!part) { notice(esc(T.saveFail)); return false; }
+    const rows = check(await sb.from("body_measurements").select("*").eq("participant_id", id).order("measured_at")).map(BD.derive);
+    $("#bcPart").textContent = part.code; $("#bcPart").href = url(U.participant, id); $("#rpCalc").href = U.body + "?participant=" + id;
+    $("#rpTitle").textContent = pf(T.participantTitle, {c: part.code});
+    $("#rpMeta").textContent = [SEX[part.sex], part.age_years ? pf(T.years, {a: part.age_years}) : null, pf(T.target, {t: part.energy_target_kcal}), fdate(new Date().toISOString().slice(0, 10))].filter(Boolean).join(" · ");
+    document.title = `${part.code} · ${document.title}`;
+    if (!rows.length) { $("#rpBox").hidden = true; $("#rpEmpty").hidden = false; $("#rpEmpty").textContent = T.ibNoRows; return; }
+    const last = rows[rows.length - 1], first = rows[0];
+    const card = (col, k, d = 1) => last[col] == null ? "" : `<div class="col-6 col-md-3"><div class="stat h-100"><div class="l">${esc(T[k])}</div><div class="v">${(+last[col]).toFixed(d)}</div>${rows.length > 1 && first[col] != null ? `<div class="small text-secondary">${LTR((last[col] - first[col] > 0 ? "+" : "") + (last[col] - first[col]).toFixed(d))} · ${esc(fdate(first.measured_at.slice(0, 10)))}</div>` : ""}</div></div>`;
+    $("#rpCards").innerHTML = [["weight_kg", "ibWeight"], ["pbf_pct", "ibPbf"], ["smm_kg", "ibSmm"], ["ffm_kg", "ffmLabel"], ["bmr_kcal", "ibBmr", 0], ["vfl", "ibVfl", 0], ["waist_cm", "waistLabel"], ["bmi", "bmiLabel"]].map(a => card(...a)).filter(Boolean).slice(0, 8).join("");
+    $("#rpRanges").innerHTML = rangeRows(last, part);
+    bodyTrend("rpTrend", rows);
+    $("#rpLink").innerHTML = linkHtml(await usualIntake(id), last, part.energy_target_kcal);
+    $("#rpRows").innerHTML = rows.slice().reverse().map(r => `<tr><td class="ps-3">${esc(fdate(r.measured_at.slice(0, 10)))}</td><td class="n">${fx1(r.weight_kg)}</td><td class="n">${fx1(r.bmi)}</td><td class="n">${fx1(r.pbf_pct)}</td><td class="n">${fx1(r.smm_kg)}</td><td class="n">${fx1(r.ffm_kg)}</td><td class="n">${r.vfl ?? "–"}</td><td class="n">${r.bmr_kcal ? Math.round(r.bmr_kcal) : "–"}</td><td class="pe-3 small">${esc(r.device)}</td></tr>`).join("");
+  };
+  const fx1 = v => v == null ? "–" : (+v).toFixed(1);
+
   async function bodyPanel(part) {
     $("#ibLink").href += "?participant=" + part.id;
-    const rows = check(await sb.from("body_measurements").select("*").eq("participant_id", part.id).order("measured_at"));
+    $("#reportLink").href = url(U.report, part.id); $("#calcLink").href = U.body + "?participant=" + part.id;
+    const rows = check(await sb.from("body_measurements").select("*").eq("participant_id", part.id).order("measured_at")).map(BD.derive);
     if (!rows.length) { $("#bodyEmpty").textContent = T.ibNoRows; return; }
     $("#bodyEmpty").hidden = true; $("#bodyBox").hidden = false;
     const last = rows[rows.length - 1], prev = rows.length > 1 ? rows[rows.length - 2] : null;
     $("#bodyDate").textContent = fdate(last.measured_at.slice(0, 10));
     const stat = (col, k, d = 1) => last[col] == null ? "" : `<div class="col-6 col-md-3"><div class="border rounded-3 p-2 h-100"><div class="small text-secondary">${esc(T[k])}</div><div class="fs-5 fw-semibold num">${(+last[col]).toFixed(d)}</div>${prev && prev[col] != null ? `<div class="small ${(last[col] - prev[col] > 0) === ["smm_kg", "tbw_l", "bmr_kcal", "ffm_kg"].includes(col) ? "text-success" : "text-rose"}">${LTR((last[col] - prev[col] > 0 ? "+" : "") + (last[col] - prev[col]).toFixed(d))}</div>` : ""}</div></div>`;
     $("#bodyStats").innerHTML = [["weight_kg", "ibWeight"], ["pbf_pct", "ibPbf"], ["smm_kg", "ibSmm"], ["bfm_kg", "ibBfm"], ["bmi", "ibBmi"], ["vfl", "ibVfl", 0], ["bmr_kcal", "ibBmr", 0], ["tbw_l", "ibTbw"]].map(a => stat(...a)).join("");
+    $("#bodyRanges").innerHTML = rangeRows(last, part);
+    $("#bodyLink").innerHTML = linkHtml(await usualIntake(part.id), last, part.energy_target_kcal);
     if (rows.length > 1) {
       const lab = rows.map(r => r.measured_at.slice(0, 10)), ds = [];
       [["weight_kg", "ibWeight", COL.navy, "y"], ["smm_kg", "ibSmm", COL.olive, "y"], ["pbf_pct", "ibPbf", COL.rose, "y1"]].forEach(([c, k, col, ax]) => {

@@ -1,0 +1,36 @@
+{% extends "base.html" %}{% load static i18n %}
+{% block title %}{% translate "Body composition report" %}{% endblock %}
+{% block content %}
+<div class="container py-4" style="max-width:1000px">
+  <nav aria-label="breadcrumb" class="no-print"><ol class="breadcrumb small"><li class="breadcrumb-item"><a href="{% url 'nutrition:participants' %}">{% translate "Participants" %}</a></li><li class="breadcrumb-item"><a href="#" id="bcPart">…</a></li><li class="breadcrumb-item active">{% translate "Body composition report" %}</li></ol></nav>
+  {% include "static_site/_ws_notice.html" %}
+  <div id="wsBody" hidden>
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3 border-bottom pb-3">
+    <div class="d-flex align-items-center gap-3">
+      <img src="{% static 'nutrition/img/uop_logo_navy.png' %}" alt="{% translate 'University of Petra' %}" style="height:40px;width:auto">
+      <div><div class="eyebrow">ArabNutriVision · {% translate "Body composition report" %}</div><h1 class="h3 mb-0" id="rpTitle"></h1><div class="small text-secondary" id="rpMeta"></div></div>
+    </div>
+    <div class="d-flex gap-2 no-print">
+      <a class="btn btn-sm btn-outline-primary" id="rpCalc" href="{% url 'nutrition:body' %}"><i class="bi bi-rulers me-1"></i>{% translate "Add measurement" %}</a>
+      <button class="btn btn-sm btn-primary" onclick="window.print()"><i class="bi bi-printer me-1"></i>{% translate "Print / save as PDF" %}</button>
+    </div>
+  </div>
+  <p class="text-secondary" id="rpEmpty" hidden></p>
+  <div id="rpBox">
+    <div class="row g-3 mb-3" id="rpCards"></div>
+    <div class="panel mb-3">
+      <h2 class="h6 fw-semibold">{% translate "Latest measurement against reference ranges" %}</h2>
+      <div class="table-responsive"><table class="table table-anv align-middle mb-0"><thead><tr><th>{% translate "Indicator" %}</th><th class="n">{% translate "Value" %}</th><th class="n">{% translate "Reference" %}</th><th>{% translate "Status" %}</th></tr></thead><tbody id="rpRanges"></tbody></table></div>
+    </div>
+    <div class="row g-3 mb-3">
+      <div class="col-md-7"><div class="panel h-100"><h2 class="h6 fw-semibold">{% translate "Body composition over time" %}</h2><div style="height:240px"><canvas id="rpTrend" role="img" aria-label="{% translate 'Body composition over time' %}"></canvas></div></div></div>
+      <div class="col-md-5"><div class="panel h-100"><h2 class="h6 fw-semibold"><i class="bi bi-link-45deg me-1"></i>{% translate "Body composition and diet" %}</h2><div id="rpLink"></div></div></div>
+    </div>
+    <div class="panel p-0 mb-3"><div class="p-3 pb-0"><h2 class="h6 fw-semibold mb-0">{% translate "All measurements" %}</h2></div>
+      <div class="table-responsive"><table class="table table-anv table-sm align-middle mb-0"><thead><tr><th class="ps-3">{% translate "Date" %}</th><th class="n">{% translate "Weight (kg)" %}</th><th class="n">BMI</th><th class="n">{% translate "Body fat %" %}</th><th class="n">{% translate "Skeletal muscle mass (kg)" %}</th><th class="n">{% translate "Fat-free mass (kg)" %}</th><th class="n">{% translate "Visceral fat level" %}</th><th class="n">BMR</th><th class="pe-3">{% translate "Source" %}</th></tr></thead><tbody id="rpRows"></tbody></table></div></div>
+    <p class="small text-secondary">{% translate "Reference ranges: BMI (WHO 2000); body fat by sex and age (Gallagher et al. 2000); waist–hip ratio (WHO 2008); waist-to-height ratio (Ashwell et al. 2012); visceral fat level < 10 (InBody). Equation-based values are estimates. This report supports, and does not replace, the dietitian's assessment." %}</p>
+  </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}{% include "static_site/_ws_scripts.html" %}{% endblock %}

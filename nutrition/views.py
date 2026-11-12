@@ -425,3 +425,9 @@ def validation_csv(request):
 def validation_delete(request, pk):
     get_object_or_404(ValidationSample, pk=pk, owner=request.user).delete()
     return redirect("nutrition:validation")
+
+
+def body_calculator(request):
+    """Body-composition calculator (equations with published sources; works without a device)."""
+    from .static_views import js_strings
+    return render(request, "nutrition/body.html", {"js_json": js_strings()})

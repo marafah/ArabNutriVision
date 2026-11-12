@@ -25,6 +25,7 @@ urlpatterns = [
     path("validation/", views.validation_lab, name="validation"),
     path("validation/annotations.csv", views.validation_csv, name="validation_csv"),
     path("validation/<int:pk>/delete/", views.validation_delete, name="validation_delete"),
+    path("body/", views.body_calculator, name="body"),
     path("api/add-item/", views.api_add_item, name="api_add_item"),
 ]
 
@@ -36,4 +37,5 @@ if settings.STATIC_SITE:   # static edition: researcher pages are client-side (S
             _u.callback = _swap[_u.name]
     urlpatterns += [path("participants/view/", sv.participant_view, name="participant_view"),
                     path("records/view/", sv.record_view, name="record_view"),
-                    path("inbody/", sv.inbody, name="inbody")]
+                    path("inbody/", sv.inbody, name="inbody"),
+                    path("participants/report/", sv.report, name="report")]

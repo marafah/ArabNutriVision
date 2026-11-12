@@ -1,3 +1,4 @@
 {% load static %}{{ ref_json|json_script:"anv-ref" }}{{ js_json|json_script:"anv-t" }}
-<script>window.ANV_PAGE = "{{ ws_page }}"; window.ANV_URLS = {participant: "{% url 'nutrition:participant_view' %}", record: "{% url 'nutrition:record_view' %}", participants: "{% url 'nutrition:participants' %}", dish: "{% url 'nutrition:dishes' %}", validation: "{% url 'nutrition:validation' %}", inbody: "{% url 'nutrition:inbody' %}"};</script>
+<script>window.ANV_PAGE = "{{ ws_page }}"; window.ANV_URLS = {participant: "{% url 'nutrition:participant_view' %}", record: "{% url 'nutrition:record_view' %}", participants: "{% url 'nutrition:participants' %}", dish: "{% url 'nutrition:dishes' %}", validation: "{% url 'nutrition:validation' %}", inbody: "{% url 'nutrition:inbody' %}", report: "{% url 'nutrition:report' %}", body: "{% url 'nutrition:body' %}"};</script>
+<script src="{% static 'nutrition/js/body.js' %}"></script>
 <script src="{% static 'nutrition/js/workspace.js' %}"></script>
