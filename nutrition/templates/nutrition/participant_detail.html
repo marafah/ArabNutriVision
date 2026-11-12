@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{{ part.code }}{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb"><ol class="breadcrumb small"><li class="breadcrumb-item"><a href="{% url 'nutrition:participants' %}">Participants</a></li><li class="breadcrumb-item active">{{ part.code }}</li></ol></nav>
+  <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+    <div><div class="eyebrow">{{ part.get_sex_display }}{% if part.age_years %} · {{ part.age_years }} years{% endif %} · target {{ part.energy_target_kcal }} kcal/day</div><h1 class="h2 mb-0">Participant {{ part.code }}</h1></div>
+    <a href="{% url 'nutrition:ffq' %}" class="btn btn-outline-primary btn-sm"><i class="bi bi-file-earmark-spreadsheet me-1"></i>Import FFQ</a>
+  </div>
+  <div class="row g-4">
+    <div class="col-lg-8 min-w-0">
+      <div class="panel mb-4">
+        <div class="d-flex justify-content-between align-items-center"><h2 class="h5 mb-0">Energy and fat by day</h2><span class="small text-secondary">{{ n_food_days }} recall/record day{{ n_food_days|pluralize }}</span></div>
+        {% if days %}<div style="height:240px" class="mt-2"><canvas id="trend" role="img" aria-label="Energy by day"></canvas></div>{% else %}<p class="text-secondary mt-2 mb-0">No records yet. Create the first one with the form.</p>{% endif %}
+      </div>
+      <div class="panel p-0"><div class="table-responsive"><table class="table table-anv table-hover align-middle mb-0">
+        <thead><tr><th class="ps-3">Date</th><th>Method</th><th class="n">Items</th><th class="n">kcal</th><th class="n">Protein g</th><th class="n">Fat g</th><th class="n">SFA % kcal</th><th class="n pe-3">Sodium mg</th></tr></thead>
+        <tbody>{% for r, s in days %}<tr style="cursor:pointer" onclick="location.href='{{ r.get_absolute_url }}'"><td class="ps-3"><a href="{{ r.get_absolute_url }}">{{ r.date|date:"d M Y" }}</a></td><td>{{ r.get_method_display }}</td><td class="n">{{ s.rows|length }}</td><td class="n fw-semibold">{{ s.totals.kcal|floatformat:0 }}</td><td class="n">{{ s.totals.protein_g|floatformat:1 }}</td><td class="n">{{ s.totals.fat_g|floatformat:1 }}</td><td class="n"><span class="pill {% if s.fa_pct_energy.SFA > 10 %}pill-rose{% else %}pill-good{% endif %}">{{ s.fa_pct_energy.SFA|floatformat:1 }}%</span></td><td class="n pe-3">{{ s.totals.sodium_mg|floatformat:0 }}</td></tr>{% endfor %}</tbody>
+      </table></div></div>
+    </div>
+    <div class="col-lg-4">
+      <div class="panel mb-4">
+        <h2 class="h5">New record</h2>
+        <form method="post">{% csrf_token %}
+          {% for f in form %}<div class="mb-2"><label class="form-label small" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}{% for e in f.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}</div>{% endfor %}
+          <button class="btn btn-primary btn-sm">Create record</button>
+        </form>
+      </div>
+      {% if mean %}
+      <div class="panel">
+        <div class="eyebrow mb-1">Usual intake · mean of {{ n_food_days }} day{{ n_food_days|pluralize }} incl. supplements</div>
+        <h2 class="h5">Share of reference values</h2>
+        {% for p in pct %}<div class="dv-row"><span>{{ p.n.label }}</span><div class="progress progress-thin"><div class="progress-bar {% if p.n.upper and p.pct > 100 %}bg-danger{% elif p.pct > 100 %}bg-warning{% else %}bg-primary{% endif %}" style="width:{% if p.pct > 100 %}100{% else %}{{ p.pct|floatformat:0 }}{% endif %}%"></div></div><span class="pct">{{ p.pct|floatformat:0 }}%</span></div>{% endfor %}
+        <p class="small text-secondary mt-2 mb-0">Energy against the participant target; others against US FDA Daily Values (sodium, SFA and cholesterol are upper limits).</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{{ trend_json|json_script:"anv-trend" }}
+{% endblock %}
+{% block scripts %}
+<script>
+(function(){ const el = document.getElementById("trend"); if (!el) return; const T = JSON.parse(JSON.parse(document.getElementById("anv-trend").textContent)), C = window.ANV_COLORS;
+  new Chart(el, {type:"bar", data:{labels:T.map(t=>t.date+(t.method.startsWith("FFQ")?" (FFQ)":"")), datasets:[{label:"Energy (kcal)", data:T.map(t=>t.kcal), backgroundColor:C.navy, yAxisID:"y"},{type:"line", label:"Fat (g)", data:T.map(t=>t.fat), borderColor:C.rose, backgroundColor:C.rose, yAxisID:"y1"}]},
+  options:{maintainAspectRatio:false, plugins:{legend:{position:"bottom"}}, scales:{y:{beginAtZero:true}, y1:{beginAtZero:true, position:"right", grid:{drawOnChartArea:false}}}}}); })();
+</script>
+{% endblock %}

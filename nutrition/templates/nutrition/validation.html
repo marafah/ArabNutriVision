@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Validation lab{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+    <div><div class="eyebrow">ArabFood-N · weighed ground truth</div><h1 class="h2 mb-0">Validation lab</h1>
+      <p class="text-secondary small mb-0">Every weighed plate becomes a data point for RQ1–RQ4. Metrics update as plates are added.</p></div>
+    <div class="d-flex gap-2 flex-wrap">
+      <div class="btn-group btn-group-sm" role="group" aria-label="Split">
+        <a class="btn btn-outline-primary {% if not split %}active{% endif %}" href="?">All</a><a class="btn btn-outline-primary {% if split == 'train' %}active{% endif %}" href="?split=train">Train</a><a class="btn btn-outline-primary {% if split == 'val' %}active{% endif %}" href="?split=val">Val</a><a class="btn btn-outline-primary {% if split == 'test' %}active{% endif %}" href="?split=test">Test</a></div>
+      <a class="btn btn-sm btn-primary" href="{% url 'nutrition:validation_csv' %}"><i class="bi bi-download me-1"></i>annotations.csv</a>
+    </div>
+  </div>
+  {% if demo %}<div class="alert alert-secondary small py-2"><i class="bi bi-info-circle me-1"></i>Sessions starting with <b>DEMO</b> are <b>simulated examples</b> created by <code>seed_demo</code> so the lab can be explored. Never report them as results; remove them with <code>python manage.py seed_demo --clear</code>.</div>{% endif %}
+
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3"><div class="stat"><div class="v">{{ res.n }}</div><div class="l">plates · {{ res.sessions }} cooking session{{ res.sessions|pluralize }}</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat"><div class="v">{% if res.top1 is not None %}{{ res.top1|floatformat:1 }}%{% else %}–{% endif %}</div><div class="l">top-1 dish recognition</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat"><div class="v">{% if res.portion %}{{ res.portion.mape|floatformat:1 }}%{% else %}–{% endif %}</div><div class="l">portion MAPE{% if res.portion %} · MAE {{ res.portion.mae|floatformat:0 }} g{% endif %}</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat"><div class="v">{% if res.coverage is not None %}{{ res.coverage|floatformat:0 }}%{% else %}–{% endif %}</div><div class="l">truth inside recipe-aware interval (RQ4)</div></div></div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-8 min-w-0">
+      <div class="panel p-0 mb-4">
+        <div class="p-3 pb-0"><h2 class="h5 mb-0">Energy and fat error by system</h2><p class="small text-secondary mb-0">MAPE with bootstrap 95% CI; Bland–Altman bias (estimate − truth).</p></div>
+        <div class="table-responsive"><table class="table table-anv align-middle mb-0">
+          <thead><tr><th class="ps-3">System</th><th class="n">n</th><th class="n">Energy MAPE</th><th class="n">95% CI</th><th class="n">Bias kcal</th><th class="n">LoA</th><th class="n pe-3">Fat MAPE</th></tr></thead>
+          <tbody>{% for x in res.systems %}<tr><td class="ps-3"><div class="fw-semibold">{{ x.label }}</div><div class="small text-secondary">{{ x.desc }}</div></td><td class="n">{{ x.e.n }}</td><td class="n fw-semibold">{{ x.e.mape|floatformat:1 }}%</td><td class="n small">{% if x.e.mape_ci %}{{ x.e.mape_ci.0|floatformat:1 }}–{{ x.e.mape_ci.1|floatformat:1 }}{% else %}–{% endif %}</td><td class="n">{% if x.e.ba %}{{ x.e.ba.bias|floatformat:0 }}{% else %}–{% endif %}</td><td class="n small">{% if x.e.ba %}{{ x.e.ba.loa_low|floatformat:0 }} to {{ x.e.ba.loa_high|floatformat:0 }}{% else %}–{% endif %}</td><td class="n pe-3">{% if x.f %}<span class="pill {% if x.f.mape > 30 %}pill-rose{% else %}pill-good{% endif %}">{{ x.f.mape|floatformat:1 }}%</span>{% else %}–{% endif %}</td></tr>
+          {% empty %}<tr><td colspan="7" class="text-center text-secondary py-4">No plates with AI outputs yet. Add a plate with the form, or from the Analyze page after weighing.</td></tr>{% endfor %}</tbody>
+        </table></div>
+      </div>
+      {% if res.systems %}
+      <div class="panel mb-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2"><h2 class="h5 mb-0">Bland–Altman plot</h2><select id="baSel" class="form-select form-select-sm w-auto" aria-label="System"></select></div>
+        <div style="height:300px" class="mt-2"><canvas id="ba" role="img" aria-label="Bland-Altman plot"></canvas></div>
+      </div>
+      {% endif %}
+      <div class="panel p-0">
+        <div class="p-3 pb-0"><h2 class="h5 mb-0">Plates</h2></div>
+        <div class="table-responsive" style="max-height:420px"><table class="table table-anv table-sm align-middle mb-0">
+          <thead class="sticky-top bg-white"><tr><th class="ps-3">Image</th><th>Session</th><th>Dish (truth)</th><th class="n">g</th><th class="n">kcal truth</th><th>AI dish</th><th class="n">AI g</th><th class="n">Image-only</th><th class="n">Recipe-aware</th><th class="pe-3"></th></tr></thead>
+          <tbody>{% for r in rows %}<tr><td class="ps-3 small mono">{{ r.s.image_file|truncatechars:30 }}</td><td class="small">{{ r.s.session_id }}{% if r.s.session_id|slice:":4" == "DEMO" %} <span class="pill pill-demo">demo</span>{% endif %}</td><td>{{ r.s.dish.short_name }} <span class="small text-secondary">{{ r.s.variant }}</span></td><td class="n">{{ r.s.weight_g|floatformat:0 }}</td><td class="n">{{ r.truth.kcal|floatformat:0 }}</td>
+            <td class="small">{% if r.s.ai_dish %}{% if r.s.ai_dish_id == r.s.dish_id %}<i class="bi bi-check-circle text-success"></i>{% else %}<i class="bi bi-x-circle text-danger"></i>{% endif %} {{ r.s.ai_dish.short_name }}{% else %}–{% endif %}</td><td class="n">{{ r.s.ai_grams|floatformat:0|default:"–" }}</td><td class="n">{{ r.image_only.kcal|floatformat:0|default:"–" }}</td><td class="n">{{ r.recipe.kcal|floatformat:0|default:"–" }}</td>
+            <td class="pe-3"><form method="post" action="{% url 'nutrition:validation_delete' r.s.pk %}">{% csrf_token %}<button class="btn btn-sm btn-link text-secondary p-0" aria-label="Delete plate"><i class="bi bi-x-lg"></i></button></form></td></tr>
+          {% empty %}<tr><td colspan="10" class="text-center text-secondary py-4">No plates yet.</td></tr>{% endfor %}</tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="panel">
+        <h2 class="h5">Add a weighed plate</h2>
+        <p class="small text-secondary">Protocol: weigh the plated portion on a 1 g scale; photograph top-down and at 45°, with and without a card; split by cooking session, never by image.</p>
+        <form method="post" class="row g-2">{% csrf_token %}
+          {% for f in form %}{% if f.name == 'reference_card' %}<div class="col-12 form-check ms-2">{{ f }} <label class="form-check-label small" for="{{ f.id_for_label }}">Reference card in photo</label></div>{% else %}<div class="col-6"><label class="form-label small" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}{% for e in f.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}</div>{% endif %}{% endfor %}
+          <div class="col-12"><button class="btn btn-primary btn-sm">Save plate</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ ba_json|json_script:"anv-ba" }}
+{% endblock %}
+{% block scripts %}
+<script>
+(function(){
+  const el = document.getElementById("ba"); if (!el) return;
+  const B = JSON.parse(JSON.parse(document.getElementById("anv-ba").textContent)), C = window.ANV_COLORS, sel = document.getElementById("baSel");
+  Object.entries(B).forEach(([k, v]) => sel.append(new Option(v.label, k)));
+  let ch;
+  function draw(){ const b = B[sel.value]; if (!b) return; const xs = b.points.map(p => p.x), x0 = Math.min(...xs), x1 = Math.max(...xs);
+    const line = (y, label, dash) => ({type:"line", label, data:[{x:x0,y},{x:x1,y}], borderColor: dash ? C.grey : C.rose, borderDash: dash ? [5,4] : [], pointRadius:0, borderWidth:1.5});
+    const data = {datasets:[{type:"scatter", label:"Plates", data:b.points, backgroundColor:"rgba(21,48,94,.55)"}, line(b.bias, `Bias ${b.bias.toFixed(0)} kcal`, false), line(b.loa_low, "−1.96 SD", true), line(b.loa_high, "+1.96 SD", true)]};
+    if (ch) { ch.data = data; ch.update(); } else ch = new Chart(el, {type:"scatter", data, options:{maintainAspectRatio:false, plugins:{legend:{position:"bottom"}}, scales:{x:{title:{display:true, text:"Mean of estimate and truth (kcal)"}}, y:{title:{display:true, text:"Estimate − truth (kcal)"}}}}}); }
+  sel.onchange = draw; sel.value = B.recipe ? "recipe" : Object.keys(B)[0]; draw();
+})();
+</script>
+{% endblock %}

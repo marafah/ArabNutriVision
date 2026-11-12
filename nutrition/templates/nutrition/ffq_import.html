@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Import FFQ{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="eyebrow">Food Frequency Questionnaire</div>
+  <h1 class="h2 mb-3">Import an FFQ <span class="text-secondary fs-5" lang="ar">· استبيان تكرار الأطعمة</span></h1>
+  <div class="row g-4">
+    <div class="col-lg-6"><div class="panel">
+      <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        {% for f in form %}<div class="mb-3"><label class="form-label small" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}{% if f.help_text %}<div class="form-text">{{ f.help_text }}</div>{% endif %}{% for e in f.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}</div>{% endfor %}
+        <button class="btn btn-primary"><i class="bi bi-upload me-1"></i>Import</button>
+        <a class="btn btn-link" href="{% url 'nutrition:ffq_template' %}"><i class="bi bi-file-earmark-arrow-down me-1"></i>Download the template</a>
+      </form>
+      {% if errors %}<div class="alert alert-warning mt-3 small mb-0"><b>Fix these rows and upload again:</b><ul class="mb-0">{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul></div>{% endif %}
+      {% if preview %}<div class="mt-3 small text-secondary">{{ preview|length }} rows were readable.</div>{% endif %}
+    </div></div>
+    <div class="col-lg-6"><div class="panel">
+      <h2 class="h6 fw-semibold">File format</h2>
+      <div class="table-responsive"><table class="table table-anv table-sm"><thead><tr><th>food</th><th>frequency</th><th class="n">portion_g</th></tr></thead><tbody>
+        <tr><td>maqluba</td><td>2/week</td><td class="n">400</td></tr><tr><td>hummus</td><td>4/week</td><td class="n">150</td></tr><tr><td>olive_oil</td><td>1/day</td><td class="n">10</td></tr><tr><td>knafeh</td><td>1/month</td><td class="n">150</td></tr></tbody></table></div>
+      <ul class="small text-secondary mb-0">
+        <li><b>food</b>: a dish or ingredient code, English name, or Arabic name from the composition table.</li>
+        <li><b>frequency</b>: <code>n/day</code>, <code>n/week</code>, <code>n/month</code> or <code>never</code>. A plain number means times per day.</li>
+        <li><b>portion_g</b>: grams per occasion; blank uses the dish's typical serving.</li>
+        <li>The result is saved as one "FFQ (daily average)" record: grams/day = frequency/day × portion.</li>
+      </ul>
+    </div></div>
+  </div>
+</div>
+{% endblock %}

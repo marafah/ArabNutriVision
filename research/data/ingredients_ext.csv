@@ -1,0 +1,54 @@
+id,sfa_g,mufa_g,pufa_g,cholesterol_mg,potassium_mg,magnesium_mg,zinc_mg,vitc_mg,vita_rae_ug,gi,source_note
+rice_white_raw,0.18,0.21,0.18,0,115,25,1.1,0,0,73,USDA FDC approx; GI Atkinson 2021 approx
+vermicelli_raw,0.28,0.17,0.56,0,223,53,1.4,0,0,58,USDA approx; GI approx
+bulgur_raw,0.23,0.17,0.53,0,410,164,1.9,0,1,48,USDA approx; GI approx
+freekeh_raw,0.40,0.30,1.00,0,350,130,2.5,0,0,43,literature approx [CHECK]
+chicken_skin_raw,4.30,6.20,3.20,75,189,20,1.3,1.6,41,,USDA approx
+chicken_breast_raw,0.60,0.70,0.50,73,334,28,0.7,0,9,,USDA approx
+chicken_thigh_raw,1.00,1.30,0.90,94,240,23,1.6,0,10,,USDA approx
+lamb_raw,8.70,8.20,1.50,72,230,21,3.4,0,0,,USDA approx
+beef_ground_raw,7.60,8.90,0.50,71,270,17,4.2,0,0,,USDA approx
+lamb_ground_raw,10.20,9.60,1.70,73,222,21,3.4,0,0,,USDA approx
+eggplant,0.03,0.02,0.08,0,229,14,0.2,2.2,1,15,USDA approx; low-carb vegetable GI assumed
+cauliflower,0.13,0.03,0.03,0,299,15,0.3,48.2,0,15,USDA approx
+potato,0.03,0.00,0.04,0,425,23,0.3,19.7,0,78,USDA approx; GI approx
+tomato,0.03,0.03,0.08,0,237,11,0.2,13.7,42,15,USDA approx
+tomato_paste,0.10,0.07,0.20,0,1014,42,0.6,22.0,76,35,USDA approx
+onion,0.04,0.01,0.02,0,146,10,0.2,7.4,0,15,USDA approx
+garlic,0.09,0.01,0.25,0,401,25,1.2,31.2,0,15,USDA approx
+parsley,0.13,0.29,0.12,0,554,50,1.1,133.0,421,15,USDA approx
+mint,0.25,0.03,0.05,0,569,80,1.1,31.8,212,15,USDA approx
+cucumber,0.04,0.00,0.03,0,147,13,0.2,2.8,5,15,USDA approx
+lettuce,0.04,0.01,0.12,0,247,14,0.2,4.0,436,15,USDA approx
+spinach,0.06,0.01,0.17,0,558,79,0.5,28.1,469,15,USDA approx
+jute_leaves,0.05,0.03,0.10,0,559,64,0.8,37.0,278,15,USDA approx [CHECK]
+vine_leaves,0.30,0.10,1.00,0,272,95,0.7,11.1,1376,15,USDA approx
+fava_cooked,0.07,0.08,0.16,0,268,43,1.0,0.3,1,79,USDA approx; GI approx [CHECK]
+chickpeas_dry,0.60,1.40,2.70,0,718,79,2.8,4.0,3,28,USDA approx; GI approx
+chickpeas_cooked,0.27,0.58,1.16,0,291,48,1.5,1.3,1,28,USDA approx; GI approx
+lentils_dry,0.16,0.19,0.53,0,677,47,3.3,4.5,2,32,USDA approx; GI approx
+tahini,7.50,20.30,23.60,0,414,95,4.6,0,3,40,USDA approx; GI assumed
+lemon_juice,0.04,0.01,0.02,0,103,6,0.05,38.7,1,20,USDA approx
+olive_oil,13.80,73.00,10.50,0,1,0,0,0,0,,USDA approx
+veg_oil,15.60,22.80,57.70,0,0,0,0,0,0,,USDA approx (soybean oil)
+ghee,61.90,28.70,3.70,256,5,0,0,0,840,,USDA approx
+butter,51.40,21.00,3.00,215,24,2,0.1,0,684,,USDA approx
+jameed_sauce,2.50,1.10,0.20,15,150,12,0.6,0,30,36,ESTIMATE - replace with lab value
+yogurt_full,2.10,0.90,0.10,13,155,12,0.6,0.5,27,36,USDA approx; GI approx
+milk_whole,1.90,0.80,0.20,10,132,10,0.4,0,46,39,USDA approx; GI approx
+white_cheese,15.00,6.50,1.00,80,90,25,2.5,0,200,,ESTIMATE
+pita_bread,0.17,0.10,0.53,0,120,26,0.8,0,0,68,USDA approx; GI approx
+taboon_bread,0.30,0.30,0.60,0,120,25,0.8,0,0,70,approx
+shrak_bread,0.20,0.10,0.50,0,120,25,0.8,0,0,70,approx
+flour_white,0.16,0.09,0.41,0,107,22,0.7,0,0,70,USDA approx; GI as baked product approx
+semolina,0.15,0.13,0.44,0,186,47,1.1,0,0,66,USDA approx; GI approx
+kataifi,0.40,0.40,0.80,0,100,20,0.6,0,0,70,approx
+sugar,0,0,0,0,2,0,0,0,0,65,USDA; GI Atkinson 2021
+coconut,57.20,2.70,0.70,0,543,90,2.0,1.5,0,45,USDA approx
+almonds,3.80,31.60,12.30,0,733,270,3.1,0,0,15,USDA approx
+pine_nuts,4.90,18.80,34.10,0,597,251,6.5,0.8,1,15,USDA approx
+sumac,2.00,6.00,5.00,0,500,100,1.5,0,0,,approx
+zaatar_mix,2.00,5.00,6.00,0,600,200,3.0,5.0,100,,approx
+spice_mix,1.50,3.00,3.50,0,1500,200,3.0,5.0,50,,approx
+salt,0,0,0,0,8,1,0.1,0,0,,USDA
+water,0,0,0,0,0,1,0,0,0,,-

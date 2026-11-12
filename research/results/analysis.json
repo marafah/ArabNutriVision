@@ -1,0 +1,433 @@
+{
+ "n_dishes": 22,
+ "n_ingredients": 53,
+ "restaurant_vs_light_pct": {
+  "mean": 63.6,
+  "ci95": [
+   50.8,
+   78.2
+  ],
+  "min": 20.2,
+  "max": 163.7,
+  "min_dish": "mansaf",
+  "max_dish": "fattoush"
+ },
+ "energy_from_fat_pct": {
+  "mean": 46.8,
+  "min": 19.1,
+  "max": 69.5,
+  "n_above_35": 20
+ },
+ "gap_share_from_fat_sources_pct": {
+  "mean": 100.0,
+  "ci95": [
+   94.9,
+   104.8
+  ],
+  "min": 71.3
+ },
+ "gap_share_added_fat_pct": {
+  "mean": 74.6,
+  "ci95": [
+   64.7,
+   84.8
+  ]
+ },
+ "preparation_blind_floor_ape": {
+  "kcal": {
+   "mean": 17.5,
+   "ci95": [
+    14.5,
+    20.7
+   ],
+   "median": 16.1,
+   "max_dish": "fattoush"
+  },
+  "fat_g": {
+   "mean": 53.2,
+   "ci95": [
+    43.1,
+    63.1
+   ],
+   "median": 49.2,
+   "max_dish": "foul"
+  },
+  "protein_g": {
+   "mean": 4.3,
+   "ci95": [
+    3.1,
+    5.5
+   ],
+   "median": 3.9,
+   "max_dish": "mutabbal"
+  },
+  "carb_g": {
+   "mean": 2.8,
+   "ci95": [
+    1.8,
+    4.0
+   ],
+   "median": 1.9,
+   "max_dish": "fattoush"
+  }
+ },
+ "atwater_max_abs_dev_pct": 7.9,
+ "montecarlo": {
+  "settings": {
+   "N_per_seed": 4000,
+   "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ],
+   "true_portion_logsd": 0.3,
+   "fat_jitter_logsd": 0.15
+  },
+  "grid": [
+   {
+    "sigma": 0.0,
+    "estimator": "mean_profile",
+    "energy_mape": 18.1,
+    "energy_mape_sd": 0.19,
+    "fat_mape": 54.5,
+    "coverage_pm20": 0.998
+   },
+   {
+    "sigma": 0.0,
+    "estimator": "style_acc0.6",
+    "energy_mape": 10.9,
+    "energy_mape_sd": 0.43,
+    "fat_mape": 30.6,
+    "coverage_pm20": 0.998
+   },
+   {
+    "sigma": 0.0,
+    "estimator": "style_acc0.8",
+    "energy_mape": 7.0,
+    "energy_mape_sd": 0.16,
+    "fat_mape": 18.9,
+    "coverage_pm20": 0.998
+   },
+   {
+    "sigma": 0.0,
+    "estimator": "oracle_variant",
+    "energy_mape": 3.1,
+    "energy_mape_sd": 0.03,
+    "fat_mape": 7.3,
+    "coverage_pm20": 0.998
+   },
+   {
+    "sigma": 0.05,
+    "estimator": "mean_profile",
+    "energy_mape": 18.6,
+    "energy_mape_sd": 0.16,
+    "fat_mape": 54.7,
+    "coverage_pm20": 0.995
+   },
+   {
+    "sigma": 0.05,
+    "estimator": "style_acc0.6",
+    "energy_mape": 12.5,
+    "energy_mape_sd": 0.44,
+    "fat_mape": 31.6,
+    "coverage_pm20": 0.996
+   },
+   {
+    "sigma": 0.05,
+    "estimator": "style_acc0.8",
+    "energy_mape": 8.9,
+    "energy_mape_sd": 0.18,
+    "fat_mape": 20.0,
+    "coverage_pm20": 0.996
+   },
+   {
+    "sigma": 0.05,
+    "estimator": "oracle_variant",
+    "energy_mape": 5.3,
+    "energy_mape_sd": 0.08,
+    "fat_mape": 8.5,
+    "coverage_pm20": 0.995
+   },
+   {
+    "sigma": 0.1,
+    "estimator": "mean_profile",
+    "energy_mape": 20.0,
+    "energy_mape_sd": 0.13,
+    "fat_mape": 55.5,
+    "coverage_pm20": 0.974
+   },
+   {
+    "sigma": 0.1,
+    "estimator": "style_acc0.6",
+    "energy_mape": 15.2,
+    "energy_mape_sd": 0.45,
+    "fat_mape": 33.7,
+    "coverage_pm20": 0.977
+   },
+   {
+    "sigma": 0.1,
+    "estimator": "style_acc0.8",
+    "energy_mape": 12.0,
+    "energy_mape_sd": 0.18,
+    "fat_mape": 22.4,
+    "coverage_pm20": 0.975
+   },
+   {
+    "sigma": 0.1,
+    "estimator": "oracle_variant",
+    "energy_mape": 8.7,
+    "energy_mape_sd": 0.14,
+    "fat_mape": 11.2,
+    "coverage_pm20": 0.974
+   },
+   {
+    "sigma": 0.15,
+    "estimator": "mean_profile",
+    "energy_mape": 22.0,
+    "energy_mape_sd": 0.15,
+    "fat_mape": 56.8,
+    "coverage_pm20": 0.928
+   },
+   {
+    "sigma": 0.15,
+    "estimator": "style_acc0.6",
+    "energy_mape": 18.3,
+    "energy_mape_sd": 0.47,
+    "fat_mape": 36.4,
+    "coverage_pm20": 0.929
+   },
+   {
+    "sigma": 0.15,
+    "estimator": "style_acc0.8",
+    "energy_mape": 15.5,
+    "energy_mape_sd": 0.2,
+    "fat_mape": 25.4,
+    "coverage_pm20": 0.928
+   },
+   {
+    "sigma": 0.15,
+    "estimator": "oracle_variant",
+    "energy_mape": 12.6,
+    "energy_mape_sd": 0.2,
+    "fat_mape": 14.5,
+    "coverage_pm20": 0.928
+   },
+   {
+    "sigma": 0.2,
+    "estimator": "mean_profile",
+    "energy_mape": 24.6,
+    "energy_mape_sd": 0.22,
+    "fat_mape": 58.6,
+    "coverage_pm20": 0.874
+   },
+   {
+    "sigma": 0.2,
+    "estimator": "style_acc0.6",
+    "energy_mape": 21.7,
+    "energy_mape_sd": 0.48,
+    "fat_mape": 39.4,
+    "coverage_pm20": 0.871
+   },
+   {
+    "sigma": 0.2,
+    "estimator": "style_acc0.8",
+    "energy_mape": 19.2,
+    "energy_mape_sd": 0.24,
+    "fat_mape": 28.8,
+    "coverage_pm20": 0.871
+   },
+   {
+    "sigma": 0.2,
+    "estimator": "oracle_variant",
+    "energy_mape": 16.5,
+    "energy_mape_sd": 0.26,
+    "fat_mape": 18.1,
+    "coverage_pm20": 0.874
+   },
+   {
+    "sigma": 0.25,
+    "estimator": "mean_profile",
+    "energy_mape": 27.7,
+    "energy_mape_sd": 0.29,
+    "fat_mape": 60.9,
+    "coverage_pm20": 0.818
+   },
+   {
+    "sigma": 0.25,
+    "estimator": "style_acc0.6",
+    "energy_mape": 25.3,
+    "energy_mape_sd": 0.5,
+    "fat_mape": 42.7,
+    "coverage_pm20": 0.815
+   },
+   {
+    "sigma": 0.25,
+    "estimator": "style_acc0.8",
+    "energy_mape": 23.2,
+    "energy_mape_sd": 0.3,
+    "fat_mape": 32.5,
+    "coverage_pm20": 0.813
+   },
+   {
+    "sigma": 0.25,
+    "estimator": "oracle_variant",
+    "energy_mape": 20.7,
+    "energy_mape_sd": 0.34,
+    "fat_mape": 22.0,
+    "coverage_pm20": 0.818
+   },
+   {
+    "sigma": 0.3,
+    "estimator": "mean_profile",
+    "energy_mape": 31.2,
+    "energy_mape_sd": 0.39,
+    "fat_mape": 63.6,
+    "coverage_pm20": 0.762
+   },
+   {
+    "sigma": 0.3,
+    "estimator": "style_acc0.6",
+    "energy_mape": 29.2,
+    "energy_mape_sd": 0.53,
+    "fat_mape": 46.3,
+    "coverage_pm20": 0.76
+   },
+   {
+    "sigma": 0.3,
+    "estimator": "style_acc0.8",
+    "energy_mape": 27.2,
+    "energy_mape_sd": 0.37,
+    "fat_mape": 36.4,
+    "coverage_pm20": 0.754
+   },
+   {
+    "sigma": 0.3,
+    "estimator": "oracle_variant",
+    "energy_mape": 24.9,
+    "energy_mape_sd": 0.42,
+    "fat_mape": 26.0,
+    "coverage_pm20": 0.762
+   },
+   {
+    "sigma": 0.35,
+    "estimator": "mean_profile",
+    "energy_mape": 35.1,
+    "energy_mape_sd": 0.52,
+    "fat_mape": 66.7,
+    "coverage_pm20": 0.71
+   },
+   {
+    "sigma": 0.35,
+    "estimator": "style_acc0.6",
+    "energy_mape": 33.2,
+    "energy_mape_sd": 0.56,
+    "fat_mape": 50.2,
+    "coverage_pm20": 0.709
+   },
+   {
+    "sigma": 0.35,
+    "estimator": "style_acc0.8",
+    "energy_mape": 31.5,
+    "energy_mape_sd": 0.47,
+    "fat_mape": 40.5,
+    "coverage_pm20": 0.7
+   },
+   {
+    "sigma": 0.35,
+    "estimator": "oracle_variant",
+    "energy_mape": 29.3,
+    "energy_mape_sd": 0.51,
+    "fat_mape": 30.3,
+    "coverage_pm20": 0.71
+   },
+   {
+    "sigma": 0.4,
+    "estimator": "mean_profile",
+    "energy_mape": 39.3,
+    "energy_mape_sd": 0.66,
+    "fat_mape": 70.4,
+    "coverage_pm20": 0.663
+   },
+   {
+    "sigma": 0.4,
+    "estimator": "style_acc0.6",
+    "energy_mape": 37.6,
+    "energy_mape_sd": 0.6,
+    "fat_mape": 54.4,
+    "coverage_pm20": 0.661
+   },
+   {
+    "sigma": 0.4,
+    "estimator": "style_acc0.8",
+    "energy_mape": 36.0,
+    "energy_mape_sd": 0.57,
+    "fat_mape": 44.9,
+    "coverage_pm20": 0.652
+   },
+   {
+    "sigma": 0.4,
+    "estimator": "oracle_variant",
+    "energy_mape": 33.9,
+    "energy_mape_sd": 0.61,
+    "fat_mape": 34.8,
+    "coverage_pm20": 0.663
+   }
+  ],
+  "prior_portion_only": {
+   "energy_mape": 31.7,
+   "fat_mape": 64.9,
+   "coverage_pm20": 0.754
+  },
+  "interval_calibration": [
+   {
+    "sigma": 0.0,
+    "portion_halfwidth_for_80pct": 0.05,
+    "coverage": 0.932
+   },
+   {
+    "sigma": 0.1,
+    "portion_halfwidth_for_80pct": 0.1,
+    "coverage": 0.881
+   },
+   {
+    "sigma": 0.2,
+    "portion_halfwidth_for_80pct": 0.15,
+    "coverage": 0.818
+   },
+   {
+    "sigma": 0.3,
+    "portion_halfwidth_for_80pct": 0.25,
+    "coverage": 0.817
+   }
+  ],
+  "fat_jitter_sensitivity": [
+   {
+    "fat_jitter": 0.0,
+    "energy_mape_perfect_portion": 17.6,
+    "fat_mape": 52.9
+   },
+   {
+    "fat_jitter": 0.1,
+    "energy_mape_perfect_portion": 17.9,
+    "fat_mape": 53.8
+   },
+   {
+    "fat_jitter": 0.15,
+    "energy_mape_perfect_portion": 18.1,
+    "fat_mape": 54.5
+   },
+   {
+    "fat_jitter": 0.25,
+    "energy_mape_perfect_portion": 18.7,
+    "fat_mape": 56.2
+   }
+  ]
+ },
+ "oil_sensitivity_pct_serving_energy": {
+  "mean": 3.6,
+  "max": 8.5,
+  "max_dish": "tabbouleh"
+ }
+}

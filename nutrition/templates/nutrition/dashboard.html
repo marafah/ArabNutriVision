@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Workspace{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="eyebrow">Researcher workspace</div>
+  <h1 class="h2">Welcome, {{ user.get_full_name|default:user.username }}</h1>
+  <div class="row g-3 my-2">
+    <div class="col-6 col-md-3"><div class="stat"><div class="v">{{ participants|length }}</div><div class="l">Participants</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat"><div class="v">{{ records|length }}</div><div class="l">Recent records</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat"><div class="v">{{ n_val }}</div><div class="l">Weighed validation plates</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat"><div class="v">{{ n_custom }}</div><div class="l">Your recipes</div></div></div>
+  </div>
+  <div class="row g-3 mb-4">
+    <div class="col-sm-6 col-lg-3"><a class="panel d-block text-decoration-none text-reset h-100" href="{% url 'nutrition:analyze' %}"><div class="feature-icon rose mb-2"><i class="bi bi-camera"></i></div><div class="fw-semibold">Analyze a photo</div><div class="small text-secondary">Recognise, weigh, add to a record</div></a></div>
+    <div class="col-sm-6 col-lg-3"><a class="panel d-block text-decoration-none text-reset h-100" href="{% url 'nutrition:participants' %}"><div class="feature-icon mb-2"><i class="bi bi-people"></i></div><div class="fw-semibold">Participants &amp; records</div><div class="small text-secondary">24-h recalls, food records, menus</div></a></div>
+    <div class="col-sm-6 col-lg-3"><a class="panel d-block text-decoration-none text-reset h-100" href="{% url 'nutrition:ffq' %}"><div class="feature-icon mb-2"><i class="bi bi-file-earmark-spreadsheet"></i></div><div class="fw-semibold">Import an FFQ</div><div class="small text-secondary">CSV or Excel → daily average</div></a></div>
+    <div class="col-sm-6 col-lg-3"><a class="panel d-block text-decoration-none text-reset h-100" href="{% url 'nutrition:validation' %}"><div class="feature-icon mb-2"><i class="bi bi-bullseye"></i></div><div class="fw-semibold">Validation lab</div><div class="small text-secondary">Weighed plates → paper metrics</div></a></div>
+  </div>
+  <div class="row g-4">
+    <div class="col-lg-6"><div class="panel h-100">
+      <div class="d-flex justify-content-between align-items-center mb-2"><h2 class="h5 mb-0">Participants</h2><a class="btn btn-sm btn-outline-primary" href="{% url 'nutrition:participants' %}"><i class="bi bi-plus"></i> Add</a></div>
+      <ul class="list-group list-group-flush">{% for p in participants %}<li class="list-group-item d-flex justify-content-between px-0"><a href="{{ p.get_absolute_url }}" class="fw-semibold">{{ p.code }}</a><span class="small text-secondary">{{ p.get_sex_display }}{% if p.age_years %}, {{ p.age_years }} y{% endif %} · {{ p.n }} record{{ p.n|pluralize }}</span></li>{% empty %}<li class="list-group-item px-0 text-secondary">No participants yet. Add one with a pseudonymous code such as P001.</li>{% endfor %}</ul>
+    </div></div>
+    <div class="col-lg-6"><div class="panel h-100">
+      <h2 class="h5">Recent records</h2>
+      <ul class="list-group list-group-flush">{% for r in records %}<li class="list-group-item d-flex justify-content-between px-0"><a href="{{ r.get_absolute_url }}">{{ r.participant.code }} · {{ r.date|date:"d M Y" }}</a><span class="small text-secondary">{{ r.get_method_display }}</span></li>{% empty %}<li class="list-group-item px-0 text-secondary">No records yet.</li>{% endfor %}</ul>
+    </div></div>
+  </div>
+</div>
+{% endblock %}

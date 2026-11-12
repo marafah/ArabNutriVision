@@ -1,0 +1,118 @@
+{% extends "base.html" %}{% load static %}
+{% block title %}Analyze a dish{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+    <div><div class="eyebrow">Photo → dish → grams → recipe</div><h1 class="h2 mb-0">Analyze a dish <span class="text-secondary fs-5" lang="ar">· تحليل طبق</span></h1></div>
+    {% if AI_ENABLED %}<span class="pill pill-good"><i class="bi bi-stars me-1"></i>AI recognition on</span>{% else %}<span class="pill pill-demo" title="Set ANTHROPIC_API_KEY on the server to enable photo recognition"><i class="bi bi-hand-index me-1"></i>Manual mode · AI key not configured</span>{% endif %}
+  </div>
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <div class="panel">
+        <div class="eyebrow mb-2">Step 1 · Photo</div>
+        <div class="dropzone" id="drop" tabindex="0" role="button" aria-label="Choose or drop a food photo">
+          <div id="dropHint"><i class="bi bi-cloud-arrow-up fs-1 text-secondary"></i><div class="fw-semibold mt-1">Drop a photo of the plate</div><div class="small text-secondary">or click to choose. Top-down works best; a bank card beside the plate improves the portion estimate.</div></div>
+          <img id="preview" alt="Selected food photo" hidden>
+        </div>
+        <input type="file" id="file" accept="image/jpeg,image/png,image/webp" hidden>
+        <div class="d-flex gap-2 mt-3 align-items-center">
+          <button class="btn btn-rose" id="analyzeBtn" disabled><span class="spinner-border spinner-border-sm me-2" id="spin" hidden></span><i class="bi bi-stars me-1"></i>Analyze with AI</button>
+          <span class="small text-secondary"><i class="bi bi-shield-check me-1"></i>Photo is processed in memory, metadata removed, never stored.</span>
+        </div>
+        <div class="small mt-2" id="status" role="status">Choose a photo, or set the dish and grams by hand below.</div>
+
+        <hr>
+        <div class="eyebrow mb-2">Step 2 · Check and correct</div>
+        <label class="form-label small" for="dishSel">Dish · الطبق</label>
+        <select id="dishSel" class="form-select"></select>
+        <div class="d-flex flex-wrap gap-1 mt-2" id="alts"></div>
+        <label class="form-label small mt-3" for="grams">Portion on the plate</label>
+        <div class="d-flex gap-2 align-items-center">
+          <input type="range" class="form-range flex-grow-1" id="grams" min="30" max="900" step="5" value="400">
+          <div class="input-group input-group-sm" style="width:7.5rem"><input type="number" class="form-control" id="gramsN" min="1" max="3000" value="400" aria-label="Portion in grams"><span class="input-group-text">g</span></div>
+        </div>
+        <label class="form-label small mt-3 d-block">Preparation · طريقة التحضير</label>
+        <div class="btn-group flex-wrap style-chips gap-1" role="group" id="styles">
+          <button type="button" class="btn btn-sm btn-outline-primary active" data-style="mean">Average</button>
+          <button type="button" class="btn btn-sm btn-outline-primary" data-style="light">Light · خفيف</button>
+          <button type="button" class="btn btn-sm btn-outline-primary" data-style="home">Home · بيتي</button>
+          <button type="button" class="btn btn-sm btn-outline-primary" data-style="restaurant">Restaurant · مطاعم</button>
+        </div>
+
+        <hr>
+        <div class="eyebrow mb-2">Step 3 · Save</div>
+        {% if user.is_authenticated %}
+          {% if records %}
+          <div class="row g-2">
+            <div class="col-sm-7"><label class="form-label small" for="recSel">Dietary record</label><select id="recSel" class="form-select form-select-sm">{% for r in records %}<option value="{{ r.pk }}">{{ r.participant.code }} · {{ r.date|date:"d M Y" }} · {{ r.get_method_display }}</option>{% endfor %}</select></div>
+            <div class="col-sm-5"><label class="form-label small" for="mealSel">Meal</label><select id="mealSel" class="form-select form-select-sm">{% for k, v in meals %}<option value="{{ k }}" {% if k == 'lunch' %}selected{% endif %}>{{ v }}</option>{% endfor %}</select></div>
+          </div>
+          <div class="d-flex flex-wrap gap-2 mt-2">
+            <button class="btn btn-primary btn-sm" id="addBtn"><i class="bi bi-plus-circle me-1"></i>Add to record</button>
+            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" data-bs-target="#valBox" aria-expanded="false"><i class="bi bi-bullseye me-1"></i>Save as weighed validation plate</button>
+          </div>
+          {% else %}
+          <p class="small text-secondary mb-2">Create a participant and a record first to save foods.</p>
+          <a class="btn btn-sm btn-outline-primary" href="{% url 'nutrition:participants' %}">Go to participants</a>
+          {% endif %}
+          <div class="small mt-2" id="saveStatus" role="status"></div>
+          <div class="collapse mt-3" id="valBox">
+            <form method="post" action="{% url 'nutrition:validation' %}" class="border rounded-3 p-3 bg-light" id="valForm">{% csrf_token %}
+              <div class="small text-secondary mb-2">Ground truth from the scale, plus this photo's AI outputs (filled in automatically).</div>
+              <div class="row g-2">
+                <div class="col-6">{{ vform.session_id.label_tag }}{{ vform.session_id }}</div>
+                <div class="col-6">{{ vform.plate_no.label_tag }}{{ vform.plate_no }}</div>
+                <div class="col-6">{{ vform.dish.label_tag }}{{ vform.dish }}</div>
+                <div class="col-6">{{ vform.variant.label_tag }}{{ vform.variant }}</div>
+                <div class="col-6">{{ vform.weight_g.label_tag }}{{ vform.weight_g }}</div>
+                <div class="col-6">{{ vform.view.label_tag }}{{ vform.view }}</div>
+                <div class="col-6">{{ vform.phone.label_tag }}{{ vform.phone }}</div>
+                <div class="col-6">{{ vform.split.label_tag }}{{ vform.split }}</div>
+                <div class="col-12 form-check ms-2">{{ vform.reference_card }} <label class="form-check-label" for="id_reference_card">Reference card in photo</label></div>
+              </div>
+              <div class="d-none">{{ vform.ai_dish }}{{ vform.ai_grams }}{{ vform.ai_style }}{{ vform.ai_direct_kcal }}{{ vform.ai_direct_fat_g }}</div>
+              <button class="btn btn-sm btn-primary mt-2">Save plate</button>
+            </form>
+          </div>
+        {% else %}
+          <p class="small text-secondary mb-0"><a href="{% url 'login' %}?next={{ request.path }}">Sign in</a> to add foods to a participant's record or to the validation set.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-lg-7">
+      <div class="panel" id="result" aria-live="polite">
+        <div class="d-flex justify-content-between gap-2 flex-wrap">
+          <div><div class="eyebrow" id="resEyebrow">Example result</div><h2 class="h3 mb-0" id="resEn"></h2><div class="fs-5 text-secondary" id="resAr" lang="ar" dir="rtl"></div></div>
+          <span class="pill pill-demo align-self-start" id="resTag">Example</span>
+        </div>
+        <div class="d-flex align-items-baseline gap-2 mt-3"><span class="kcal-big" id="kcal">0</span><span class="text-secondary">kcal</span></div>
+        <div class="mono small text-secondary" id="kcalRange"></div>
+        <div class="row g-3 align-items-center mt-1">
+          <div class="col-sm-5"><div style="max-width:220px;margin:auto"><canvas id="donut" aria-label="Energy split by macronutrient" role="img"></canvas></div></div>
+          <div class="col-sm-7">
+            <h3 class="h6 fw-semibold">Where the energy comes from</h3>
+            <div id="legend" class="small"></div>
+            <div class="mt-2 small" id="glLine"></div>
+          </div>
+        </div>
+        <div class="nlabel mt-3" id="labelBox"></div>
+        <div class="row g-2 mt-3">
+          <div class="col-6"><div class="border rounded-3 p-2 h-100"><div class="small text-secondary">Recipe-aware (this tool)</div><div class="fs-4 fw-semibold num" id="cmpRecipe">–</div><div class="small text-secondary" id="cmpRecipeFat"></div></div></div>
+          <div class="col-6"><div class="border rounded-3 p-2 h-100"><div class="small text-secondary">Image-only AI estimate</div><div class="fs-4 fw-semibold num" id="cmpAI">–</div><div class="small text-secondary" id="cmpAIFat">Shown after a photo is analysed</div></div></div>
+        </div>
+        <div class="alert alert-light border mt-3 mb-0 small" id="hidden"></div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ dishes_json|json_script:"anv-dishes" }}
+{{ nut_json|json_script:"anv-nutrients" }}
+{% endblock %}
+{% block scripts %}
+<script>
+  window.ANV = {recogniseUrl: "{% url 'nutrition:api_recognise' %}", addUrl: "{% url 'nutrition:api_add_item' %}",
+                csrf: "{{ csrf_token }}", ai: {{ AI_ENABLED|yesno:"true,false" }}};
+</script>
+<script src="{% static 'nutrition/js/analyze.js' %}"></script>
+{% endblock %}

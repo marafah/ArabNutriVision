@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}{{ rec.participant.code }} · {{ rec.date }}{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb"><ol class="breadcrumb small"><li class="breadcrumb-item"><a href="{% url 'nutrition:participants' %}">Participants</a></li><li class="breadcrumb-item"><a href="{{ rec.participant.get_absolute_url }}">{{ rec.participant.code }}</a></li><li class="breadcrumb-item active">{{ rec.date|date:"d M Y" }}</li></ol></nav>
+  <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+    <div><div class="eyebrow">{{ rec.get_method_display }}{% if rec.notes %} · {{ rec.notes }}{% endif %}</div><h1 class="h2 mb-0">{{ rec.participant.code }} · {{ rec.date|date:"l d M Y" }}</h1></div>
+    <div class="d-flex flex-wrap gap-2">
+      <a class="btn btn-sm btn-outline-primary" href="{% url 'nutrition:record_csv' rec.pk %}"><i class="bi bi-download me-1"></i>Export CSV</a>
+      <a class="btn btn-sm btn-rose" href="{% url 'nutrition:analyze' %}"><i class="bi bi-camera me-1"></i>Add from photo</a>
+      <form method="post" action="{% url 'nutrition:record_delete' rec.pk %}" onsubmit="return this.dataset.ok==='1' || (this.dataset.ok='1', this.querySelector('button').textContent='Press again to delete', false)">{% csrf_token %}<button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash me-1"></i>Delete record</button></form>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3"><div class="stat"><div class="v">{{ s.with_supp.kcal|floatformat:0 }}</div><div class="l">kcal · target {{ rec.participant.energy_target_kcal }}</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat"><div class="v">{{ s.with_supp.protein_g|floatformat:0 }} g</div><div class="l">protein · {{ s.macro_pct.Protein|floatformat:0 }}% of energy</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat"><div class="v text-rose">{{ s.with_supp.fat_g|floatformat:0 }} g</div><div class="l">fat · {{ s.macro_pct.Fat|floatformat:0 }}% of energy · SFA {{ s.fa_pct_energy.SFA|floatformat:1 }}%</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat"><div class="v">{{ s.gl_total|floatformat:0 }}</div><div class="l">glycaemic load · carbohydrate {{ s.with_supp.carb_g|floatformat:0 }} g</div></div></div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-8 min-w-0">
+      <div class="panel p-0 mb-4">
+        <div class="p-3 pb-0 d-flex justify-content-between"><h2 class="h5 mb-0">Foods eaten</h2><span class="small text-secondary">{{ s.rows|length }} item{{ s.rows|length|pluralize }}</span></div>
+        <div class="table-responsive"><table class="table table-anv align-middle mb-0">
+          <thead><tr><th class="ps-3">Meal</th><th>Food</th><th class="n">g</th><th>Prep.</th><th class="n">kcal</th><th class="n">Prot.</th><th class="n">Fat</th><th class="n">SFA</th><th class="n">Carb.</th><th class="n">Na mg</th><th class="n">GL</th><th class="pe-3"></th></tr></thead>
+          <tbody>
+          {% for r in s.rows %}
+            <tr><td class="ps-3 small">{{ r.item.get_meal_display }}</td>
+              <td>{% if r.item.dish %}<a href="{% url 'nutrition:dish_detail' r.item.dish.code %}">{{ r.item.food_name }}</a> <span class="small text-secondary" lang="ar">{{ r.item.dish.name_ar }}</span>{% else %}{{ r.item.food_name }}{% endif %}
+                {% if r.item.source != 'manual' %}<span class="pill pill-demo ms-1">{{ r.item.get_source_display }}</span>{% endif %}
+                {% if r.item.ai_image_only_kcal %}<div class="small text-secondary">image-only AI said {{ r.item.ai_image_only_kcal|floatformat:0 }} kcal</div>{% endif %}</td>
+              <td class="n">{{ r.item.grams|floatformat:0 }}</td><td class="small text-capitalize">{{ r.item.style }}</td>
+              <td class="n fw-semibold">{{ r.n.kcal|floatformat:0 }}</td><td class="n">{{ r.n.protein_g|floatformat:1 }}</td><td class="n">{{ r.n.fat_g|floatformat:1 }}</td><td class="n">{{ r.n.sfa_g|floatformat:1 }}</td><td class="n">{{ r.n.carb_g|floatformat:1 }}</td><td class="n">{{ r.n.sodium_mg|floatformat:0 }}</td><td class="n">{{ r.gl|floatformat:0|default:"–" }}</td>
+              <td class="pe-3"><form method="post" action="{% url 'nutrition:item_delete' r.item.pk %}">{% csrf_token %}<button class="btn btn-sm btn-link text-secondary p-0" aria-label="Remove {{ r.item.food_name }}"><i class="bi bi-x-lg"></i></button></form></td></tr>
+          {% empty %}<tr><td colspan="12" class="text-center text-secondary py-4">No foods yet. Add the first item with the form below, or from a photo.</td></tr>{% endfor %}
+          {% for r in s.supp_rows %}<tr class="table-light"><td class="ps-3 small">Supplement</td><td>{{ r.s.supplement.name }}</td><td class="n">{{ r.s.doses }}×</td><td class="small">{{ r.s.supplement.dose_label }}</td><td class="n">{{ r.n.kcal|floatformat:0 }}</td><td colspan="6" class="small text-secondary">{% if r.n.iron_mg %}Fe {{ r.n.iron_mg|floatformat:0 }} mg {% endif %}{% if r.n.calcium_mg %}Ca {{ r.n.calcium_mg|floatformat:0 }} mg {% endif %}{% if r.n.vitc_mg %}Vit C {{ r.n.vitc_mg|floatformat:0 }} mg {% endif %}{% if r.n.zinc_mg %}Zn {{ r.n.zinc_mg|floatformat:0 }} mg{% endif %}</td>
+            <td class="pe-3"><form method="post" action="{% url 'nutrition:supplement_delete' r.s.pk %}">{% csrf_token %}<button class="btn btn-sm btn-link text-secondary p-0" aria-label="Remove supplement"><i class="bi bi-x-lg"></i></button></form></td></tr>{% endfor %}
+          </tbody>
+          <tfoot><tr class="fw-semibold"><td class="ps-3" colspan="4">Total (food)</td><td class="n">{{ s.totals.kcal|floatformat:0 }}</td><td class="n">{{ s.totals.protein_g|floatformat:1 }}</td><td class="n">{{ s.totals.fat_g|floatformat:1 }}</td><td class="n">{{ s.totals.sfa_g|floatformat:1 }}</td><td class="n">{{ s.totals.carb_g|floatformat:1 }}</td><td class="n">{{ s.totals.sodium_mg|floatformat:0 }}</td><td class="n">{{ s.gl_total|floatformat:0 }}</td><td></td></tr></tfoot>
+        </table></div>
+      </div>
+
+      <div class="row g-4 mb-4">
+        <div class="col-md-7"><div class="panel h-100">
+          <h2 class="h6 fw-semibold">Add a food</h2>
+          <form method="post" class="row g-2">{% csrf_token %}<input type="hidden" name="action" value="item">
+            {% for e in iform.non_field_errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}
+            <div class="col-6"><label class="form-label small" for="{{ iform.meal.id_for_label }}">Meal</label>{{ iform.meal }}</div>
+            <div class="col-6"><label class="form-label small" for="{{ iform.grams.id_for_label }}">Portion (g)</label>{{ iform.grams }}{% for e in iform.grams.errors %}<div class="text-danger small">{{ e }}</div>{% endfor %}</div>
+            <div class="col-12"><label class="form-label small" for="{{ iform.dish.id_for_label }}">Dish</label>{{ iform.dish }}</div>
+            <div class="col-7"><label class="form-label small" for="{{ iform.ingredient.id_for_label }}">…or single ingredient</label>{{ iform.ingredient }}</div>
+            <div class="col-5"><label class="form-label small" for="{{ iform.style.id_for_label }}">Preparation</label>{{ iform.style }}</div>
+            <div class="col-12"><button class="btn btn-primary btn-sm">Add food</button></div>
+          </form>
+        </div></div>
+        <div class="col-md-5"><div class="panel h-100">
+          <h2 class="h6 fw-semibold">Add a supplement</h2>
+          <form method="post" class="row g-2">{% csrf_token %}<input type="hidden" name="action" value="supp">
+            <div class="col-12"><label class="form-label small" for="{{ sform.supplement.id_for_label }}">Supplement</label>{{ sform.supplement }}</div>
+            <div class="col-6"><label class="form-label small" for="{{ sform.doses.id_for_label }}">Doses</label>{{ sform.doses }}</div>
+            <div class="col-12"><button class="btn btn-outline-primary btn-sm">Add supplement</button></div>
+          </form>
+        </div></div>
+      </div>
+
+      <div class="panel">
+        <div class="d-flex justify-content-between align-items-center"><h2 class="h5 mb-0"><i class="bi bi-chat-square-text me-2"></i>Ask the nutrition assistant</h2><span class="pill pill-good"><i class="bi bi-shield-lock me-1"></i>aggregated data only</span></div>
+        <p class="small text-secondary mt-1">Only the computed totals, foods and percentages are sent to Claude; the participant code, date and notes stay on this server. Arabic or English.</p>
+        <div class="chat-box mb-2" id="chat"></div>
+        <form id="askForm" class="d-flex gap-2">
+          <input class="form-control" id="q" placeholder="e.g. Which foods contribute most saturated fat today? ما مصدر الصوديوم الأعلى؟" aria-label="Question" {% if not AI_ENABLED %}disabled{% endif %}>
+          <button class="btn btn-primary" {% if not AI_ENABLED %}disabled{% endif %}>Ask</button>
+        </form>
+        {% if not AI_ENABLED %}<div class="small text-secondary mt-2">Set <code>ANTHROPIC_API_KEY</code> on the server to enable the assistant.</div>{% endif %}
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="panel mb-4">
+        <h2 class="h6 fw-semibold">Energy sources</h2>
+        <div style="height:190px"><canvas id="macro" role="img" aria-label="Energy split"></canvas></div>
+        <h2 class="h6 fw-semibold mt-3">Fatty acids, % of energy</h2>
+        <div style="height:150px"><canvas id="fa" role="img" aria-label="Fatty acids as percent of energy"></canvas></div>
+        <p class="small text-secondary mb-0">Dashed line: WHO limit of 10% of energy from saturated fat.</p>
+      </div>
+      <div class="panel mb-4">
+        <h2 class="h6 fw-semibold">Share of reference values <span class="small text-secondary fw-normal">(incl. supplements)</span></h2>
+        {% for p in s.pct %}<div class="dv-row"><span>{{ p.n.label }}</span><div class="progress progress-thin"><div class="progress-bar {% if p.n.upper and p.pct > 100 %}bg-danger{% elif p.pct > 100 %}bg-warning{% else %}bg-primary{% endif %}" style="width:{% if p.pct > 100 %}100{% else %}{{ p.pct|floatformat:0 }}{% endif %}%"></div></div><span class="pct">{{ p.pct|floatformat:0 }}%</span></div>{% endfor %}
+      </div>
+      <div class="panel">
+        <h2 class="h6 fw-semibold">Energy by meal</h2>
+        <div style="height:170px"><canvas id="meals" role="img" aria-label="Energy by meal"></canvas></div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ chart_json|json_script:"anv-chart" }}
+{% endblock %}
+{% block scripts %}
+<script>
+(function(){
+  const D = JSON.parse(JSON.parse(document.getElementById("anv-chart").textContent)), C = window.ANV_COLORS;
+  new Chart(document.getElementById("macro"), {type:"doughnut", data:{labels:Object.keys(D.macro), datasets:[{data:Object.values(D.macro).map(v=>+v.toFixed(1)), backgroundColor:[C.blue,C.gold,C.olive], borderColor:"#fff"}]}, options:{maintainAspectRatio:false, cutout:"60%", plugins:{legend:{position:"right"}, tooltip:{callbacks:{label:c=>`${c.label}: ${c.raw}% of energy`}}}}});
+  const limit = {id:"limit", afterDraw(ch){ const x = ch.scales.x.getPixelForValue(10), {top,bottom} = ch.chartArea, g = ch.ctx; g.save(); g.setLineDash([4,3]); g.strokeStyle = C.rose; g.beginPath(); g.moveTo(x,top); g.lineTo(x,bottom); g.stroke(); g.restore(); }};
+  new Chart(document.getElementById("fa"), {type:"bar", data:{labels:Object.keys(D.fa), datasets:[{data:Object.values(D.fa).map(v=>+v.toFixed(1)), backgroundColor:[C.rose,C.olive,C.blue]}]}, options:{indexAxis:"y", maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{beginAtZero:true, suggestedMax:15}}}, plugins:[limit]});
+  new Chart(document.getElementById("meals"), {type:"bar", data:{labels:Object.keys(D.meals), datasets:[{data:Object.values(D.meals), backgroundColor:C.navy}]}, options:{maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true}}}});
+  const form = document.getElementById("askForm"), chat = document.getElementById("chat"), q = document.getElementById("q");
+  const add = (cls, text) => { const d = document.createElement("div"); d.className = "chat-msg " + cls; d.textContent = text; chat.append(d); chat.scrollTop = chat.scrollHeight; return d; };
+  form.onsubmit = async e => { e.preventDefault(); const text = q.value.trim(); if (!text) return; add("q", text); q.value = ""; const a = add("a", "Thinking…");
+    const fd = new FormData(); fd.append("question", text);
+    try { const r = await fetch("{% url 'nutrition:assistant' rec.pk %}", {method:"POST", body:fd, headers:{"X-CSRFToken":"{{ csrf_token }}"}}); const j = await r.json(); a.textContent = j.answer || j.error; }
+    catch(err) { a.textContent = "The assistant could not be reached. Try again."; } };
+})();
+</script>
+{% endblock %}

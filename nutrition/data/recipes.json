@@ -1,0 +1,115 @@
+{
+  "_note": "Draft standard recipes (raw edible weights in grams per batch) and cooked batch weight. Variants capture home / restaurant / lighter preparation so the hidden-fat spread becomes an uncertainty interval. ALL values are provisional and must be replaced by recipes weighed in the ArabFood-N cooking sessions.",
+  "dishes": [
+    {"id": "maqluba", "en": "Maqluba (chicken, eggplant, cauliflower)", "ar": "مقلوبة", "category": "Main dish", "serving_g": 400,
+     "variants": {
+       "home": {"cooked_g": 3000, "ing": {"rice_white_raw": 500, "water": 900, "chicken_skin_raw": 900, "eggplant": 600, "cauliflower": 500, "veg_oil": 120, "onion": 150, "tomato": 200, "salt": 15, "spice_mix": 10, "almonds": 30}},
+       "restaurant": {"cooked_g": 3000, "ing": {"rice_white_raw": 500, "water": 900, "chicken_skin_raw": 900, "eggplant": 600, "cauliflower": 500, "veg_oil": 200, "ghee": 40, "onion": 150, "tomato": 200, "salt": 18, "spice_mix": 10, "almonds": 50, "pine_nuts": 20}},
+       "light": {"cooked_g": 2950, "ing": {"rice_white_raw": 500, "water": 900, "chicken_breast_raw": 900, "eggplant": 600, "cauliflower": 500, "olive_oil": 50, "onion": 150, "tomato": 200, "salt": 12, "spice_mix": 10}}}},
+    {"id": "mansaf", "en": "Mansaf (lamb, jameed, rice, shrak)", "ar": "منسف", "category": "Main dish", "serving_g": 450,
+     "variants": {
+       "home": {"cooked_g": 5200, "ing": {"lamb_raw": 1500, "jameed_sauce": 2000, "rice_white_raw": 600, "water": 1100, "ghee": 60, "shrak_bread": 200, "almonds": 40, "pine_nuts": 20, "salt": 5}},
+       "restaurant": {"cooked_g": 5200, "ing": {"lamb_raw": 1500, "jameed_sauce": 2000, "rice_white_raw": 600, "water": 1100, "ghee": 120, "shrak_bread": 200, "almonds": 60, "pine_nuts": 30, "salt": 8}},
+       "light": {"cooked_g": 5100, "ing": {"lamb_raw": 1300, "jameed_sauce": 2000, "rice_white_raw": 600, "water": 1100, "ghee": 25, "shrak_bread": 200, "almonds": 20, "salt": 5}}}},
+    {"id": "musakhan", "en": "Musakhan (chicken, onion, sumac, taboon)", "ar": "مسخن", "category": "Main dish", "serving_g": 300,
+     "variants": {
+       "home": {"cooked_g": 2300, "ing": {"chicken_skin_raw": 1200, "onion": 1000, "olive_oil": 200, "sumac": 30, "taboon_bread": 500, "pine_nuts": 30, "salt": 12, "spice_mix": 8}},
+       "restaurant": {"cooked_g": 2300, "ing": {"chicken_skin_raw": 1200, "onion": 1000, "olive_oil": 320, "sumac": 30, "taboon_bread": 500, "pine_nuts": 50, "salt": 14, "spice_mix": 8}},
+       "light": {"cooked_g": 2200, "ing": {"chicken_breast_raw": 1200, "onion": 1000, "olive_oil": 100, "sumac": 30, "taboon_bread": 500, "salt": 10, "spice_mix": 8}}}},
+    {"id": "mulukhiyah", "en": "Mulukhiyah with chicken (stew only)", "ar": "ملوخية بالدجاج", "category": "Stew", "serving_g": 350,
+     "variants": {
+       "home": {"cooked_g": 3200, "ing": {"jute_leaves": 800, "chicken_skin_raw": 800, "water": 1800, "garlic": 60, "olive_oil": 40, "lemon_juice": 40, "salt": 14, "spice_mix": 5}},
+       "restaurant": {"cooked_g": 3200, "ing": {"jute_leaves": 800, "chicken_skin_raw": 800, "water": 1800, "garlic": 60, "ghee": 60, "olive_oil": 30, "lemon_juice": 40, "salt": 16, "spice_mix": 5}},
+       "light": {"cooked_g": 3150, "ing": {"jute_leaves": 800, "chicken_breast_raw": 800, "water": 1800, "garlic": 60, "olive_oil": 20, "lemon_juice": 40, "salt": 10, "spice_mix": 5}}}},
+    {"id": "kabsa", "en": "Chicken kabsa", "ar": "كبسة دجاج", "category": "Main dish", "serving_g": 400,
+     "variants": {
+       "home": {"cooked_g": 2900, "ing": {"rice_white_raw": 600, "water": 1000, "chicken_skin_raw": 900, "onion": 200, "tomato": 250, "tomato_paste": 30, "veg_oil": 60, "spice_mix": 15, "salt": 15, "almonds": 20}},
+       "restaurant": {"cooked_g": 2900, "ing": {"rice_white_raw": 600, "water": 1000, "chicken_skin_raw": 900, "onion": 200, "tomato": 250, "tomato_paste": 30, "veg_oil": 100, "ghee": 40, "spice_mix": 15, "salt": 18, "almonds": 40}},
+       "light": {"cooked_g": 2850, "ing": {"rice_white_raw": 600, "water": 1000, "chicken_breast_raw": 900, "onion": 200, "tomato": 250, "tomato_paste": 30, "olive_oil": 30, "spice_mix": 15, "salt": 12}}}},
+    {"id": "mujaddara", "en": "Mujaddara (lentils, rice/bulgur, fried onion)", "ar": "مجدرة", "category": "Main dish", "serving_g": 300,
+     "variants": {
+       "home": {"cooked_g": 1700, "ing": {"lentils_dry": 250, "rice_white_raw": 200, "water": 1100, "onion": 400, "olive_oil": 100, "salt": 10, "spice_mix": 5}},
+       "restaurant": {"cooked_g": 1700, "ing": {"lentils_dry": 250, "rice_white_raw": 200, "water": 1100, "onion": 400, "olive_oil": 80, "veg_oil": 80, "salt": 12, "spice_mix": 5}},
+       "light": {"cooked_g": 1650, "ing": {"lentils_dry": 250, "bulgur_raw": 200, "water": 1100, "onion": 300, "olive_oil": 40, "salt": 8, "spice_mix": 5}}}},
+    {"id": "warak_enab", "en": "Warak enab (vegetarian stuffed vine leaves)", "ar": "ورق عنب", "category": "Mezze", "serving_g": 150,
+     "variants": {
+       "home": {"cooked_g": 1500, "ing": {"vine_leaves": 250, "rice_white_raw": 300, "water": 600, "tomato": 250, "parsley": 60, "mint": 15, "onion": 100, "olive_oil": 120, "lemon_juice": 80, "salt": 10}},
+       "restaurant": {"cooked_g": 1500, "ing": {"vine_leaves": 250, "rice_white_raw": 300, "water": 600, "tomato": 250, "parsley": 60, "mint": 15, "onion": 100, "olive_oil": 200, "lemon_juice": 80, "salt": 12}},
+       "light": {"cooked_g": 1480, "ing": {"vine_leaves": 250, "rice_white_raw": 300, "water": 600, "tomato": 250, "parsley": 60, "mint": 15, "onion": 100, "olive_oil": 60, "lemon_juice": 80, "salt": 8}}}},
+    {"id": "kofta_tahini", "en": "Kofta bil tahini (oven, with potato)", "ar": "كفتة بالطحينة", "category": "Main dish", "serving_g": 300,
+     "variants": {
+       "home": {"cooked_g": 2000, "ing": {"beef_ground_raw": 800, "onion": 150, "parsley": 50, "potato": 600, "tahini": 150, "lemon_juice": 60, "water": 300, "veg_oil": 40, "salt": 12, "spice_mix": 8}},
+       "restaurant": {"cooked_g": 2000, "ing": {"lamb_ground_raw": 800, "onion": 150, "parsley": 50, "potato": 600, "tahini": 200, "lemon_juice": 60, "water": 300, "veg_oil": 80, "salt": 14, "spice_mix": 8}},
+       "light": {"cooked_g": 1950, "ing": {"beef_ground_raw": 800, "onion": 150, "parsley": 50, "potato": 600, "tahini": 100, "lemon_juice": 60, "water": 300, "salt": 10, "spice_mix": 8}}}},
+    {"id": "chicken_shawarma_wrap", "en": "Chicken shawarma wrap (with toum)", "ar": "شاورما دجاج", "category": "Sandwich", "serving_g": 250,
+     "variants": {
+       "home": {"cooked_g": 1000, "ing": {"chicken_thigh_raw": 600, "pita_bread": 240, "veg_oil": 40, "garlic": 20, "yogurt_full": 60, "tomato": 80, "lettuce": 40, "spice_mix": 8, "salt": 6, "lemon_juice": 20}},
+       "restaurant": {"cooked_g": 1000, "ing": {"chicken_thigh_raw": 600, "pita_bread": 240, "veg_oil": 110, "garlic": 25, "potato": 80, "tomato": 60, "spice_mix": 8, "salt": 8, "lemon_juice": 20}},
+       "light": {"cooked_g": 1000, "ing": {"chicken_breast_raw": 600, "pita_bread": 240, "olive_oil": 15, "yogurt_full": 80, "tomato": 100, "lettuce": 60, "spice_mix": 8, "salt": 5, "lemon_juice": 20}}}},
+    {"id": "ruz_shaariyeh", "en": "Rice with vermicelli", "ar": "رز بالشعيرية", "category": "Side", "serving_g": 200,
+     "variants": {
+       "home": {"cooked_g": 1500, "ing": {"rice_white_raw": 450, "vermicelli_raw": 50, "water": 950, "butter": 30, "veg_oil": 20, "salt": 8}},
+       "restaurant": {"cooked_g": 1500, "ing": {"rice_white_raw": 450, "vermicelli_raw": 60, "water": 950, "ghee": 50, "veg_oil": 20, "salt": 9}},
+       "light": {"cooked_g": 1480, "ing": {"rice_white_raw": 450, "vermicelli_raw": 40, "water": 950, "olive_oil": 15, "salt": 6}}}},
+    {"id": "hummus", "en": "Hummus", "ar": "حمص", "category": "Mezze", "serving_g": 150,
+     "variants": {
+       "home": {"cooked_g": 1000, "ing": {"chickpeas_cooked": 600, "tahini": 150, "lemon_juice": 80, "garlic": 10, "water": 100, "olive_oil": 40, "salt": 8}},
+       "restaurant": {"cooked_g": 1000, "ing": {"chickpeas_cooked": 560, "tahini": 180, "lemon_juice": 70, "garlic": 10, "water": 90, "olive_oil": 80, "salt": 10}},
+       "light": {"cooked_g": 1000, "ing": {"chickpeas_cooked": 650, "tahini": 100, "lemon_juice": 90, "garlic": 10, "water": 140, "olive_oil": 10, "salt": 6}}}},
+    {"id": "mutabbal", "en": "Mutabbal (eggplant with tahini)", "ar": "متبل", "category": "Mezze", "serving_g": 150,
+     "variants": {
+       "home": {"cooked_g": 800, "ing": {"eggplant": 900, "tahini": 100, "yogurt_full": 60, "lemon_juice": 40, "garlic": 10, "olive_oil": 30, "salt": 6}},
+       "restaurant": {"cooked_g": 800, "ing": {"eggplant": 850, "tahini": 130, "yogurt_full": 50, "lemon_juice": 40, "garlic": 10, "olive_oil": 60, "salt": 7}},
+       "light": {"cooked_g": 800, "ing": {"eggplant": 950, "tahini": 60, "yogurt_full": 80, "lemon_juice": 40, "garlic": 10, "olive_oil": 10, "salt": 5}}}},
+    {"id": "tabbouleh", "en": "Tabbouleh", "ar": "تبولة", "category": "Salad", "serving_g": 150,
+     "variants": {
+       "home": {"cooked_g": 900, "ing": {"parsley": 400, "mint": 30, "tomato": 250, "onion": 50, "bulgur_raw": 50, "lemon_juice": 80, "olive_oil": 70, "salt": 6}},
+       "restaurant": {"cooked_g": 900, "ing": {"parsley": 350, "mint": 30, "tomato": 250, "onion": 50, "bulgur_raw": 70, "lemon_juice": 70, "olive_oil": 110, "salt": 7}},
+       "light": {"cooked_g": 900, "ing": {"parsley": 420, "mint": 30, "tomato": 280, "onion": 50, "bulgur_raw": 40, "lemon_juice": 80, "olive_oil": 30, "salt": 5}}}},
+    {"id": "fattoush", "en": "Fattoush (with fried bread)", "ar": "فتوش", "category": "Salad", "serving_g": 200,
+     "variants": {
+       "home": {"cooked_g": 1100, "ing": {"lettuce": 300, "tomato": 250, "cucumber": 250, "onion": 50, "parsley": 50, "mint": 15, "pita_bread": 100, "veg_oil": 30, "olive_oil": 50, "lemon_juice": 50, "sumac": 10, "salt": 6}},
+       "restaurant": {"cooked_g": 1100, "ing": {"lettuce": 280, "tomato": 230, "cucumber": 230, "onion": 50, "parsley": 50, "mint": 15, "pita_bread": 130, "veg_oil": 60, "olive_oil": 80, "lemon_juice": 50, "sumac": 10, "salt": 8}},
+       "light": {"cooked_g": 1100, "ing": {"lettuce": 320, "tomato": 260, "cucumber": 270, "onion": 50, "parsley": 50, "mint": 15, "pita_bread": 70, "olive_oil": 30, "lemon_juice": 50, "sumac": 10, "salt": 5}}}},
+    {"id": "falafel", "en": "Falafel (deep fried)", "ar": "فلافل", "category": "Mezze", "serving_g": 100,
+     "variants": {
+       "home": {"cooked_g": 900, "ing": {"chickpeas_dry": 400, "onion": 100, "parsley": 60, "garlic": 15, "spice_mix": 10, "salt": 8, "water": 300, "veg_oil": 130}},
+       "restaurant": {"cooked_g": 900, "ing": {"chickpeas_dry": 380, "onion": 100, "parsley": 60, "garlic": 15, "spice_mix": 10, "salt": 9, "water": 300, "veg_oil": 180}},
+       "light": {"cooked_g": 860, "ing": {"chickpeas_dry": 420, "onion": 100, "parsley": 60, "garlic": 15, "spice_mix": 10, "salt": 6, "water": 300, "olive_oil": 40}}}},
+    {"id": "foul", "en": "Foul mudammas", "ar": "فول مدمس", "category": "Breakfast", "serving_g": 200,
+     "variants": {
+       "home": {"cooked_g": 800, "ing": {"fava_cooked": 600, "lemon_juice": 40, "garlic": 10, "olive_oil": 50, "tomato": 80, "salt": 6, "spice_mix": 3}},
+       "restaurant": {"cooked_g": 800, "ing": {"fava_cooked": 560, "tahini": 40, "lemon_juice": 40, "garlic": 10, "olive_oil": 80, "tomato": 60, "salt": 8, "spice_mix": 3}},
+       "light": {"cooked_g": 800, "ing": {"fava_cooked": 640, "lemon_juice": 40, "garlic": 10, "olive_oil": 15, "tomato": 100, "salt": 5, "spice_mix": 3}}}},
+    {"id": "manakish_zaatar", "en": "Manakish za'atar", "ar": "مناقيش زعتر", "category": "Bakery", "serving_g": 120,
+     "variants": {
+       "home": {"cooked_g": 1000, "ing": {"flour_white": 500, "water": 300, "olive_oil": 120, "zaatar_mix": 80, "salt": 8, "sugar": 10}},
+       "restaurant": {"cooked_g": 1000, "ing": {"flour_white": 480, "water": 290, "olive_oil": 170, "zaatar_mix": 90, "salt": 9, "sugar": 10}},
+       "light": {"cooked_g": 980, "ing": {"flour_white": 520, "water": 320, "olive_oil": 70, "zaatar_mix": 70, "salt": 7, "sugar": 8}}}},
+    {"id": "fatayer_spinach", "en": "Fatayer bi sabanekh (spinach pies)", "ar": "فطاير سبانخ", "category": "Bakery", "serving_g": 150,
+     "variants": {
+       "home": {"cooked_g": 1300, "ing": {"flour_white": 500, "water": 280, "veg_oil": 60, "spinach": 700, "onion": 150, "olive_oil": 60, "lemon_juice": 50, "sumac": 15, "salt": 12}},
+       "restaurant": {"cooked_g": 1300, "ing": {"flour_white": 500, "water": 280, "veg_oil": 90, "spinach": 650, "onion": 150, "olive_oil": 90, "lemon_juice": 50, "sumac": 15, "salt": 14}},
+       "light": {"cooked_g": 1300, "ing": {"flour_white": 500, "water": 290, "olive_oil": 50, "spinach": 750, "onion": 150, "lemon_juice": 50, "sumac": 15, "salt": 10}}}},
+    {"id": "knafeh", "en": "Knafeh nabulsieh", "ar": "كنافة نابلسية", "category": "Dessert", "serving_g": 150,
+     "variants": {
+       "home": {"cooked_g": 1700, "ing": {"kataifi": 500, "ghee": 200, "white_cheese": 600, "sugar": 400, "water": 250, "pine_nuts": 0}},
+       "restaurant": {"cooked_g": 1700, "ing": {"kataifi": 500, "ghee": 280, "white_cheese": 600, "sugar": 450, "water": 250}},
+       "light": {"cooked_g": 1650, "ing": {"kataifi": 500, "ghee": 130, "white_cheese": 600, "sugar": 300, "water": 250}}}},
+    {"id": "basbousa", "en": "Basbousa / hareeseh", "ar": "هريسة / بسبوسة", "category": "Dessert", "serving_g": 80,
+     "variants": {
+       "home": {"cooked_g": 1500, "ing": {"semolina": 500, "sugar": 450, "yogurt_full": 250, "butter": 120, "coconut": 50, "almonds": 30, "water": 250}},
+       "restaurant": {"cooked_g": 1500, "ing": {"semolina": 500, "sugar": 500, "yogurt_full": 200, "ghee": 160, "coconut": 60, "almonds": 30, "water": 250}},
+       "light": {"cooked_g": 1450, "ing": {"semolina": 500, "sugar": 330, "yogurt_full": 300, "butter": 70, "almonds": 20, "water": 250}}}},
+    {"id": "freekeh_chicken", "en": "Freekeh with chicken", "ar": "فريكة بالدجاج", "category": "Main dish", "serving_g": 350,
+     "variants": {
+       "home": {"cooked_g": 2700, "ing": {"freekeh_raw": 500, "water": 1100, "chicken_skin_raw": 900, "onion": 150, "ghee": 40, "veg_oil": 20, "salt": 14, "spice_mix": 8, "almonds": 30}},
+       "restaurant": {"cooked_g": 2700, "ing": {"freekeh_raw": 500, "water": 1100, "chicken_skin_raw": 900, "onion": 150, "ghee": 90, "veg_oil": 30, "salt": 16, "spice_mix": 8, "almonds": 50, "pine_nuts": 20}},
+       "light": {"cooked_g": 2650, "ing": {"freekeh_raw": 500, "water": 1100, "chicken_breast_raw": 900, "onion": 150, "olive_oil": 25, "salt": 10, "spice_mix": 8}}}},
+    {"id": "fattet_hummus", "en": "Fatteh hummus", "ar": "فتة حمص", "category": "Breakfast", "serving_g": 250,
+     "variants": {
+       "home": {"cooked_g": 1300, "ing": {"chickpeas_cooked": 450, "pita_bread": 200, "yogurt_full": 400, "tahini": 80, "garlic": 10, "lemon_juice": 30, "ghee": 40, "pine_nuts": 30, "salt": 7}},
+       "restaurant": {"cooked_g": 1300, "ing": {"chickpeas_cooked": 420, "pita_bread": 220, "veg_oil": 50, "yogurt_full": 380, "tahini": 100, "garlic": 10, "lemon_juice": 30, "ghee": 70, "pine_nuts": 40, "salt": 8}},
+       "light": {"cooked_g": 1300, "ing": {"chickpeas_cooked": 480, "pita_bread": 180, "yogurt_full": 450, "tahini": 50, "garlic": 10, "lemon_juice": 30, "olive_oil": 15, "salt": 6}}}}
+  ]
+}

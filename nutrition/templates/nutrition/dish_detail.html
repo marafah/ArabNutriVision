@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}{{ p.name }}{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb"><ol class="breadcrumb small"><li class="breadcrumb-item"><a href="{% url 'nutrition:dishes' %}">Composition table</a></li><li class="breadcrumb-item active">{{ dish.short_name }}</li></ol></nav>
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <div class="panel">
+        <div class="eyebrow">{{ dish.category }} · typical serving {{ dish.serving_g }} g{% if dish.is_custom %} · user recipe{% endif %}</div>
+        <h1 class="h2 mb-0">{{ dish.name_en }}</h1>
+        <div class="fs-4 text-secondary" lang="ar" dir="rtl">{{ dish.name_ar }}</div>
+        <div class="d-flex flex-wrap gap-2 my-2">
+          <span class="pill pill-rose">{{ p.energy_from_fat_pct }}% of energy from fat</span>
+          <span class="pill pill-demo">variant spread {{ p.spread_pct }}%</span>
+          {% if p.gi %}<span class="pill pill-good">GI ≈ {{ p.gi }} · GL/serving {{ gl }}</span>{% endif %}
+          {% if p.has_estimates %}<span class="pill pill-est">contains placeholder values</span>{% endif %}
+        </div>
+        <div class="d-flex align-items-baseline gap-2 mt-3"><span class="kcal-big">{{ p.mean.kcal|floatformat:0 }}</span><span class="text-secondary">kcal / 100 g · range {{ p.low.kcal|floatformat:0 }}–{{ p.high.kcal|floatformat:0 }}</span></div>
+        <div style="height:220px" class="mt-3"><canvas id="varChart" aria-label="Energy and fat by recipe variant" role="img"></canvas></div>
+        <div class="d-flex gap-2 mt-3">
+          <a class="btn btn-rose btn-sm" href="{% url 'nutrition:analyze' %}"><i class="bi bi-camera me-1"></i>Analyze a photo</a>
+        </div>
+      </div>
+
+      <div class="panel mt-4">
+        <div class="eyebrow mb-1">Hidden-fat sensitivity</div>
+        <h2 class="h5">What if the cook adds more oil?</h2>
+        <p class="small text-secondary">Extra oil or ghee per batch of the home recipe ({{ home_cooked_g|floatformat:0 }} g cooked). Fat is invisible once absorbed by rice or bread.</p>
+        <label for="oil" class="form-label small">Extra fat per batch: <b id="oilOut">50 g</b></label>
+        <input type="range" class="form-range" id="oil" min="0" max="300" step="10" value="50">
+        <div class="row g-2 text-center">
+          <div class="col-6"><div class="border rounded-3 p-2"><div class="small text-secondary">per 100 g</div><div class="fs-5 fw-semibold num" id="oilPer100"></div></div></div>
+          <div class="col-6"><div class="border rounded-3 p-2"><div class="small text-secondary">per {{ dish.serving_g }} g serving</div><div class="fs-5 fw-semibold num text-rose" id="oilServ"></div></div></div>
+        </div>
+      </div>
+
+      {% if gap %}
+      <div class="panel mt-4">
+        <div class="eyebrow mb-1">Restaurant minus light recipe</div>
+        <h2 class="h5">What drives the energy gap</h2>
+        {% for k, v in gap.items %}
+        <div class="d-flex justify-content-between small border-bottom py-1"><span>{{ k }}</span><span class="mono {% if v < 0 %}text-success{% endif %}">{{ v|floatformat:1 }} kcal/100 g</span></div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="col-lg-7">
+      <div class="panel">
+        <div class="eyebrow mb-2">Per 100 g by recipe variant</div>
+        <div class="table-responsive">
+          <table class="table table-anv table-sm align-middle mb-0">
+            <thead><tr><th>Nutrient</th>{% for s in styles %}<th class="n text-capitalize">{{ s }}</th>{% endfor %}<th class="n">Mean</th></tr></thead>
+            {% for label, rows in groups %}
+            <tbody><tr><td colspan="{{ styles|length|add:2 }}" class="eyebrow pt-3">{{ label }}</td></tr>
+              {% for r in rows %}<tr><td>{{ r.n.label }} <span class="text-secondary small" lang="ar">{{ r.n.label_ar }}</span> <span class="text-secondary small">({{ r.n.unit }})</span></td>{% for v in r.variants %}<td class="n">{% if r.n.unit == 'g' %}{{ v|floatformat:1 }}{% else %}{{ v|floatformat:0 }}{% endif %}</td>{% endfor %}<td class="n fw-semibold">{% if r.n.unit == 'g' %}{{ r.mean|floatformat:1 }}{% else %}{{ r.mean|floatformat:0 }}{% endif %}</td></tr>{% endfor %}
+            </tbody>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+
+      <div class="panel mt-4">
+        <div class="eyebrow mb-2">Recipes · raw edible grams per batch</div>
+        <ul class="nav nav-pills mb-3" role="tablist">
+          {% for v in variants %}<li class="nav-item" role="presentation"><button class="nav-link btn-sm {% if forloop.first %}active{% endif %} text-capitalize" data-bs-toggle="pill" data-bs-target="#v{{ v.pk }}" type="button" role="tab">{{ v.style }}</button></li>{% endfor %}
+        </ul>
+        <div class="tab-content">
+          {% for v in variants %}
+          <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="v{{ v.pk }}" role="tabpanel">
+            <div class="small text-secondary mb-2">Cooked batch weight <b class="mono">{{ v.cooked_g|floatformat:0 }} g</b> · {{ v.source }}</div>
+            <div class="table-responsive"><table class="table table-anv table-sm mb-0"><thead><tr><th>Ingredient</th><th class="n">g</th><th class="n">kcal</th><th class="n">fat g</th><th>Source</th></tr></thead><tbody>
+              {% for l in v.lines.all %}<tr><td>{{ l.ingredient.name }}{% if l.ingredient.is_estimate %} <span class="pill pill-est">placeholder</span>{% endif %}</td><td class="n">{{ l.grams|floatformat:0 }}</td><td class="n">{% widthratio l.grams 100 l.ingredient.kcal %}</td><td class="n">{% widthratio l.grams 100 l.ingredient.fat_g %}</td><td class="small text-secondary">{{ l.ingredient.source_note|truncatechars:38 }}</td></tr>{% endfor %}
+            </tbody></table></div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ chart_json|json_script:"anv-chart" }}
+{% endblock %}
+{% block scripts %}
+<script>
+(function(){
+  const d = JSON.parse(JSON.parse(document.getElementById("anv-chart").textContent)), C = window.ANV_COLORS;
+  const order = ["light","home","restaurant","custom"].filter(s => d[s]);
+  new Chart(document.getElementById("varChart"), {type:"bar", data:{labels: order.map(s => s[0].toUpperCase()+s.slice(1)),
+    datasets:[{label:"Energy (kcal/100 g)", data: order.map(s => d[s].kcal), backgroundColor: C.navy, yAxisID:"y"},
+              {label:"Fat (g/100 g)", data: order.map(s => d[s].fat_g), backgroundColor: C.gold, yAxisID:"y1"}]},
+    options:{maintainAspectRatio:false, plugins:{legend:{position:"bottom"}}, scales:{y:{beginAtZero:true, title:{display:true,text:"kcal"}}, y1:{beginAtZero:true, position:"right", grid:{drawOnChartArea:false}, title:{display:true,text:"fat g"}}}}});
+  const cooked = {{ home_cooked_g|floatformat:"0"|default:"1000" }}, serv = {{ dish.serving_g }}, base = d.home ? d.home.kcal : d[order[0]].kcal;
+  const oil = document.getElementById("oil");
+  function upd(){ const g = +oil.value, add = g * 8.84 * 100 / cooked; document.getElementById("oilOut").textContent = g + " g";
+    document.getElementById("oilPer100").textContent = "+" + add.toFixed(0) + " kcal (" + (100*add/base).toFixed(0) + "%)";
+    document.getElementById("oilServ").textContent = "+" + (add*serv/100).toFixed(0) + " kcal"; }
+  oil.oninput = upd; upd();
+})();
+</script>
+{% endblock %}

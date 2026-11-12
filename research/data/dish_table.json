@@ -1,0 +1,1542 @@
+[
+ {
+  "id": "maqluba",
+  "en": "Maqluba (chicken, eggplant, cauliflower)",
+  "ar": "مقلوبة",
+  "category": "Main dish",
+  "serving_g": 400,
+  "per100": {
+   "kcal": 176.78,
+   "protein_g": 8.09,
+   "fat_g": 8.7,
+   "carb_g": 16.59,
+   "fiber_g": 1.54,
+   "sodium_mg": 220.25,
+   "iron_mg": 0.64,
+   "calcium_mg": 18.64
+  },
+  "per100_low": {
+   "kcal": 127.05,
+   "protein_g": 7.64,
+   "fat_g": 2.75,
+   "carb_g": 16.49,
+   "fiber_g": 1.44,
+   "sodium_mg": 178.47,
+   "iron_mg": 0.51,
+   "calcium_mg": 15.15
+  },
+  "per100_high": {
+   "kcal": 223.45,
+   "protein_g": 8.74,
+   "fat_g": 14.07,
+   "carb_g": 16.72,
+   "fiber_g": 1.65,
+   "sodium_mg": 260.54,
+   "iron_mg": 0.74,
+   "calcium_mg": 21.37
+  },
+  "variants": {
+   "home": {
+    "kcal": 179.85,
+    "protein_g": 7.64,
+    "fat_g": 9.29,
+    "carb_g": 16.49,
+    "fiber_g": 1.54,
+    "sodium_mg": 221.73,
+    "iron_mg": 0.68,
+    "calcium_mg": 19.39
+   },
+   "restaurant": {
+    "kcal": 223.45,
+    "protein_g": 7.88,
+    "fat_g": 14.07,
+    "carb_g": 16.72,
+    "fiber_g": 1.65,
+    "sodium_mg": 260.54,
+    "iron_mg": 0.74,
+    "calcium_mg": 21.37
+   },
+   "light": {
+    "kcal": 127.05,
+    "protein_g": 8.74,
+    "fat_g": 2.75,
+    "carb_g": 16.55,
+    "fiber_g": 1.44,
+    "sodium_mg": 178.47,
+    "iron_mg": 0.51,
+    "calcium_mg": 15.15
+   }
+  },
+  "energy_from_fat_pct": 44.3
+ },
+ {
+  "id": "mansaf",
+  "en": "Mansaf (lamb, jameed, rice, shrak)",
+  "ar": "منسف",
+  "category": "Main dish",
+  "serving_g": 450,
+  "per100": {
+   "kcal": 169.55,
+   "protein_g": 8.62,
+   "fat_g": 9.14,
+   "carb_g": 13.03,
+   "fiber_g": 0.34,
+   "sodium_mg": 350.63,
+   "iron_mg": 0.72,
+   "calcium_mg": 88.87
+  },
+  "per100_low": {
+   "kcal": 153.43,
+   "protein_g": 8.16,
+   "fat_g": 7.48,
+   "carb_g": 12.95,
+   "fiber_g": 0.29,
+   "sodium_mg": 341.73,
+   "iron_mg": 0.65,
+   "calcium_mg": 88.47
+  },
+  "per100_high": {
+   "kcal": 184.43,
+   "protein_g": 8.9,
+   "fat_g": 10.7,
+   "carb_g": 13.07,
+   "fiber_g": 0.4,
+   "sodium_mg": 364.12,
+   "iron_mg": 0.76,
+   "calcium_mg": 89.63
+  },
+  "variants": {
+   "home": {
+    "kcal": 170.8,
+    "protein_g": 8.79,
+    "fat_g": 9.23,
+    "carb_g": 12.95,
+    "fiber_g": 0.34,
+    "sodium_mg": 341.73,
+    "iron_mg": 0.74,
+    "calcium_mg": 88.51
+   },
+   "restaurant": {
+    "kcal": 184.43,
+    "protein_g": 8.9,
+    "fat_g": 10.7,
+    "carb_g": 13.06,
+    "fiber_g": 0.4,
+    "sodium_mg": 364.12,
+    "iron_mg": 0.76,
+    "calcium_mg": 89.63
+   },
+   "light": {
+    "kcal": 153.43,
+    "protein_g": 8.16,
+    "fat_g": 7.48,
+    "carb_g": 13.07,
+    "fiber_g": 0.29,
+    "sodium_mg": 346.05,
+    "iron_mg": 0.65,
+    "calcium_mg": 88.47
+   }
+  },
+  "energy_from_fat_pct": 48.5
+ },
+ {
+  "id": "musakhan",
+  "en": "Musakhan (chicken, onion, sumac, taboon)",
+  "ar": "مسخن",
+  "category": "Main dish",
+  "serving_g": 300,
+  "per100": {
+   "kcal": 266.03,
+   "protein_g": 13.28,
+   "fat_g": 16.17,
+   "carb_g": 17.24,
+   "fiber_g": 1.85,
+   "sodium_mg": 350.05,
+   "iron_mg": 1.37,
+   "calcium_mg": 33.92
+  },
+  "per100_low": {
+   "kcal": 189.68,
+   "protein_g": 12.4,
+   "fat_g": 6.58,
+   "carb_g": 17.01,
+   "fiber_g": 1.83,
+   "sodium_mg": 316.72,
+   "iron_mg": 1.14,
+   "calcium_mg": 32.52
+  },
+  "per100_high": {
+   "kcal": 330.19,
+   "protein_g": 14.91,
+   "fat_g": 23.87,
+   "carb_g": 17.6,
+   "fiber_g": 1.86,
+   "sodium_mg": 383.63,
+   "iron_mg": 1.52,
+   "calcium_mg": 34.72
+  },
+  "variants": {
+   "home": {
+    "kcal": 278.21,
+    "protein_g": 12.4,
+    "fat_g": 18.05,
+    "carb_g": 17.01,
+    "fiber_g": 1.83,
+    "sodium_mg": 349.81,
+    "iron_mg": 1.45,
+    "calcium_mg": 34.51
+   },
+   "restaurant": {
+    "kcal": 330.19,
+    "protein_g": 12.52,
+    "fat_g": 23.87,
+    "carb_g": 17.12,
+    "fiber_g": 1.86,
+    "sodium_mg": 383.63,
+    "iron_mg": 1.52,
+    "calcium_mg": 34.72
+   },
+   "light": {
+    "kcal": 189.68,
+    "protein_g": 14.91,
+    "fat_g": 6.58,
+    "carb_g": 17.6,
+    "fiber_g": 1.86,
+    "sodium_mg": 316.72,
+    "iron_mg": 1.14,
+    "calcium_mg": 32.52
+   }
+  },
+  "energy_from_fat_pct": 54.7
+ },
+ {
+  "id": "mulukhiyah",
+  "en": "Mulukhiyah with chicken (stew only)",
+  "ar": "ملوخية بالدجاج",
+  "category": "Stew",
+  "serving_g": 350,
+  "per100": {
+   "kcal": 71.89,
+   "protein_g": 6.33,
+   "fat_g": 4.4,
+   "carb_g": 2.26,
+   "fiber_g": 0.59,
+   "sodium_mg": 180.06,
+   "iron_mg": 1.48,
+   "calcium_mg": 58.78
+  },
+  "per100_low": {
+   "kcal": 48.32,
+   "protein_g": 5.97,
+   "fat_g": 1.4,
+   "carb_g": 2.25,
+   "fiber_g": 0.59,
+   "sodium_mg": 136.93,
+   "iron_mg": 1.41,
+   "calcium_mg": 58.34
+  },
+  "per100_high": {
+   "kcal": 90.5,
+   "protein_g": 7.05,
+   "fat_g": 6.68,
+   "carb_g": 2.29,
+   "fiber_g": 0.6,
+   "sodium_mg": 213.76,
+   "iron_mg": 1.51,
+   "calcium_mg": 59.05
+  },
+  "variants": {
+   "home": {
+    "kcal": 76.84,
+    "protein_g": 5.97,
+    "fat_g": 5.13,
+    "carb_g": 2.25,
+    "fiber_g": 0.59,
+    "sodium_mg": 189.5,
+    "iron_mg": 1.51,
+    "calcium_mg": 58.96
+   },
+   "restaurant": {
+    "kcal": 90.5,
+    "protein_g": 5.97,
+    "fat_g": 6.68,
+    "carb_g": 2.25,
+    "fiber_g": 0.59,
+    "sodium_mg": 213.76,
+    "iron_mg": 1.51,
+    "calcium_mg": 59.05
+   },
+   "light": {
+    "kcal": 48.32,
+    "protein_g": 7.05,
+    "fat_g": 1.4,
+    "carb_g": 2.29,
+    "fiber_g": 0.6,
+    "sodium_mg": 136.93,
+    "iron_mg": 1.41,
+    "calcium_mg": 58.34
+   }
+  },
+  "energy_from_fat_pct": 55.1
+ },
+ {
+  "id": "kabsa",
+  "en": "Chicken kabsa",
+  "ar": "كبسة دجاج",
+  "category": "Main dish",
+  "serving_g": 400,
+  "per100": {
+   "kcal": 167.2,
+   "protein_g": 8.09,
+   "fat_g": 6.62,
+   "carb_g": 18.29,
+   "fiber_g": 0.78,
+   "sodium_mg": 223.28,
+   "iron_mg": 0.65,
+   "calcium_mg": 15.55
+  },
+  "per100_low": {
+   "kcal": 130.87,
+   "protein_g": 7.64,
+   "fat_g": 2.1,
+   "carb_g": 18.18,
+   "fiber_g": 0.7,
+   "sodium_mg": 180.08,
+   "iron_mg": 0.53,
+   "calcium_mg": 12.56
+  },
+  "per100_high": {
+   "kcal": 199.5,
+   "protein_g": 8.85,
+   "fat_g": 10.42,
+   "carb_g": 18.35,
+   "fiber_g": 0.86,
+   "sodium_mg": 264.94,
+   "iron_mg": 0.72,
+   "calcium_mg": 18.01
+  },
+  "variants": {
+   "home": {
+    "kcal": 171.23,
+    "protein_g": 7.64,
+    "fat_g": 7.33,
+    "carb_g": 18.18,
+    "fiber_g": 0.77,
+    "sodium_mg": 224.81,
+    "iron_mg": 0.7,
+    "calcium_mg": 16.08
+   },
+   "restaurant": {
+    "kcal": 199.5,
+    "protein_g": 7.79,
+    "fat_g": 10.42,
+    "carb_g": 18.33,
+    "fiber_g": 0.86,
+    "sodium_mg": 264.94,
+    "iron_mg": 0.72,
+    "calcium_mg": 18.01
+   },
+   "light": {
+    "kcal": 130.87,
+    "protein_g": 8.85,
+    "fat_g": 2.1,
+    "carb_g": 18.35,
+    "fiber_g": 0.7,
+    "sodium_mg": 180.08,
+    "iron_mg": 0.53,
+    "calcium_mg": 12.56
+   }
+  },
+  "energy_from_fat_pct": 35.6
+ },
+ {
+  "id": "mujaddara",
+  "en": "Mujaddara (lentils, rice/bulgur, fried onion)",
+  "ar": "مجدرة",
+  "category": "Main dish",
+  "serving_g": 300,
+  "per100": {
+   "kcal": 156.53,
+   "protein_g": 4.98,
+   "fat_g": 6.23,
+   "carb_g": 20.96,
+   "fiber_g": 2.89,
+   "sodium_mg": 232.9,
+   "iron_mg": 1.29,
+   "calcium_mg": 15.19
+  },
+  "per100_low": {
+   "kcal": 124.4,
+   "protein_g": 4.74,
+   "fat_g": 2.8,
+   "carb_g": 20.68,
+   "fiber_g": 2.21,
+   "sodium_mg": 191.81,
+   "iron_mg": 1.21,
+   "calcium_mg": 15.08
+  },
+  "per100_high": {
+   "kcal": 188.2,
+   "protein_g": 5.45,
+   "fat_g": 9.71,
+   "carb_g": 21.1,
+   "fiber_g": 4.24,
+   "sodium_mg": 276.24,
+   "iron_mg": 1.43,
+   "calcium_mg": 15.25
+  },
+  "variants": {
+   "home": {
+    "kcal": 157.0,
+    "protein_g": 4.74,
+    "fat_g": 6.18,
+    "carb_g": 21.1,
+    "fiber_g": 2.21,
+    "sodium_mg": 230.66,
+    "iron_mg": 1.22,
+    "calcium_mg": 15.23
+   },
+   "restaurant": {
+    "kcal": 188.2,
+    "protein_g": 4.74,
+    "fat_g": 9.71,
+    "carb_g": 21.1,
+    "fiber_g": 2.21,
+    "sodium_mg": 276.24,
+    "iron_mg": 1.21,
+    "calcium_mg": 15.25
+   },
+   "light": {
+    "kcal": 124.4,
+    "protein_g": 5.45,
+    "fat_g": 2.8,
+    "carb_g": 20.68,
+    "fiber_g": 4.24,
+    "sodium_mg": 191.81,
+    "iron_mg": 1.43,
+    "calcium_mg": 15.08
+   }
+  },
+  "energy_from_fat_pct": 35.8
+ },
+ {
+  "id": "warak_enab",
+  "en": "Warak enab (vegetarian stuffed vine leaves)",
+  "ar": "ورق عنب",
+  "category": "Mezze",
+  "serving_g": 150,
+  "per100": {
+   "kcal": 172.73,
+   "protein_g": 2.77,
+   "fat_g": 9.04,
+   "carb_g": 21.02,
+   "fiber_g": 2.64,
+   "sodium_mg": 265.72,
+   "iron_mg": 1.02,
+   "calcium_mg": 78.17
+  },
+  "per100_low": {
+   "kcal": 134.64,
+   "protein_g": 2.76,
+   "fat_g": 4.64,
+   "carb_g": 20.92,
+   "fiber_g": 2.63,
+   "sodium_mg": 215.87,
+   "iron_mg": 1.0,
+   "calcium_mg": 77.81
+  },
+  "per100_high": {
+   "kcal": 215.35,
+   "protein_g": 2.79,
+   "fat_g": 13.91,
+   "carb_g": 21.21,
+   "fiber_g": 2.67,
+   "sodium_mg": 316.53,
+   "iron_mg": 1.04,
+   "calcium_mg": 78.79
+  },
+  "variants": {
+   "home": {
+    "kcal": 168.2,
+    "protein_g": 2.76,
+    "fat_g": 8.58,
+    "carb_g": 20.92,
+    "fiber_g": 2.63,
+    "sodium_mg": 264.75,
+    "iron_mg": 1.01,
+    "calcium_mg": 77.81
+   },
+   "restaurant": {
+    "kcal": 215.35,
+    "protein_g": 2.76,
+    "fat_g": 13.91,
+    "carb_g": 20.92,
+    "fiber_g": 2.63,
+    "sodium_mg": 316.53,
+    "iron_mg": 1.04,
+    "calcium_mg": 77.9
+   },
+   "light": {
+    "kcal": 134.64,
+    "protein_g": 2.79,
+    "fat_g": 4.64,
+    "carb_g": 21.21,
+    "fiber_g": 2.67,
+    "sodium_mg": 215.87,
+    "iron_mg": 1.0,
+    "calcium_mg": 78.79
+   }
+  },
+  "energy_from_fat_pct": 47.1
+ },
+ {
+  "id": "kofta_tahini",
+  "en": "Kofta bil tahini (oven, with potato)",
+  "ar": "كفتة بالطحينة",
+  "category": "Main dish",
+  "serving_g": 300,
+  "per100": {
+   "kcal": 197.87,
+   "protein_g": 8.96,
+   "fat_g": 14.68,
+   "carb_g": 8.05,
+   "fiber_g": 1.71,
+   "sodium_mg": 266.3,
+   "iron_mg": 1.93,
+   "calcium_mg": 49.92
+  },
+  "per100_low": {
+   "kcal": 164.32,
+   "protein_g": 8.76,
+   "fat_g": 11.07,
+   "carb_g": 7.65,
+   "fiber_g": 1.5,
+   "sodium_mg": 231.46,
+   "iron_mg": 1.78,
+   "calcium_mg": 40.18
+  },
+  "per100_high": {
+   "kcal": 236.52,
+   "protein_g": 9.15,
+   "fat_g": 18.84,
+   "carb_g": 8.52,
+   "fiber_g": 1.93,
+   "sodium_mg": 302.14,
+   "iron_mg": 2.06,
+   "calcium_mg": 59.72
+  },
+  "variants": {
+   "home": {
+    "kcal": 192.76,
+    "protein_g": 8.96,
+    "fat_g": 14.14,
+    "carb_g": 7.99,
+    "fiber_g": 1.7,
+    "sodium_mg": 265.3,
+    "iron_mg": 1.96,
+    "calcium_mg": 49.85
+   },
+   "restaurant": {
+    "kcal": 236.52,
+    "protein_g": 9.15,
+    "fat_g": 18.84,
+    "carb_g": 8.52,
+    "fiber_g": 1.93,
+    "sodium_mg": 302.14,
+    "iron_mg": 2.06,
+    "calcium_mg": 59.72
+   },
+   "light": {
+    "kcal": 164.32,
+    "protein_g": 8.76,
+    "fat_g": 11.07,
+    "carb_g": 7.65,
+    "fiber_g": 1.5,
+    "sodium_mg": 231.46,
+    "iron_mg": 1.78,
+    "calcium_mg": 40.18
+   }
+  },
+  "energy_from_fat_pct": 66.8
+ },
+ {
+  "id": "chicken_shawarma_wrap",
+  "en": "Chicken shawarma wrap (with toum)",
+  "ar": "شاورما دجاج",
+  "category": "Sandwich",
+  "serving_g": 250,
+  "per100": {
+   "kcal": 199.0,
+   "protein_g": 15.08,
+   "fat_g": 8.22,
+   "carb_g": 15.58,
+   "fiber_g": 1.03,
+   "sodium_mg": 424.77,
+   "iron_mg": 1.38,
+   "calcium_mg": 38.5
+  },
+  "per100_low": {
+   "kcal": 161.8,
+   "protein_g": 14.47,
+   "fat_g": 3.73,
+   "carb_g": 14.95,
+   "fiber_g": 1.0,
+   "sodium_mg": 354.54,
+   "iron_mg": 1.21,
+   "calcium_mg": 34.44
+  },
+  "per100_high": {
+   "kcal": 249.65,
+   "protein_g": 16.21,
+   "fat_g": 13.86,
+   "carb_g": 16.41,
+   "fiber_g": 1.07,
+   "sodium_mg": 497.33,
+   "iron_mg": 1.47,
+   "calcium_mg": 41.3
+  },
+  "variants": {
+   "home": {
+    "kcal": 185.56,
+    "protein_g": 14.55,
+    "fat_g": 7.07,
+    "carb_g": 15.37,
+    "fiber_g": 1.0,
+    "sodium_mg": 422.43,
+    "iron_mg": 1.45,
+    "calcium_mg": 41.3
+   },
+   "restaurant": {
+    "kcal": 249.65,
+    "protein_g": 14.47,
+    "fat_g": 13.86,
+    "carb_g": 16.41,
+    "fiber_g": 1.07,
+    "sodium_mg": 497.33,
+    "iron_mg": 1.47,
+    "calcium_mg": 34.44
+   },
+   "light": {
+    "kcal": 161.8,
+    "protein_g": 16.21,
+    "fat_g": 3.73,
+    "carb_g": 14.95,
+    "fiber_g": 1.02,
+    "sodium_mg": 354.54,
+    "iron_mg": 1.21,
+    "calcium_mg": 39.76
+   }
+  },
+  "energy_from_fat_pct": 37.2
+ },
+ {
+  "id": "ruz_shaariyeh",
+  "en": "Rice with vermicelli",
+  "ar": "رز بالشعيرية",
+  "category": "Side",
+  "serving_g": 200,
+  "per100": {
+   "kcal": 147.76,
+   "protein_g": 2.58,
+   "fat_g": 3.14,
+   "carb_g": 26.62,
+   "fiber_g": 0.5,
+   "sodium_mg": 200.6,
+   "iron_mg": 0.28,
+   "calcium_mg": 9.47
+  },
+  "per100_low": {
+   "kcal": 129.97,
+   "protein_g": 2.51,
+   "fat_g": 1.27,
+   "carb_g": 26.35,
+   "fiber_g": 0.48,
+   "sodium_mg": 158.83,
+   "iron_mg": 0.28,
+   "calcium_mg": 9.19
+  },
+  "per100_high": {
+   "kcal": 165.33,
+   "protein_g": 2.66,
+   "fat_g": 4.92,
+   "carb_g": 27.0,
+   "fiber_g": 0.52,
+   "sodium_mg": 234.35,
+   "iron_mg": 0.29,
+   "calcium_mg": 9.71
+  },
+  "variants": {
+   "home": {
+    "kcal": 147.99,
+    "protein_g": 2.58,
+    "fat_g": 3.22,
+    "carb_g": 26.5,
+    "fiber_g": 0.5,
+    "sodium_mg": 208.63,
+    "iron_mg": 0.28,
+    "calcium_mg": 9.71
+   },
+   "restaurant": {
+    "kcal": 165.33,
+    "protein_g": 2.66,
+    "fat_g": 4.92,
+    "carb_g": 27.0,
+    "fiber_g": 0.52,
+    "sodium_mg": 234.35,
+    "iron_mg": 0.29,
+    "calcium_mg": 9.52
+   },
+   "light": {
+    "kcal": 129.97,
+    "protein_g": 2.51,
+    "fat_g": 1.27,
+    "carb_g": 26.35,
+    "fiber_g": 0.48,
+    "sodium_mg": 158.83,
+    "iron_mg": 0.28,
+    "calcium_mg": 9.19
+   }
+  },
+  "energy_from_fat_pct": 19.1
+ },
+ {
+  "id": "hummus",
+  "en": "Hummus",
+  "ar": "حمص",
+  "category": "Mezze",
+  "serving_g": 150,
+  "per100": {
+   "kcal": 225.79,
+   "protein_g": 7.9,
+   "fat_g": 13.63,
+   "carb_g": 20.45,
+   "fiber_g": 5.96,
+   "sodium_mg": 319.64,
+   "iron_mg": 3.08,
+   "calcium_mg": 93.15
+  },
+  "per100_low": {
+   "kcal": 178.41,
+   "protein_g": 7.58,
+   "fat_g": 8.09,
+   "carb_g": 19.97,
+   "fiber_g": 5.92,
+   "sodium_mg": 240.88,
+   "iron_mg": 2.81,
+   "calcium_mg": 76.95
+  },
+  "per100_high": {
+   "kcal": 272.69,
+   "protein_g": 8.14,
+   "fat_g": 19.16,
+   "carb_g": 20.88,
+   "fiber_g": 6.0,
+   "sodium_mg": 398.2,
+   "iron_mg": 3.3,
+   "calcium_mg": 106.67
+  },
+  "variants": {
+   "home": {
+    "kcal": 226.26,
+    "protein_g": 7.99,
+    "fat_g": 13.65,
+    "carb_g": 20.5,
+    "fiber_g": 6.0,
+    "sodium_mg": 319.84,
+    "iron_mg": 3.12,
+    "calcium_mg": 95.82
+   },
+   "restaurant": {
+    "kcal": 272.69,
+    "protein_g": 8.14,
+    "fat_g": 19.16,
+    "carb_g": 19.97,
+    "fiber_g": 5.97,
+    "sodium_mg": 398.2,
+    "iron_mg": 3.3,
+    "calcium_mg": 106.67
+   },
+   "light": {
+    "kcal": 178.41,
+    "protein_g": 7.58,
+    "fat_g": 8.09,
+    "carb_g": 20.88,
+    "fiber_g": 5.92,
+    "sodium_mg": 240.88,
+    "iron_mg": 2.81,
+    "calcium_mg": 76.95
+   }
+  },
+  "energy_from_fat_pct": 54.3
+ },
+ {
+  "id": "mutabbal",
+  "en": "Mutabbal (eggplant with tahini)",
+  "ar": "متبل",
+  "category": "Mezze",
+  "serving_g": 150,
+  "per100": {
+   "kcal": 144.64,
+   "protein_g": 3.55,
+   "fat_g": 11.17,
+   "carb_g": 10.33,
+   "fiber_g": 4.54,
+   "sodium_mg": 301.15,
+   "iron_mg": 1.36,
+   "calcium_mg": 73.96
+  },
+  "per100_low": {
+   "kcal": 94.42,
+   "protein_g": 2.91,
+   "fat_g": 5.87,
+   "carb_g": 9.83,
+   "fiber_g": 4.3,
+   "sodium_mg": 252.12,
+   "iron_mg": 0.95,
+   "calcium_mg": 57.46
+  },
+  "per100_high": {
+   "kcal": 196.32,
+   "protein_g": 4.14,
+   "fat_g": 16.68,
+   "carb_g": 10.77,
+   "fiber_g": 4.74,
+   "sodium_mg": 350.23,
+   "iron_mg": 1.74,
+   "calcium_mg": 89.2
+  },
+  "variants": {
+   "home": {
+    "kcal": 143.19,
+    "protein_g": 3.61,
+    "fat_g": 10.96,
+    "carb_g": 10.4,
+    "fiber_g": 4.58,
+    "sodium_mg": 301.1,
+    "iron_mg": 1.39,
+    "calcium_mg": 75.23
+   },
+   "restaurant": {
+    "kcal": 196.32,
+    "protein_g": 4.14,
+    "fat_g": 16.68,
+    "carb_g": 10.77,
+    "fiber_g": 4.74,
+    "sodium_mg": 350.23,
+    "iron_mg": 1.74,
+    "calcium_mg": 89.2
+   },
+   "light": {
+    "kcal": 94.42,
+    "protein_g": 2.91,
+    "fat_g": 5.87,
+    "carb_g": 9.83,
+    "fiber_g": 4.3,
+    "sodium_mg": 252.12,
+    "iron_mg": 0.95,
+    "calcium_mg": 57.46
+   }
+  },
+  "energy_from_fat_pct": 69.5
+ },
+ {
+  "id": "tabbouleh",
+  "en": "Tabbouleh",
+  "ar": "تبولة",
+  "category": "Salad",
+  "serving_g": 150,
+  "per100": {
+   "kcal": 116.25,
+   "protein_g": 2.51,
+   "fat_g": 8.31,
+   "carb_g": 9.96,
+   "fiber_g": 3.24,
+   "sodium_mg": 286.6,
+   "iron_mg": 3.16,
+   "calcium_mg": 74.89
+  },
+  "per100_low": {
+   "kcal": 73.58,
+   "protein_g": 2.45,
+   "fat_g": 3.88,
+   "carb_g": 9.15,
+   "fiber_g": 3.11,
+   "sodium_mg": 245.18,
+   "iron_mg": 2.95,
+   "calcium_mg": 69.32
+  },
+  "per100_high": {
+   "kcal": 159.91,
+   "protein_g": 2.59,
+   "fat_g": 12.74,
+   "carb_g": 10.99,
+   "fiber_g": 3.42,
+   "sodium_mg": 327.52,
+   "iron_mg": 3.31,
+   "calcium_mg": 79.14
+  },
+  "variants": {
+   "home": {
+    "kcal": 115.27,
+    "protein_g": 2.49,
+    "fat_g": 8.31,
+    "carb_g": 9.73,
+    "fiber_g": 3.2,
+    "sodium_mg": 287.11,
+    "iron_mg": 3.21,
+    "calcium_mg": 76.2
+   },
+   "restaurant": {
+    "kcal": 159.91,
+    "protein_g": 2.59,
+    "fat_g": 12.74,
+    "carb_g": 10.99,
+    "fiber_g": 3.42,
+    "sodium_mg": 327.52,
+    "iron_mg": 2.95,
+    "calcium_mg": 69.32
+   },
+   "light": {
+    "kcal": 73.58,
+    "protein_g": 2.45,
+    "fat_g": 3.88,
+    "carb_g": 9.15,
+    "fiber_g": 3.11,
+    "sodium_mg": 245.18,
+    "iron_mg": 3.31,
+    "calcium_mg": 79.14
+   }
+  },
+  "energy_from_fat_pct": 64.3
+ },
+ {
+  "id": "fattoush",
+  "en": "Fattoush (with fried bread)",
+  "ar": "فتوش",
+  "category": "Salad",
+  "serving_g": 200,
+  "per100": {
+   "kcal": 111.73,
+   "protein_g": 1.81,
+   "fat_g": 8.02,
+   "carb_g": 9.32,
+   "fiber_g": 1.78,
+   "sodium_mg": 279.11,
+   "iron_mg": 1.12,
+   "calcium_mg": 36.52
+  },
+  "per100_low": {
+   "kcal": 62.17,
+   "protein_g": 1.61,
+   "fat_g": 3.15,
+   "carb_g": 7.97,
+   "fiber_g": 1.77,
+   "sodium_mg": 217.71,
+   "iron_mg": 1.06,
+   "calcium_mg": 35.13
+  },
+  "per100_high": {
+   "kcal": 163.92,
+   "protein_g": 2.01,
+   "fat_g": 13.2,
+   "carb_g": 10.65,
+   "fiber_g": 1.78,
+   "sodium_mg": 352.24,
+   "iron_mg": 1.18,
+   "calcium_mg": 37.88
+  },
+  "variants": {
+   "home": {
+    "kcal": 109.11,
+    "protein_g": 1.81,
+    "fat_g": 7.72,
+    "carb_g": 9.33,
+    "fiber_g": 1.78,
+    "sodium_mg": 267.38,
+    "iron_mg": 1.12,
+    "calcium_mg": 36.54
+   },
+   "restaurant": {
+    "kcal": 163.92,
+    "protein_g": 2.01,
+    "fat_g": 13.2,
+    "carb_g": 10.65,
+    "fiber_g": 1.77,
+    "sodium_mg": 352.24,
+    "iron_mg": 1.18,
+    "calcium_mg": 37.88
+   },
+   "light": {
+    "kcal": 62.17,
+    "protein_g": 1.61,
+    "fat_g": 3.15,
+    "carb_g": 7.97,
+    "fiber_g": 1.78,
+    "sodium_mg": 217.71,
+    "iron_mg": 1.06,
+    "calcium_mg": 35.13
+   }
+  },
+  "energy_from_fat_pct": 64.6
+ },
+ {
+  "id": "falafel",
+  "en": "Falafel (deep fried)",
+  "ar": "فلافل",
+  "category": "Mezze",
+  "serving_g": 100,
+  "per100": {
+   "kcal": 298.79,
+   "protein_g": 9.81,
+   "fat_g": 15.93,
+   "carb_g": 31.17,
+   "fiber_g": 6.3,
+   "sodium_mg": 350.13,
+   "iron_mg": 2.76,
+   "calcium_mg": 45.48
+  },
+  "per100_low": {
+   "kcal": 238.97,
+   "protein_g": 9.2,
+   "fat_g": 7.77,
+   "carb_g": 29.27,
+   "fiber_g": 5.93,
+   "sodium_mg": 287.47,
+   "iron_mg": 2.61,
+   "calcium_mg": 43.52
+  },
+  "per100_high": {
+   "kcal": 349.06,
+   "protein_g": 10.58,
+   "fat_g": 22.72,
+   "carb_g": 33.56,
+   "fiber_g": 6.77,
+   "sodium_mg": 402.73,
+   "iron_mg": 2.96,
+   "calcium_mg": 48.16
+  },
+  "variants": {
+   "home": {
+    "kcal": 308.35,
+    "protein_g": 9.65,
+    "fat_g": 17.3,
+    "carb_g": 30.67,
+    "fiber_g": 6.2,
+    "sodium_mg": 360.2,
+    "iron_mg": 2.71,
+    "calcium_mg": 44.76
+   },
+   "restaurant": {
+    "kcal": 349.06,
+    "protein_g": 9.2,
+    "fat_g": 22.72,
+    "carb_g": 29.27,
+    "fiber_g": 5.93,
+    "sodium_mg": 402.73,
+    "iron_mg": 2.61,
+    "calcium_mg": 43.52
+   },
+   "light": {
+    "kcal": 238.97,
+    "protein_g": 10.58,
+    "fat_g": 7.77,
+    "carb_g": 33.56,
+    "fiber_g": 6.77,
+    "sodium_mg": 287.47,
+    "iron_mg": 2.96,
+    "calcium_mg": 48.16
+   }
+  },
+  "energy_from_fat_pct": 48.0
+ },
+ {
+  "id": "foul",
+  "en": "Foul mudammas",
+  "ar": "فول مدمس",
+  "category": "Breakfast",
+  "serving_g": 200,
+  "per100": {
+   "kcal": 151.71,
+   "protein_g": 6.21,
+   "fat_g": 7.31,
+   "carb_g": 16.5,
+   "fiber_g": 4.48,
+   "sodium_mg": 312.24,
+   "iron_mg": 1.48,
+   "calcium_mg": 39.41
+  },
+  "per100_low": {
+   "kcal": 110.91,
+   "protein_g": 5.93,
+   "fat_g": 2.27,
+   "carb_g": 16.13,
+   "fiber_g": 4.32,
+   "sodium_mg": 247.35,
+   "iron_mg": 1.33,
+   "calcium_mg": 32.3
+  },
+  "per100_high": {
+   "kcal": 200.59,
+   "protein_g": 6.37,
+   "fat_g": 13.04,
+   "carb_g": 17.23,
+   "fiber_g": 4.62,
+   "sodium_mg": 393.85,
+   "iron_mg": 1.72,
+   "calcium_mg": 51.65
+  },
+  "variants": {
+   "home": {
+    "kcal": 143.64,
+    "protein_g": 5.93,
+    "fat_g": 6.62,
+    "carb_g": 16.15,
+    "fiber_g": 4.32,
+    "sodium_mg": 295.51,
+    "iron_mg": 1.33,
+    "calcium_mg": 32.3
+   },
+   "restaurant": {
+    "kcal": 200.59,
+    "protein_g": 6.37,
+    "fat_g": 13.04,
+    "carb_g": 16.13,
+    "fiber_g": 4.49,
+    "sodium_mg": 393.85,
+    "iron_mg": 1.72,
+    "calcium_mg": 51.65
+   },
+   "light": {
+    "kcal": 110.91,
+    "protein_g": 6.33,
+    "fat_g": 2.27,
+    "carb_g": 17.23,
+    "fiber_g": 4.62,
+    "sodium_mg": 247.35,
+    "iron_mg": 1.39,
+    "calcium_mg": 34.28
+   }
+  },
+  "energy_from_fat_pct": 43.4
+ },
+ {
+  "id": "manakish_zaatar",
+  "en": "Manakish za'atar",
+  "ar": "مناقيش زعتر",
+  "category": "Bakery",
+  "serving_g": 120,
+  "per100": {
+   "kcal": 319.98,
+   "protein_g": 5.99,
+   "fat_g": 13.68,
+   "carb_g": 42.58,
+   "fiber_g": 3.37,
+   "sodium_mg": 377.55,
+   "iron_mg": 4.8,
+   "calcium_mg": 72.26
+  },
+  "per100_low": {
+   "kcal": 283.02,
+   "protein_g": 5.84,
+   "fat_g": 8.67,
+   "carb_g": 41.22,
+   "fiber_g": 3.22,
+   "sodium_mg": 335.2,
+   "iron_mg": 4.63,
+   "calcium_mg": 65.35
+  },
+  "per100_high": {
+   "kcal": 358.57,
+   "protein_g": 6.18,
+   "fat_g": 18.74,
+   "carb_g": 44.16,
+   "fiber_g": 3.55,
+   "sodium_mg": 422.13,
+   "iron_mg": 5.01,
+   "calcium_mg": 79.6
+  },
+  "variants": {
+   "home": {
+    "kcal": 318.35,
+    "protein_g": 5.95,
+    "fat_g": 13.62,
+    "carb_g": 42.35,
+    "fiber_g": 3.35,
+    "sodium_mg": 375.31,
+    "iron_mg": 4.77,
+    "calcium_mg": 71.82
+   },
+   "restaurant": {
+    "kcal": 358.57,
+    "protein_g": 5.84,
+    "fat_g": 18.74,
+    "carb_g": 41.22,
+    "fiber_g": 3.55,
+    "sodium_mg": 422.13,
+    "iron_mg": 5.01,
+    "calcium_mg": 79.6
+   },
+   "light": {
+    "kcal": 283.02,
+    "protein_g": 6.18,
+    "fat_g": 8.67,
+    "carb_g": 44.16,
+    "fiber_g": 3.22,
+    "sodium_mg": 335.2,
+    "iron_mg": 4.63,
+    "calcium_mg": 65.35
+   }
+  },
+  "energy_from_fat_pct": 38.5
+ },
+ {
+  "id": "fatayer_spinach",
+  "en": "Fatayer bi sabanekh (spinach pies)",
+  "ar": "فطاير سبانخ",
+  "category": "Bakery",
+  "serving_g": 150,
+  "per100": {
+   "kcal": 240.07,
+   "protein_g": 5.71,
+   "fat_g": 9.75,
+   "carb_g": 33.18,
+   "fiber_g": 2.78,
+   "sodium_mg": 401.91,
+   "iron_mg": 3.38,
+   "calcium_mg": 65.69
+  },
+  "per100_low": {
+   "kcal": 195.62,
+   "protein_g": 5.6,
+   "fat_g": 4.64,
+   "carb_g": 33.04,
+   "fiber_g": 2.69,
+   "sodium_mg": 345.29,
+   "iron_mg": 3.29,
+   "calcium_mg": 61.94
+  },
+  "per100_high": {
+   "kcal": 282.25,
+   "protein_g": 5.82,
+   "fat_g": 14.61,
+   "carb_g": 33.32,
+   "fiber_g": 2.86,
+   "sodium_mg": 458.53,
+   "iron_mg": 3.48,
+   "calcium_mg": 69.45
+  },
+  "variants": {
+   "home": {
+    "kcal": 242.33,
+    "protein_g": 5.71,
+    "fat_g": 10.01,
+    "carb_g": 33.18,
+    "fiber_g": 2.78,
+    "sodium_mg": 401.9,
+    "iron_mg": 3.38,
+    "calcium_mg": 65.69
+   },
+   "restaurant": {
+    "kcal": 282.25,
+    "protein_g": 5.6,
+    "fat_g": 14.61,
+    "carb_g": 33.04,
+    "fiber_g": 2.69,
+    "sodium_mg": 458.53,
+    "iron_mg": 3.29,
+    "calcium_mg": 61.94
+   },
+   "light": {
+    "kcal": 195.62,
+    "protein_g": 5.82,
+    "fat_g": 4.64,
+    "carb_g": 33.32,
+    "fiber_g": 2.86,
+    "sodium_mg": 345.29,
+    "iron_mg": 3.48,
+    "calcium_mg": 69.45
+   }
+  },
+  "energy_from_fat_pct": 36.6
+ },
+ {
+  "id": "knafeh",
+  "en": "Knafeh nabulsieh",
+  "ar": "كنافة نابلسية",
+  "category": "Dessert",
+  "serving_g": 150,
+  "per100": {
+   "kcal": 401.37,
+   "protein_g": 9.13,
+   "fat_g": 21.13,
+   "carb_g": 44.83,
+   "fiber_g": 0.75,
+   "sodium_mg": 303.5,
+   "iron_mg": 0.87,
+   "calcium_mg": 184.91
+  },
+  "per100_low": {
+   "kcal": 351.5,
+   "protein_g": 9.04,
+   "fat_g": 17.17,
+   "carb_g": 40.73,
+   "fiber_g": 0.74,
+   "sodium_mg": 300.47,
+   "iron_mg": 0.86,
+   "calcium_mg": 183.06
+  },
+  "per100_high": {
+   "kcal": 452.61,
+   "protein_g": 9.3,
+   "fat_g": 25.45,
+   "carb_g": 48.35,
+   "fiber_g": 0.76,
+   "sodium_mg": 309.43,
+   "iron_mg": 0.88,
+   "calcium_mg": 188.38
+  },
+  "variants": {
+   "home": {
+    "kcal": 400.0,
+    "protein_g": 9.04,
+    "fat_g": 20.76,
+    "carb_g": 45.41,
+    "fiber_g": 0.74,
+    "sodium_mg": 300.47,
+    "iron_mg": 0.86,
+    "calcium_mg": 183.06
+   },
+   "restaurant": {
+    "kcal": 452.61,
+    "protein_g": 9.05,
+    "fat_g": 25.45,
+    "carb_g": 48.35,
+    "fiber_g": 0.74,
+    "sodium_mg": 300.59,
+    "iron_mg": 0.87,
+    "calcium_mg": 183.28
+   },
+   "light": {
+    "kcal": 351.5,
+    "protein_g": 9.3,
+    "fat_g": 17.17,
+    "carb_g": 40.73,
+    "fiber_g": 0.76,
+    "sodium_mg": 309.43,
+    "iron_mg": 0.88,
+    "calcium_mg": 188.38
+   }
+  },
+  "energy_from_fat_pct": 47.4
+ },
+ {
+  "id": "basbousa",
+  "en": "Basbousa / hareeseh",
+  "ar": "هريسة / بسبوسة",
+  "category": "Dessert",
+  "serving_g": 80,
+  "per100": {
+   "kcal": 331.06,
+   "protein_g": 5.47,
+   "fat_g": 10.41,
+   "carb_g": 55.01,
+   "fiber_g": 1.94,
+   "sodium_mg": 9.86,
+   "iron_mg": 0.6,
+   "calcium_mg": 33.09
+  },
+  "per100_low": {
+   "kcal": 267.43,
+   "protein_g": 5.43,
+   "fat_g": 5.67,
+   "carb_g": 49.14,
+   "fiber_g": 1.52,
+   "sodium_mg": 8.51,
+   "iron_mg": 0.51,
+   "calcium_mg": 28.98
+  },
+  "per100_high": {
+   "kcal": 388.55,
+   "protein_g": 5.54,
+   "fat_g": 15.0,
+   "carb_g": 59.61,
+   "fiber_g": 2.2,
+   "sodium_mg": 10.63,
+   "iron_mg": 0.65,
+   "calcium_mg": 35.99
+  },
+  "variants": {
+   "home": {
+    "kcal": 337.21,
+    "protein_g": 5.54,
+    "fat_g": 10.55,
+    "carb_g": 56.28,
+    "fiber_g": 2.09,
+    "sodium_mg": 10.43,
+    "iron_mg": 0.63,
+    "calcium_mg": 34.3
+   },
+   "restaurant": {
+    "kcal": 388.55,
+    "protein_g": 5.43,
+    "fat_g": 15.0,
+    "carb_g": 59.61,
+    "fiber_g": 2.2,
+    "sodium_mg": 8.51,
+    "iron_mg": 0.65,
+    "calcium_mg": 28.98
+   },
+   "light": {
+    "kcal": 267.43,
+    "protein_g": 5.44,
+    "fat_g": 5.67,
+    "carb_g": 49.14,
+    "fiber_g": 1.52,
+    "sodium_mg": 10.63,
+    "iron_mg": 0.51,
+    "calcium_mg": 35.99
+   }
+  },
+  "energy_from_fat_pct": 28.3
+ },
+ {
+  "id": "freekeh_chicken",
+  "en": "Freekeh with chicken",
+  "ar": "فريكة بالدجاج",
+  "category": "Main dish",
+  "serving_g": 350,
+  "per100": {
+   "kcal": 154.73,
+   "protein_g": 9.37,
+   "fat_g": 7.34,
+   "carb_g": 14.36,
+   "fiber_g": 3.3,
+   "sodium_mg": 215.24,
+   "iron_mg": 1.07,
+   "calcium_mg": 15.82
+  },
+  "per100_low": {
+   "kcal": 113.58,
+   "protein_g": 8.86,
+   "fat_g": 2.33,
+   "carb_g": 14.27,
+   "fiber_g": 3.21,
+   "sodium_mg": 163.82,
+   "iron_mg": 0.92,
+   "calcium_mg": 11.85
+  },
+  "per100_high": {
+   "kcal": 189.69,
+   "protein_g": 10.11,
+   "fat_g": 11.39,
+   "carb_g": 14.52,
+   "fiber_g": 3.41,
+   "sodium_mg": 255.33,
+   "iron_mg": 1.18,
+   "calcium_mg": 18.91
+  },
+  "variants": {
+   "home": {
+    "kcal": 160.92,
+    "protein_g": 8.86,
+    "fat_g": 8.3,
+    "carb_g": 14.27,
+    "fiber_g": 3.29,
+    "sodium_mg": 226.56,
+    "iron_mg": 1.11,
+    "calcium_mg": 16.71
+   },
+   "restaurant": {
+    "kcal": 189.69,
+    "protein_g": 9.13,
+    "fat_g": 11.39,
+    "carb_g": 14.52,
+    "fiber_g": 3.41,
+    "sodium_mg": 255.33,
+    "iron_mg": 1.18,
+    "calcium_mg": 18.91
+   },
+   "light": {
+    "kcal": 113.58,
+    "protein_g": 10.11,
+    "fat_g": 2.33,
+    "carb_g": 14.29,
+    "fiber_g": 3.21,
+    "sodium_mg": 163.82,
+    "iron_mg": 0.92,
+    "calcium_mg": 11.85
+   }
+  },
+  "energy_from_fat_pct": 42.7
+ },
+ {
+  "id": "fattet_hummus",
+  "en": "Fatteh hummus",
+  "ar": "فتة حمص",
+  "category": "Breakfast",
+  "serving_g": 250,
+  "per100": {
+   "kcal": 206.58,
+   "protein_g": 6.9,
+   "fat_g": 11.01,
+   "carb_g": 21.44,
+   "fiber_g": 3.61,
+   "sodium_mg": 310.41,
+   "iron_mg": 2.08,
+   "calcium_mg": 95.54
+  },
+  "per100_low": {
+   "kcal": 154.48,
+   "protein_g": 6.47,
+   "fat_g": 5.5,
+   "carb_g": 20.69,
+   "fiber_g": 3.49,
+   "sodium_mg": 273.13,
+   "iron_mg": 1.83,
+   "calcium_mg": 89.92
+  },
+  "per100_high": {
+   "kcal": 266.65,
+   "protein_g": 7.24,
+   "fat_g": 17.46,
+   "carb_g": 22.1,
+   "fiber_g": 3.68,
+   "sodium_mg": 347.94,
+   "iron_mg": 2.28,
+   "calcium_mg": 100.91
+  },
+  "variants": {
+   "home": {
+    "kcal": 198.6,
+    "protein_g": 6.99,
+    "fat_g": 10.06,
+    "carb_g": 21.52,
+    "fiber_g": 3.65,
+    "sodium_mg": 310.15,
+    "iron_mg": 2.12,
+    "calcium_mg": 95.79
+   },
+   "restaurant": {
+    "kcal": 266.65,
+    "protein_g": 7.24,
+    "fat_g": 17.46,
+    "carb_g": 22.1,
+    "fiber_g": 3.68,
+    "sodium_mg": 347.94,
+    "iron_mg": 2.28,
+    "calcium_mg": 100.91
+   },
+   "light": {
+    "kcal": 154.48,
+    "protein_g": 6.47,
+    "fat_g": 5.5,
+    "carb_g": 20.69,
+    "fiber_g": 3.49,
+    "sodium_mg": 273.13,
+    "iron_mg": 1.83,
+    "calcium_mg": 89.92
+   }
+  },
+  "energy_from_fat_pct": 48.0
+ }
+]

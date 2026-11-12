@@ -1,0 +1,3 @@
+image_file,dish_id,recipe_variant,session_id,split,weight_g,view,reference_card,phone,kcal,protein_g,fat_g,carb_g,notes
+maqluba_s01_p01_top_card.jpg,maqluba,home,s01,train,412,top,yes,iphone15pro,,,,,"kcal/macros filled by scripts/fill_truth.py from recipe + weight"
+maqluba_s01_p01_45_nocard.jpg,maqluba,home,s01,train,412,45deg,no,iphone15pro,,,,,
