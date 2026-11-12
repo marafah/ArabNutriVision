@@ -88,17 +88,37 @@ def record_summary(record: IntakeRecord) -> dict:
             "contributors": contrib}
 
 
-def ai_safe_summary(summary: dict) -> dict:
-    """Aggregated numbers only: no participant code, dates or notes leave the server."""
-    t = summary["totals"]
-    return {
-        "totals_food": {k: round(v, 1) for k, v in t.items()},
-        "supplement_totals": {k: round(v, 1) for k, v in summary["supp_totals"].items() if v},
-        "energy_split_pct": {k: round(v, 1) for k, v in summary["macro_pct"].items()},
-        "fatty_acids_pct_energy": {k: round(v, 1) for k, v in summary["fa_pct_energy"].items()},
-        "glycaemic_load": round(summary["gl_total"], 1),
-        "foods": [{"food": r["item"].food_name, "meal": r["item"].meal, "grams": round(r["item"].grams),
-                   "preparation": r["item"].style, "kcal": round(r["n"]["kcal"]), "fat_g": round(r["n"]["fat_g"], 1)}
-                  for r in summary["rows"]],
-        "percent_of_reference": {p["n"].label: round(p["pct"]) for p in summary["pct"]},
-    }
+def insights(summary: dict) -> list[dict]:
+    """Rule-based interpretation of one intake record (no external AI): level is good / warn / crit."""
+    t, w = summary["totals"], summary["with_supp"]
+    out = []
+    e = t["kcal"]
+    if not summary["rows"]:
+        return out
+    fat_pct, sfa_pct = summary["macro_pct"]["Fat"], summary["fa_pct_energy"]["SFA"]
+    if fat_pct > 35:
+        out.append({"level": "warn", "icon": "droplet-half", "text": f"Fat supplies {fat_pct:.0f}% of energy, above the 20–35% range."})
+    if sfa_pct > 10:
+        out.append({"level": "crit", "icon": "exclamation-octagon", "text": f"Saturated fat is {sfa_pct:.1f}% of energy; the WHO recommends less than 10%."})
+    if w["sodium_mg"] > 2300:
+        out.append({"level": "crit", "icon": "moisture", "text": f"Sodium is {w['sodium_mg']:,.0f} mg, above the 2,300 mg upper limit."})
+    if t["fiber_g"] < 25 and e > 1000:
+        out.append({"level": "warn", "icon": "flower1", "text": f"Fibre is {t['fiber_g']:.0f} g; adults are advised 25–30 g a day."})
+    if summary["gl_total"] > 120:
+        out.append({"level": "warn", "icon": "graph-up-arrow", "text": f"Daily glycaemic load is {summary['gl_total']:.0f} (above 120 is considered high)."})
+    hidden = [r for r in summary["rows"] if r["item"].dish_id and r["item"].style in ("restaurant", "mean")]
+    if hidden:
+        k = sum(r["n"]["kcal"] for r in hidden)
+        out.append({"level": "warn", "icon": "eye-slash", "text": f"{len(hidden)} dish(es) are recorded as restaurant or unknown preparation ({k:,.0f} kcal). "
+                    "Confirming the preparation narrows the hidden-fat range most."})
+    top = summary["contributors"][:3]
+    if top:
+        names = ", ".join(f"{r['item'].food_name} ({100 * r['n']['kcal'] / e:.0f}%)" for r in top) if e else ""
+        out.append({"level": "info", "icon": "pie-chart", "text": f"Largest energy sources: {names}."})
+    for key, label in (("iron_mg", "Iron"), ("calcium_mg", "Calcium")):
+        ref = 18 if key == "iron_mg" else 1300
+        if w[key] < 0.5 * ref:
+            out.append({"level": "warn", "icon": "capsule", "text": f"{label} is {w[key]:.0f} {'mg'} ({100 * w[key] / ref:.0f}% of the reference value)."})
+    if not any(i["level"] in ("warn", "crit") for i in out):
+        out.insert(0, {"level": "good", "icon": "check-circle", "text": "No nutrient exceeded the limits checked here."})
+    return out

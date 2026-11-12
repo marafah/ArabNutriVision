@@ -16,10 +16,10 @@ from .forms import (CustomDishForm, FFQUploadForm, ItemForm, ParticipantForm, Re
 from .models import (Dish, Ingredient, IntakeItem, IntakeRecord, Participant, RecipeLine, RecipeVariant,
                      SupplementIntake, ValidationSample)
 from .nutrients import BY_KEY, CORE, GROUP_LABELS, KEYS, MEALS, NUTRIENTS
-from .services import ai, ffq
+from .services import ffq
 from .services import metrics as M
 from .services.composition import all_profiles, gap_decomposition, invalidate, profile_for
-from .services.estimate import ai_safe_summary, estimate, record_summary
+from .services.estimate import estimate, insights, record_summary
 
 DATA = Path(__file__).resolve().parent / "data"
 
@@ -118,27 +118,6 @@ def analyze(request):
         "records": records, "meals": MEALS, "vform": ValidationSampleForm() if request.user.is_authenticated else None})
 
 
-@require_POST
-def api_recognise(request):
-    if not ai.enabled():
-        return JsonResponse({"error": "AI recognition is not configured on this server. Choose the dish and portion by hand."}, status=503)
-    f = request.FILES.get("photo")
-    if not f:
-        return JsonResponse({"error": "No photo received."}, status=400)
-    try:
-        b64, media = ai.clean_image(f)
-    except Exception:
-        return JsonResponse({"error": "That image could not be read. Use a JPEG or PNG."}, status=400)
-    dishes = [(p.code, p.name, p.name_ar) for p in all_profiles().values()]
-    try:
-        result = ai.recognise(b64, media, dishes)
-    except ai.AIUnavailable as e:
-        return JsonResponse({"error": str(e)}, status=502)
-    except (ValueError, KeyError):
-        return JsonResponse({"error": "The AI reply could not be read. Try again."}, status=502)
-    return JsonResponse(result)
-
-
 # ------------------------------------------------------------------ researcher workspace
 @login_required
 def dashboard(request):
@@ -216,7 +195,7 @@ def record_detail(request, pk):
     s = record_summary(rec)
     chart = {"macro": s["macro_pct"], "fa": s["fa_pct_energy"],
              "meals": {m: round(v["kcal"]) for m, v in s["meals"].items()}}
-    return render(request, "nutrition/record_detail.html", {"rec": rec, "s": s, "iform": iform, "sform": sform,
+    return render(request, "nutrition/record_detail.html", {"rec": rec, "s": s, "iform": iform, "sform": sform, "insights": insights(s),
                                                             "chart_json": json.dumps(chart), "core": [BY_KEY[k] for k in CORE]})
 
 
@@ -267,22 +246,6 @@ def record_csv(request, pk):
                    + [round(r["n"][k], 2) for k in KEYS] + [""])
     w.writerow(["TOTAL incl. supplements", "", "", "", "", "", "", ""] + [round(s["with_supp"][k], 2) for k in KEYS] + [round(s["gl_total"], 1)])
     return resp
-
-
-@login_required
-@require_POST
-def api_assistant(request, pk):
-    rec = get_object_or_404(IntakeRecord, pk=pk, participant__owner=request.user)
-    q = (request.POST.get("question") or "").strip()[:800]
-    if not q:
-        return JsonResponse({"error": "Type a question first."}, status=400)
-    if not ai.enabled():
-        return JsonResponse({"error": "The assistant needs ANTHROPIC_API_KEY on the server."}, status=503)
-    try:
-        answer = ai.ask_assistant(q, ai_safe_summary(record_summary(rec)))
-    except ai.AIUnavailable as e:
-        return JsonResponse({"error": str(e)}, status=502)
-    return JsonResponse({"answer": answer})
 
 
 @login_required

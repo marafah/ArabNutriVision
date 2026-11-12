@@ -9,7 +9,7 @@ from django.urls import reverse
 from .models import Dish, IntakeItem, IntakeRecord, Participant, ValidationSample
 from .services import ffq, metrics
 from .services.composition import all_profiles, gap_decomposition
-from .services.estimate import ai_safe_summary, estimate, record_summary
+from .services.estimate import estimate, insights, record_summary
 
 
 class ReferenceDataMixin:
@@ -68,14 +68,13 @@ class MetricsAndFFQTests(TestCase):
 
 
 class RecordTests(ReferenceDataMixin, TestCase):
-    def test_summary_and_privacy(self):
+    def test_summary_and_insights(self):
         rec = IntakeRecord.objects.filter(participant__owner=self.user).first()
         s = record_summary(rec)
         self.assertGreater(s["totals"]["kcal"], 0)
-        safe = ai_safe_summary(s)
-        text = str(safe)
-        self.assertNotIn(rec.participant.code, text)
-        self.assertNotIn(str(rec.date), text)
+        ins = insights(s)
+        self.assertTrue(ins)
+        self.assertTrue(all(i["level"] in ("good", "warn", "crit", "info") for i in ins))
 
 
 class ViewTests(ReferenceDataMixin, TestCase):
@@ -136,9 +135,10 @@ class ViewTests(ReferenceDataMixin, TestCase):
         csv = self.client.get(reverse("nutrition:validation_csv")).content.decode()
         self.assertTrue(csv.startswith("image_file,dish_id"))
 
-    def test_recognise_without_key_degrades(self):
-        r = self.client.post(reverse("nutrition:api_recognise"))
-        self.assertEqual(r.status_code, 503)
+    def test_analyze_page_uses_on_device_model(self):
+        r = self.client.get(reverse("nutrition:analyze"))
+        self.assertContains(r, "vendor/transformers/")
+        self.assertNotContains(r, "api.anthropic.com")
 
     def test_other_users_cannot_see_records(self):
         other = get_user_model().objects.create_user("other", password="x-strong-pass-123")

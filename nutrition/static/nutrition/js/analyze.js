@@ -65,9 +65,9 @@
     $("#labelBox").innerHTML = `<div class="ln head"><span>Nutrient</span><span class="v">This portion</span><span class="r">Range</span></div>` +
       NUT.map(n => `<div class="ln ${sub.has(n.key) ? "sub" : ""}"><span>${n.label} <span class="text-secondary small" lang="ar">${n.ar}</span></span><span class="v">${fmt(r.pt[i[n.key]], n.unit)} ${n.unit}</span><span class="r">${fmt(r.lo[i[n.key]], n.unit)}–${fmt(r.hi[i[n.key]], n.unit)}</span></div>`).join("");
     $("#cmpRecipe").textContent = `${fmt(r.pt[i.kcal], "kcal")} kcal`; $("#cmpRecipeFat").textContent = `${fmt(r.pt[i.fat_g], "g")} g fat`;
-    const de = state.ai && state.ai.direct_estimate;
-    $("#cmpAI").textContent = de && de.kcal ? `${fmt(de.kcal, "kcal")} kcal` : "–";
-    $("#cmpAIFat").textContent = de && de.fat_g != null ? `${fmt(de.fat_g, "g")} g fat` : "Shown after a photo is analysed";
+    const avg = d.m.map(x => x * state.grams / 100);
+    $("#cmpAI").textContent = `${fmt(avg[i.kcal], "kcal")} kcal`;
+    $("#cmpAIFat").textContent = `${fmt(avg[i.fat_g], "g")} g fat · range ${fmt(r.lo[i.kcal], "kcal")}–${fmt(r.hi[i.kcal], "kcal")} kcal`;
     $("#hidden").innerHTML = `<i class="bi bi-eye-slash text-rose me-1"></i><b>Hidden-fat sources in this recipe:</b> ${d.fat.join(", ") || "none listed"}.` + (state.ai && state.ai.notes ? ` <span class="text-secondary">AI note: ${escapeHtml(state.ai.notes)}</span>` : "");
     fillValidation();
   }
@@ -96,29 +96,82 @@
   file.onchange = () => { if (file.files[0]) setPhoto(file.files[0]); };
   function setPhoto(f) {
     photo = f; const p = $("#preview"); p.src = URL.createObjectURL(f); p.hidden = false; $("#dropHint").hidden = true;
-    $("#analyzeBtn").disabled = !window.ANV.ai;
-    status(window.ANV.ai ? "Photo ready. Press Analyze." : "AI recognition is not configured on this server, so pick the dish and grams by hand.");
+    $("#analyzeBtn").disabled = false;
+    status("Photo ready. Press Recognise dish.");
   }
   function status(t, err) { const s = $("#status"); s.textContent = t; s.className = "small mt-2 " + (err ? "text-danger" : "text-secondary"); }
 
+  // ---- on-device recognition: CLIP zero-shot (open-source, runs in the browser; no API) ----
+  const LOOKS = {
+    maqluba: "maqluba, an upside-down rice cake with fried eggplant, cauliflower and chicken",
+    mansaf: "mansaf, lamb on yellow rice with white jameed yogurt sauce and almonds on flatbread",
+    musakhan: "musakhan, roasted chicken on taboon flatbread covered with purple sumac onions",
+    mulukhiyah: "mulukhiyah, a dark green jute leaf stew with chicken",
+    kabsa: "kabsa, orange spiced rice with roasted chicken and raisins",
+    mujaddara: "mujaddara, brown lentils and rice topped with crispy fried onions",
+    warak_enab: "stuffed grape vine leaves rolled with rice",
+    kofta_tahini: "kofta meat baked in a tray with tahini sauce and potatoes",
+    chicken_shawarma_wrap: "a chicken shawarma wrap sandwich in thin bread",
+    ruz_shaariyeh: "a plate of white rice with toasted vermicelli",
+    hummus: "hummus, a creamy chickpea dip with olive oil",
+    mutabbal: "mutabbal, a smoky grey eggplant dip with tahini",
+    tabbouleh: "tabbouleh, a finely chopped parsley salad with tomato and bulgur",
+    fattoush: "fattoush, a green salad with fried pita chips and sumac",
+    falafel: "falafel, fried brown chickpea balls",
+    foul: "foul mudammas, mashed fava beans with olive oil",
+    manakish_zaatar: "manakish, a flatbread topped with green za'atar and olive oil",
+    fatayer_spinach: "fatayer, triangular baked pastries filled with spinach",
+    knafeh: "knafeh, an orange shredded pastry dessert with melted cheese and syrup",
+    basbousa: "basbousa, semolina cake squares soaked in syrup",
+    freekeh_chicken: "freekeh, green smoked wheat with chicken",
+    fattet_hummus: "fatteh, chickpeas and toasted bread under yogurt tahini sauce with pine nuts",
+  };
+  const NOT_FOOD = "something that is not food";
+  const STYLE_PROMPTS = {light: "a light, lean home-made plate with very little oil",
+    home: "an ordinary home-cooked plate of food", restaurant: "a rich restaurant plate glistening with oil, ghee and fried nuts"};
+  let clfPromise = null;
+  async function classifier() {
+    if (!clfPromise) clfPromise = (async () => {
+      const T = await import(window.ANV.vendor + "transformers.min.js");
+      T.env.allowLocalModels = false;
+      T.env.backends.onnx.wasm.wasmPaths = window.ANV.vendor;
+      T.env.backends.onnx.wasm.numThreads = 1;
+      const bar = $("#dlBar"), fill = bar.querySelector(".progress-bar"); bar.hidden = false;
+      const files = {};
+      const clf = await T.pipeline("zero-shot-image-classification", "Xenova/clip-vit-base-patch32", {
+        progress_callback: p => { if (p.status === "progress" && p.file) { files[p.file] = p.progress || 0;
+          const v = Object.values(files); fill.style.width = (v.reduce((a, b) => a + b, 0) / v.length) + "%";
+          status(`Downloading the open-source model once (${Math.round(v.reduce((a, b) => a + b, 0) / v.length)}%)…`); } } });
+      bar.hidden = true; return clf;
+    })().catch(e => { clfPromise = null; throw e; });
+    return clfPromise;
+  }
+
   $("#analyzeBtn").onclick = async () => {
     if (!photo) return;
-    $("#analyzeBtn").disabled = true; $("#spin").hidden = false; status("Looking at the photo… this can take up to a minute.");
-    const fd = new FormData(); fd.append("photo", photo);
+    $("#analyzeBtn").disabled = true; $("#spin").hidden = false; status("Loading the on-device model…");
     try {
-      const res = await fetch(window.ANV.recogniseUrl, {method: "POST", body: fd, headers: {"X-CSRFToken": window.ANV.csrf}});
-      const r = await res.json();
-      if (!res.ok) throw new Error(r.error || "Analysis failed.");
-      if (r.is_food === false) { status("No food found in this photo. Try a clearer top-down shot.", true); return; }
-      state.ai = r; state.example = false;
-      if (byCode[r.dish_id]) { state.dish = r.dish_id; state.source = "photo"; }
-      else { state.source = "photo_corrected"; status(`Looks like "${r.other_name || "an unlisted dish"}", which is not in the table yet. Pick the closest dish.`, true); }
-      sel.value = state.dish;
-      state.grams = Math.max(30, Math.min(1500, +r.portion_g || byCode[state.dish].srv)); syncGrams();
-      if (["home", "restaurant", "light"].includes(r.style)) { state.style = r.style; setStyleBtns(); }
-      if (byCode[r.dish_id]) status(`Done. Check the dish and portion, then save.${r.reference_object && r.reference_object !== "none" ? " Scale from: " + r.reference_object + "." : ""}`);
+      const clf = await classifier();
+      status("Recognising the dish on this device…");
+      const url = $("#preview").src;
+      const codes = DISHES.map(d => d.code);
+      const labels = codes.map(c => LOOKS[c] || byCode[c].en).concat([NOT_FOOD]);
+      const res = await clf(url, labels, {hypothesis_template: "a photo of {}."});
+      const score = Object.fromEntries(res.map(r => [r.label, r.score]));
+      if ((score[NOT_FOOD] || 0) > 0.5) { status("This does not look like food. Try a clearer top-down photo.", true); return; }
+      const ranked = codes.map(c => ({dish_id: c, confidence: score[LOOKS[c] || byCode[c].en] || 0})).sort((a, b) => b.confidence - a.confidence);
+      const norm = ranked.reduce((a, r) => a + r.confidence, 0) || 1;
+      ranked.forEach(r => r.confidence /= norm);
+      const st = await clf(url, Object.values(STYLE_PROMPTS), {hypothesis_template: "{}."});
+      const sbest = st[0], style = Object.keys(STYLE_PROMPTS).find(k => STYLE_PROMPTS[k] === sbest.label);
+      state.ai = {dish_id: ranked[0].dish_id, confidence: ranked[0].confidence, top3: ranked.slice(0, 3),
+                  style: sbest.score > 0.5 ? style : null, notes: `Preparation suggested from appearance: ${style} (${Math.round(sbest.score * 100)}%). Confirm it if you know how the dish was cooked.`};
+      state.example = false; state.dish = state.ai.dish_id; state.source = "photo"; sel.value = state.dish;
+      state.grams = byCode[state.dish].srv; syncGrams();
+      if (state.ai.style) { state.style = state.ai.style; setStyleBtns(); }
+      status(`Done: ${byCode[state.dish].en.split(" (")[0]} (${Math.round(ranked[0].confidence * 100)}%). Check the dish, then weigh or adjust the portion; it starts at the typical serving.`);
       renderAlts(); render();
-    } catch (e) { status(e.message || "Analysis failed. Try again.", true); }
+    } catch (e) { console.error(e); status("The on-device model could not run in this browser. Choose the dish and portion by hand.", true); }
     finally { $("#analyzeBtn").disabled = false; $("#spin").hidden = true; }
   };
 
@@ -127,7 +180,6 @@
     const fd = new FormData();
     fd.append("record", $("#recSel").value); fd.append("meal", $("#mealSel").value); fd.append("dish", state.dish);
     fd.append("grams", Math.round(state.grams)); fd.append("style", state.style); fd.append("source", state.example ? "manual" : state.source);
-    if (state.ai && state.ai.direct_estimate && state.ai.direct_estimate.kcal) fd.append("ai_kcal", state.ai.direct_estimate.kcal);
     const s = $("#saveStatus");
     try {
       const res = await fetch(window.ANV.addUrl, {method: "POST", body: fd, headers: {"X-CSRFToken": window.ANV.csrf}});
@@ -145,8 +197,7 @@
     if (state.ai) {
       const aiOpt = [...f.querySelector('[name="ai_dish"]').options].find(o => byCode[state.ai.dish_id] && o.textContent.startsWith(byCode[state.ai.dish_id].en));
       if (aiOpt) f.querySelector('[name="ai_dish"]').value = aiOpt.value;
-      set("ai_grams", Math.round(state.ai.portion_g || 0) || ""); set("ai_style", state.ai.style || "");
-      if (state.ai.direct_estimate) { set("ai_direct_kcal", state.ai.direct_estimate.kcal); set("ai_direct_fat_g", state.ai.direct_estimate.fat_g); }
+      set("ai_grams", Math.round(state.grams)); set("ai_style", state.ai.style || "");
     }
   }
   const vf = $("#valForm"); if (vf) vf.addEventListener("change", () => vf.dataset.touched = "1");

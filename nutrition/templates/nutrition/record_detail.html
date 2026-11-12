@@ -66,14 +66,12 @@
       </div>
 
       <div class="panel">
-        <div class="d-flex justify-content-between align-items-center"><h2 class="h5 mb-0"><i class="bi bi-chat-square-text me-2"></i>Ask the nutrition assistant</h2><span class="pill pill-good"><i class="bi bi-shield-lock me-1"></i>aggregated data only</span></div>
-        <p class="small text-secondary mt-1">Only the computed totals, foods and percentages are sent to Claude; the participant code, date and notes stay on this server. Arabic or English.</p>
-        <div class="chat-box mb-2" id="chat"></div>
-        <form id="askForm" class="d-flex gap-2">
-          <input class="form-control" id="q" placeholder="e.g. Which foods contribute most saturated fat today? ما مصدر الصوديوم الأعلى؟" aria-label="Question" {% if not AI_ENABLED %}disabled{% endif %}>
-          <button class="btn btn-primary" {% if not AI_ENABLED %}disabled{% endif %}>Ask</button>
-        </form>
-        {% if not AI_ENABLED %}<div class="small text-secondary mt-2">Set <code>ANTHROPIC_API_KEY</code> on the server to enable the assistant.</div>{% endif %}
+        <div class="d-flex justify-content-between align-items-center"><h2 class="h5 mb-0"><i class="bi bi-lightbulb me-2"></i>Nutrition insights</h2><span class="pill pill-good"><i class="bi bi-shield-lock me-1"></i>computed on the server, no external AI</span></div>
+        <p class="small text-secondary mt-1">Automatic checks against WHO and FDA reference values. Interpretation remains the dietitian's decision.</p>
+        <ul class="list-unstyled mb-0">
+          {% for i in insights %}<li class="d-flex gap-2 align-items-start py-2 border-top"><i class="bi bi-{{ i.icon }} fs-5 {% if i.level == 'crit' %}text-danger{% elif i.level == 'warn' %}text-warning{% elif i.level == 'good' %}text-success{% else %}text-primary{% endif %}"></i><span>{{ i.text }}</span></li>
+          {% empty %}<li class="text-secondary">Add foods to see insights.</li>{% endfor %}
+        </ul>
       </div>
     </div>
 
@@ -106,12 +104,6 @@
   const limit = {id:"limit", afterDraw(ch){ const x = ch.scales.x.getPixelForValue(10), {top,bottom} = ch.chartArea, g = ch.ctx; g.save(); g.setLineDash([4,3]); g.strokeStyle = C.rose; g.beginPath(); g.moveTo(x,top); g.lineTo(x,bottom); g.stroke(); g.restore(); }};
   new Chart(document.getElementById("fa"), {type:"bar", data:{labels:Object.keys(D.fa), datasets:[{data:Object.values(D.fa).map(v=>+v.toFixed(1)), backgroundColor:[C.rose,C.olive,C.blue]}]}, options:{indexAxis:"y", maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{x:{beginAtZero:true, suggestedMax:15}}}, plugins:[limit]});
   new Chart(document.getElementById("meals"), {type:"bar", data:{labels:Object.keys(D.meals), datasets:[{data:Object.values(D.meals), backgroundColor:C.navy}]}, options:{maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true}}}});
-  const form = document.getElementById("askForm"), chat = document.getElementById("chat"), q = document.getElementById("q");
-  const add = (cls, text) => { const d = document.createElement("div"); d.className = "chat-msg " + cls; d.textContent = text; chat.append(d); chat.scrollTop = chat.scrollHeight; return d; };
-  form.onsubmit = async e => { e.preventDefault(); const text = q.value.trim(); if (!text) return; add("q", text); q.value = ""; const a = add("a", "Thinking…");
-    const fd = new FormData(); fd.append("question", text);
-    try { const r = await fetch("{% url 'nutrition:assistant' rec.pk %}", {method:"POST", body:fd, headers:{"X-CSRFToken":"{{ csrf_token }}"}}); const j = await r.json(); a.textContent = j.answer || j.error; }
-    catch(err) { a.textContent = "The assistant could not be reached. Try again."; } };
 })();
 </script>
 {% endblock %}

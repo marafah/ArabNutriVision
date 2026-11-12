@@ -1,7 +1,7 @@
 """Django settings for ArabNutriVision.
 
 Secrets and deployment options come from environment variables (or a local .env file):
-    DJANGO_SECRET_KEY, DJANGO_DEBUG, DJANGO_ALLOWED_HOSTS, ANTHROPIC_API_KEY, ANV_VISION_MODEL
+    DJANGO_SECRET_KEY, DJANGO_DEBUG, DJANGO_ALLOWED_HOSTS, DATABASE_URL, ANV_ADMIN_USERNAME, ANV_ADMIN_PASSWORD
 """
 import os
 from pathlib import Path
@@ -107,14 +107,14 @@ LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "nutrition:dashboard"
 LOGOUT_REDIRECT_URL = "nutrition:home"
 
-# Uploaded meal photos are processed in memory and never written to disk (privacy by design).
 FILE_UPLOAD_MAX_MEMORY_SIZE = 12 * 1024 * 1024
 DATA_UPLOAD_MAX_MEMORY_SIZE = 12 * 1024 * 1024
 
-ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
-ANV_VISION_MODEL = os.environ.get("ANV_VISION_MODEL", "claude-sonnet-4-5")
+# Photo recognition runs entirely in the viewer's browser (open-source CLIP model via transformers.js);
+# no external AI API or key is used by the server.
 
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+WHITENOISE_MIMETYPES = {".wasm": "application/wasm", ".mjs": "text/javascript"}

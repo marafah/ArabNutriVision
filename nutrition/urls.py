@@ -17,7 +17,6 @@ urlpatterns = [
     path("records/<int:pk>/", views.record_detail, name="record_detail"),
     path("records/<int:pk>/delete/", views.record_delete, name="record_delete"),
     path("records/<int:pk>/export.csv", views.record_csv, name="record_csv"),
-    path("records/<int:pk>/assistant/", views.api_assistant, name="assistant"),
     path("items/<int:pk>/delete/", views.item_delete, name="item_delete"),
     path("supplements/<int:pk>/delete/", views.supplement_delete, name="supplement_delete"),
     path("ffq/", views.ffq_import, name="ffq"),
@@ -25,6 +24,5 @@ urlpatterns = [
     path("validation/", views.validation_lab, name="validation"),
     path("validation/annotations.csv", views.validation_csv, name="validation_csv"),
     path("validation/<int:pk>/delete/", views.validation_delete, name="validation_delete"),
-    path("api/recognise/", views.api_recognise, name="api_recognise"),
     path("api/add-item/", views.api_add_item, name="api_add_item"),
 ]

@@ -42,13 +42,13 @@ This repository holds the **web application** (Django + Bootstrap) and the **res
 
 | Module | Description |
 |---|---|
-| **Analyze** | Upload a plate photo. Claude vision proposes the dish (top-3), the preparation style and the portion; the app computes recipe-aware nutrients with an interval and shows the model's own image-only estimate beside it. Photos are re-encoded in memory (EXIF/GPS removed) and never stored. Works in manual mode without an API key. |
+| **Analyze** | Upload a plate photo. An open-source CLIP model (ViT-B/32, via transformers.js/ONNX) runs **inside the browser** and proposes the dish (top-3) and a preparation style; the photo never leaves the device and no AI API or key is used. The app computes recipe-aware nutrients with an interval. |
 | **Arabic Recipe Composition Table** | 22 Levantine/Gulf dishes × 3 recipe variants, 53 ingredients, 17 nutrients (macronutrients, SFA/MUFA/PUFA, cholesterol, Na, K, Ca, Fe, Mg, Zn, vitamins A and C) plus carbohydrate-weighted GI and glycaemic load. Per-dish hidden-fat sensitivity and gap decomposition. |
 | **Recipe builder** | Raw ingredient grams + cooked batch weight → per-100 g profile with yield (EuroFIR/FAO recipe-calculation logic). |
 | **Dietary records** | Pseudonymous participants, 24-h recalls, food records and menus by meal, dietary supplements, % of reference values, SFA % energy against the WHO limit, multi-day usual intake, CSV export. |
 | **FFQ import** | CSV or Excel food-frequency questionnaire → average daily intake. |
 | **Validation lab** | Log weighed plates (ArabFood-N protocol) with AI outputs; top-1 accuracy, portion MAE/MAPE, energy and fat MAPE with bootstrap 95% CI, Bland–Altman plot, interval coverage, `annotations.csv` export. These are the paper's RQ1–RQ4 metrics. |
-| **Privacy-aware assistant** | Ask Claude about an intake record; only aggregated numbers are sent, never participant codes, dates, notes or photos. |
+| **Nutrition insights** | Rule-based checks of each record against WHO/FDA reference values (fat and SFA % energy, sodium, fibre, glycaemic load, hidden-fat dishes); no external AI. |
 | **Research page** | The paper's thesis, the error-budget simulation and the gap decomposition, rendered from `research/results`. |
 
 ## Quick start
@@ -58,7 +58,6 @@ git clone https://github.com/marafah/ArabNutriVision.git
 cd ArabNutriVision
 python -m venv .venv && source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-cp .env.example .env                                     # optional: add ANTHROPIC_API_KEY for photo recognition
 python manage.py migrate
 python manage.py load_reference_data                     # composition table
 python manage.py seed_demo                               # optional demo account: demo / arabnutrivision-demo
@@ -68,21 +67,21 @@ python manage.py runserver
 
 Open http://127.0.0.1:8000. Run the tests with `python manage.py test nutrition` and, for the research code, `cd research && pytest -q`.
 
-Bootstrap 5.3.3, Bootstrap Icons 1.11.3, Chart.js 4.4.1 and the IBM Plex / Source Serif fonts are vendored under `nutrition/static/vendor`, so the app runs offline.
+Bootstrap 5.3.3, Bootstrap Icons 1.11.3, Chart.js 4.4.1, transformers.js 2.17.2 (ONNX Runtime Web) and the IBM Plex / Source Serif fonts are vendored under `nutrition/static/vendor`, so the app needs no CDN. The CLIP weights (about 90 MB) are fetched once from Hugging Face by the browser and cached.
 
 ### Configuration (`.env`)
 
 | Variable | Purpose |
 |---|---|
-| `ANTHROPIC_API_KEY` | Enables photo recognition and the assistant (never commit it) |
-| `ANV_VISION_MODEL` | Claude model id (default `claude-sonnet-4-5`) |
+| `DATABASE_URL` | Optional PostgreSQL database for permanent records |
+| `ANV_ADMIN_USERNAME`, `ANV_ADMIN_PASSWORD` | Admin account created at deploy time |
 | `DJANGO_SECRET_KEY`, `DJANGO_DEBUG=0`, `DJANGO_ALLOWED_HOSTS` | Production settings |
 
 ### Deploy (Render, free)
 
 1. Sign in at [render.com](https://render.com) with GitHub.
 2. **New → Blueprint**, choose `marafah/ArabNutriVision`; Render reads `render.yaml`.
-3. Enter `ANV_ADMIN_PASSWORD` (your admin login, user `marafah`) and, optionally, `ANTHROPIC_API_KEY`.
+3. Render generates `ANV_ADMIN_PASSWORD` (admin user `marafah`); read it under the service's **Environment** tab.
 4. After the build, the app is live at `https://arabnutrivision.onrender.com` (or the name Render assigns).
 
 The build loads the composition table, a demo account (`demo` / `arabnutrivision-demo`, example data only) and the admin account.
