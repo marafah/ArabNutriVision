@@ -19,12 +19,16 @@
   <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
     <span><i class="bi bi-mortarboard me-1"></i>{% translate "University of Petra · Faculty of Information Technology · Amman, Jordan" %}</span>
     {% other_language as other %}
+{% if STATIC_SITE %}
+    <a href="{{ ALT_URL }}" class="d-flex align-items-center gap-2 lang-switch text-white text-decoration-none" lang="{{ other.0 }}" hreflang="{{ other.0 }}" aria-label="{% translate 'Switch language' %}" onclick="this.href += location.search + location.hash"><i class="bi bi-translate" aria-hidden="true"></i><span>{{ other.1 }}</span></a>
+    {% else %}
     <form action="{% url 'set_language' %}" method="post" class="d-flex align-items-center gap-2 lang-switch">{% csrf_token %}
       <input type="hidden" name="next" value="{{ request.get_full_path }}">
       <input type="hidden" name="language" value="{{ other.0 }}">
       <i class="bi bi-translate" aria-hidden="true"></i>
       <button type="submit" class="btn btn-link p-0 text-white text-decoration-none" lang="{{ other.0 }}" aria-label="{% translate 'Switch language' %}">{{ other.1 }}</button>
     </form>
+    {% endif %}
   </div>
 </div>
 <nav class="navbar navbar-expand-xl navbar-dark anv-nav sticky-top">
@@ -42,14 +46,20 @@
       <ul class="navbar-nav ms-auto me-xl-3 gap-xl-1">
         <li class="nav-item"><a class="nav-link {% if u == 'analyze' %}active{% endif %}" href="{% url 'nutrition:analyze' %}"><i class="bi bi-camera me-1"></i>{% translate "Analyze" %}</a></li>
         <li class="nav-item"><a class="nav-link {% if u == 'dishes' or u == 'dish_detail' or u == 'recipe_builder' %}active{% endif %}" href="{% url 'nutrition:dishes' %}"><i class="bi bi-table me-1"></i>{% translate "Composition table" %}</a></li>
-        {% if user.is_authenticated %}
-        <li class="nav-item"><a class="nav-link {% if u == 'dashboard' or u == 'participants' or u == 'participant_detail' or u == 'record_detail' or u == 'ffq' %}active{% endif %}" href="{% url 'nutrition:dashboard' %}"><i class="bi bi-clipboard2-pulse me-1"></i>{% translate "Dietary records" %}</a></li>
-        <li class="nav-item"><a class="nav-link {% if u == 'validation' %}active{% endif %}" href="{% url 'nutrition:validation' %}"><i class="bi bi-bullseye me-1"></i>{% translate "Validation lab" %}</a></li>
+        {% if user.is_authenticated or STATIC_SITE %}
+        <li class="nav-item" {% if STATIC_SITE %}data-auth="in" hidden{% endif %}><a class="nav-link {% if u == 'dashboard' or u == 'participants' or u == 'participant_detail' or u == 'record_detail' or u == 'ffq' or u == 'participant_view' or u == 'record_view' %}active{% endif %}" href="{% url 'nutrition:dashboard' %}"><i class="bi bi-clipboard2-pulse me-1"></i>{% translate "Dietary records" %}</a></li>
+        <li class="nav-item" {% if STATIC_SITE %}data-auth="in" hidden{% endif %}><a class="nav-link {% if u == 'validation' %}active{% endif %}" href="{% url 'nutrition:validation' %}"><i class="bi bi-bullseye me-1"></i>{% translate "Validation lab" %}</a></li>
         {% endif %}
         <li class="nav-item"><a class="nav-link {% if u == 'research' %}active{% endif %}" href="{% url 'nutrition:research' %}"><i class="bi bi-journal-text me-1"></i>{% translate "Research" %}</a></li>
       </ul>
       {% endwith %}
-      {% if user.is_authenticated %}
+      {% if STATIC_SITE %}
+        <div class="d-flex align-items-center gap-2" data-auth="in" hidden>
+          <span class="text-white-50 small d-none d-xl-inline"><i class="bi bi-person-circle me-1"></i><span id="anvUser"></span></span>
+          <button class="btn btn-sm btn-outline-light" type="button" id="anvSignOut">{% translate "Sign out" %}</button>
+        </div>
+        <a class="btn btn-sm btn-login btn-outline-light" data-auth="out" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right me-1"></i>{% translate "Researcher sign-in" %}</a>
+      {% elif user.is_authenticated %}
         <form method="post" action="{% url 'logout' %}" class="d-flex align-items-center gap-2">{% csrf_token %}
           <span class="text-white-50 small d-none d-xl-inline"><i class="bi bi-person-circle me-1"></i>{{ user.get_full_name|default:user.username }}</span>
           <button class="btn btn-sm btn-outline-light">{% translate "Sign out" %}</button>
@@ -112,6 +122,12 @@
   }
   window.ANV_COLORS = {navy:'#15305e', rose:'#b0413e', gold:'#c3922e', blue:'#2f6f9f', olive:'#5d7a2b', grey:'#9aa3b2'};
 </script>
+{% if STATIC_SITE %}
+<script>window.ANV_CFG = {url: "{{ SUPABASE_URL }}", key: "{{ SUPABASE_ANON_KEY }}", root: "{{ SITE_ROOT }}", prefix: "{{ SITE_ROOT }}{% if RTL %}/ar{% endif %}",
+  login: "{% url 'login' %}", home: "{% url 'nutrition:home' %}"};</script>
+<script src="{% static 'vendor/supabase/supabase.js' %}"></script>
+<script src="{% static 'nutrition/js/cloud.js' %}"></script>
+{% endif %}
 {% block scripts %}{% endblock %}
 </body>
 </html>

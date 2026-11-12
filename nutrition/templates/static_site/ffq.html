@@ -1,0 +1,32 @@
+{% extends "base.html" %}{% load static i18n %}
+{% block title %}{% translate "Import FFQ" %}{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="eyebrow">{% translate "Food Frequency Questionnaire" %}</div>
+  <h1 class="h2 mb-3">{% translate "Import an FFQ" %}</h1>
+  {% include "static_site/_ws_notice.html" %}
+  <div class="row g-4" id="wsBody" hidden>
+    <div class="col-lg-6"><div class="panel">
+      <form id="ffqForm" novalidate>
+        <div class="mb-3"><label class="form-label small" for="f_part">{% translate "Participant" %}</label><select class="form-select" id="f_part" name="participant" required></select></div>
+        <div class="mb-3"><label class="form-label small" for="f_file">{% translate "File" %}</label><input class="form-control" type="file" id="f_file" name="file" accept=".csv,.xlsx,.xlsm" required><div class="form-text">{% translate "CSV or Excel (.xlsx) with columns: food, frequency, portion_g" %}</div></div>
+        <button class="btn btn-primary"><i class="bi bi-upload me-1"></i>{% translate "Import" %}</button>
+        <a class="btn btn-link" href="data:text/csv;charset=utf-8,food%2Cfrequency%2Cportion_g%0Amaqluba%2C2%2Fweek%2C400%0Ahummus%2C4%2Fweek%2C150%0Afalafel%2C3%2Fweek%2C100%0Aolive_oil%2C1%2Fday%2C10%0Aknafeh%2C1%2Fmonth%2C150%0A" download="arabnutrivision_ffq_template.csv"><i class="bi bi-file-earmark-arrow-down me-1"></i>{% translate "Download the template" %}</a>
+      </form>
+      <div class="alert alert-warning mt-3 small mb-0 d-none" id="ffqErr"></div>
+    </div></div>
+    <div class="col-lg-6"><div class="panel">
+      <h2 class="h6 fw-semibold">{% translate "File format" %}</h2>
+      <div class="table-responsive" dir="ltr"><table class="table table-anv table-sm"><thead><tr><th>food</th><th>frequency</th><th class="n">portion_g</th></tr></thead><tbody>
+        <tr><td>maqluba</td><td>2/week</td><td class="n">400</td></tr><tr><td>hummus</td><td>4/week</td><td class="n">150</td></tr><tr><td>olive_oil</td><td>1/day</td><td class="n">10</td></tr><tr><td>knafeh</td><td>1/month</td><td class="n">150</td></tr></tbody></table></div>
+      <ul class="small text-secondary mb-0">
+        <li>{% translate "<b>food</b>: a dish or ingredient code, English name, or Arabic name from the composition table." %}</li>
+        <li>{% translate "<b>frequency</b>: <code>n/day</code>, <code>n/week</code>, <code>n/month</code> or <code>never</code>. A plain number means times per day." %}</li>
+        <li>{% translate "<b>portion_g</b>: grams per occasion; blank uses the dish's typical serving." %}</li>
+        <li>{% translate 'The result is saved as one “FFQ (daily average)” record: grams/day = frequency/day × portion.' %}</li>
+      </ul>
+    </div></div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{% static 'vendor/xlsx/xlsx.mini.min.js' %}"></script>{% include "static_site/_ws_scripts.html" %}{% endblock %}

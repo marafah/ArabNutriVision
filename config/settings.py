@@ -116,6 +116,19 @@ LOGOUT_REDIRECT_URL = "nutrition:home"
 FILE_UPLOAD_MAX_MEMORY_SIZE = 12 * 1024 * 1024
 DATA_UPLOAD_MAX_MEMORY_SIZE = 12 * 1024 * 1024
 
+# ---------------------------------------------------------------- static edition (GitHub Pages + Supabase)
+# ANV_STATIC_SITE=1 is set only by `manage.py build_site` / the Pages workflow: pages are rendered to HTML
+# under ANV_BASE_PATH and the researcher workspace talks to Supabase from the browser.
+STATIC_SITE = os.environ.get("ANV_STATIC_SITE", "0") == "1"
+ANV_BASE_PATH = "/" + os.environ.get("ANV_BASE_PATH", "/ArabNutriVision").strip("/")
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "").rstrip("/")
+SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY", "")
+if STATIC_SITE:
+    FORCE_SCRIPT_NAME = ANV_BASE_PATH
+    STATIC_URL = ANV_BASE_PATH + "/static/"
+    STORAGES["staticfiles"] = {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"}
+    ALLOWED_HOSTS = ["testserver", "localhost"]
+
 # Photo recognition runs entirely in the viewer's browser (open-source CLIP model via transformers.js);
 # no external AI API or key is used by the server.
 

@@ -1,0 +1,47 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% translate "Participant" %}{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb"><ol class="breadcrumb small"><li class="breadcrumb-item"><a href="{% url 'nutrition:participants' %}">{% translate "Participants" %}</a></li><li class="breadcrumb-item active" id="bcCode">…</li></ol></nav>
+  {% include "static_site/_ws_notice.html" %}
+  <div id="wsBody" hidden>
+  <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+    <div><div class="eyebrow" id="pMeta"></div><h1 class="h2 mb-0" id="pTitle"></h1></div>
+    <div class="d-flex gap-2"><a href="{% url 'nutrition:ffq' %}" class="btn btn-outline-primary btn-sm" id="ffqLink"><i class="bi bi-file-earmark-spreadsheet me-1"></i>{% translate "Import FFQ" %}</a>
+    <button class="btn btn-sm btn-outline-danger" id="delPart"><i class="bi bi-trash me-1"></i>{% translate "Delete participant" %}</button></div>
+  </div>
+  <div class="row g-4">
+    <div class="col-lg-8 min-w-0">
+      <div class="panel mb-4">
+        <div class="d-flex justify-content-between align-items-center"><h2 class="h5 mb-0">{% translate "Energy and fat by day" %}</h2><span class="small text-secondary" id="nDays"></span></div>
+        <div style="height:240px" class="mt-2" id="trendBox"><canvas id="trend" role="img" aria-label="{% translate 'Energy by day' %}"></canvas></div>
+        <p class="text-secondary mt-2 mb-0" id="noDays" hidden>{% translate "No records yet. Create the first one with the form." %}</p>
+      </div>
+      <div class="panel p-0"><div class="table-responsive"><table class="table table-anv table-hover align-middle mb-0">
+        <thead><tr><th class="ps-3">{% translate "Date" %}</th><th>{% translate "Method" %}</th><th class="n">{% translate "Items" %}</th><th class="n">{% translate "kcal" %}</th><th class="n">{% translate "Protein g" %}</th><th class="n">{% translate "Fat g" %}</th><th class="n">{% translate "SFA % kcal" %}</th><th class="n pe-3">{% translate "Sodium mg" %}</th></tr></thead>
+        <tbody id="dayRows"></tbody>
+      </table></div></div>
+    </div>
+    <div class="col-lg-4">
+      <div class="panel mb-4">
+        <h2 class="h5">{% translate "New record" %}</h2>
+        <form id="recForm" novalidate>
+          <div class="mb-2"><label class="form-label small" for="r_date">{% translate "Date" %}</label><input class="form-control" type="date" id="r_date" name="date" required></div>
+          <div class="mb-2"><label class="form-label small" for="r_method">{% translate "Method" %}</label><select class="form-select" id="r_method" name="method" data-opts="methods" data-exclude="ffq"></select></div>
+          <div class="mb-2"><label class="form-label small" for="r_notes">{% translate "Notes" %}</label><input class="form-control" id="r_notes" name="notes" maxlength="200"></div>
+          <div class="text-danger small mb-2" id="recErr"></div>
+          <button class="btn btn-primary btn-sm">{% translate "Create record" %}</button>
+        </form>
+      </div>
+      <div class="panel" id="usualBox" hidden>
+        <div class="eyebrow mb-1" id="usualTitle"></div>
+        <h2 class="h5">{% translate "Share of reference values" %}</h2>
+        <div id="usualRows"></div>
+        <p class="small text-secondary mt-2 mb-0">{% translate "Energy against the participant target; others against US FDA Daily Values (sodium, SFA and cholesterol are upper limits)." %}</p>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}{% include "static_site/_ws_scripts.html" %}{% endblock %}

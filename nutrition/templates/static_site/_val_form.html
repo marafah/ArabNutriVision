@@ -1,0 +1,18 @@
+{% load i18n %}<form id="{{ form_id }}" class="row g-2 val-form" novalidate>
+  <div class="col-6"><label class="form-label small d-block w-100">{% translate "Session id" %}<input class="form-control" name="session_id" maxlength="20" required dir="ltr"></label></div>
+  <div class="col-6"><label class="form-label small d-block w-100">{% translate "Plate no." %}<input class="form-control" name="plate_no" type="number" min="1" value="1"></label></div>
+  <div class="col-6"><label class="form-label small d-block w-100">{% translate "True dish" %}<select class="form-select" name="dish_code" data-opts="dishes" required></select></label></div>
+  <div class="col-6"><label class="form-label small d-block w-100">{% translate "True recipe variant" %}<select class="form-select" name="variant" data-opts="variants" data-default="home"></select></label></div>
+  <div class="col-6"><label class="form-label small d-block w-100">{% translate "Weighed portion (g)" %}<input class="form-control" name="weight_g" type="number" min="1" max="3000" step="1" required></label></div>
+  <div class="col-6"><label class="form-label small d-block w-100">{% translate "View" %}<select class="form-select" name="view" data-opts="views"></select></label></div>
+  <div class="col-6"><label class="form-label small d-block w-100">{% translate "Phone" %}<input class="form-control" name="phone" maxlength="40"></label></div>
+  <div class="col-6"><label class="form-label small d-block w-100">{% translate "Split" %}<select class="form-select" name="split"><option value="train">train</option><option value="val">val</option><option value="test" selected>test</option></select></label></div>
+  <div class="col-12 form-check ms-2"><input class="form-check-input" type="checkbox" name="reference_card" id="{{ form_id }}_card"> <label class="form-check-label small" for="{{ form_id }}_card">{% translate "Reference card in photo" %}</label></div>
+  <div class="col-6 {% if form_id == 'valFormAnalyze' %}d-none{% endif %}"><label class="form-label small d-block w-100">{% translate "AI dish" %}<select class="form-select" name="ai_dish_code" data-opts="dishes" data-blank="1"></select></label></div>
+  <div class="col-6 {% if form_id == 'valFormAnalyze' %}d-none{% endif %}"><label class="form-label small d-block w-100">{% translate "AI portion (g)" %}<input class="form-control" name="ai_grams" type="number" min="1" max="3000" step="1"></label></div>
+  <div class="col-6 {% if form_id == 'valFormAnalyze' %}d-none{% endif %}"><label class="form-label small d-block w-100">{% translate "AI style" %}<select class="form-select" name="ai_style" data-opts="variants" data-blank="1"></select></label></div>
+  <div class="col-6 {% if form_id == 'valFormAnalyze' %}d-none{% endif %}"><label class="form-label small d-block w-100">{% translate "Image-only kcal (external model)" %}<input class="form-control" name="ai_direct_kcal" type="number" min="0" step="1"></label></div>
+  <div class="col-6 {% if form_id == 'valFormAnalyze' %}d-none{% endif %}"><label class="form-label small d-block w-100">{% translate "Image-only fat g (external model)" %}<input class="form-control" name="ai_direct_fat_g" type="number" min="0" step="0.1"></label></div>
+  <div class="col-12 small" role="status" data-status></div>
+  <div class="col-12"><button class="btn btn-primary btn-sm">{% translate "Save plate" %}</button></div>
+</form>

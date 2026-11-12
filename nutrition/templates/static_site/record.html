@@ -1,0 +1,81 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% translate "Dietary record" %}{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb"><ol class="breadcrumb small"><li class="breadcrumb-item"><a href="{% url 'nutrition:participants' %}">{% translate "Participants" %}</a></li><li class="breadcrumb-item"><a href="#" id="bcPart">…</a></li><li class="breadcrumb-item active" id="bcDate">…</li></ol></nav>
+  {% include "static_site/_ws_notice.html" %}
+  <div id="wsBody" hidden>
+  <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+    <div><div class="eyebrow" id="rMeta"></div><h1 class="h2 mb-0" id="rTitle"></h1></div>
+    <div class="d-flex flex-wrap gap-2">
+      <button class="btn btn-sm btn-outline-primary" id="csvBtn"><i class="bi bi-download me-1"></i>{% translate "Export CSV" %}</button>
+      <a class="btn btn-sm btn-rose" href="{% url 'nutrition:analyze' %}"><i class="bi bi-camera me-1"></i>{% translate "Add from photo" %}</a>
+      <button class="btn btn-sm btn-outline-danger" id="delRec"><i class="bi bi-trash me-1"></i>{% translate "Delete record" %}</button>
+    </div>
+  </div>
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3"><div class="stat"><div class="v" id="stK">–</div><div class="l" id="stKl"></div></div></div>
+    <div class="col-6 col-md-3"><div class="stat"><div class="v" id="stP">–</div><div class="l" id="stPl"></div></div></div>
+    <div class="col-6 col-md-3"><div class="stat"><div class="v text-rose" id="stF">–</div><div class="l" id="stFl"></div></div></div>
+    <div class="col-6 col-md-3"><div class="stat"><div class="v" id="stG">–</div><div class="l" id="stGl"></div></div></div>
+  </div>
+  <div class="row g-4">
+    <div class="col-lg-8 min-w-0">
+      <div class="panel p-0 mb-4">
+        <div class="p-3 pb-0 d-flex justify-content-between"><h2 class="h5 mb-0">{% translate "Foods eaten" %}</h2><span class="small text-secondary" id="nItemsLbl"></span></div>
+        <div class="table-responsive"><table class="table table-anv align-middle mb-0">
+          <thead><tr><th class="ps-3">{% translate "Meal" %}</th><th>{% translate "Food" %}</th><th class="n">{% translate "g" %}</th><th>{% translate "Prep." %}</th><th class="n">{% translate "kcal" %}</th><th class="n">{% translate "Prot." %}</th><th class="n">{% translate "Fat" %}</th><th class="n">{% translate "SFA" %}</th><th class="n">{% translate "Carb." %}</th><th class="n">{% translate "Na mg" %}</th><th class="n">{% translate "GL" %}</th><th class="pe-3"></th></tr></thead>
+          <tbody id="itemRows"></tbody>
+          <tfoot><tr class="fw-semibold" id="totRow"></tr></tfoot>
+        </table></div>
+      </div>
+      <div class="row g-4 mb-4">
+        <div class="col-md-7"><div class="panel h-100">
+          <h2 class="h6 fw-semibold">{% translate "Add a food" %}</h2>
+          <form id="itemForm" class="row g-2" novalidate>
+            <div class="col-6"><label class="form-label small" for="i_meal">{% translate "Meal" %}</label><select class="form-select" id="i_meal" name="meal" data-opts="meals" data-default="lunch"></select></div>
+            <div class="col-6"><label class="form-label small" for="i_grams">{% translate "Portion (g)" %}</label><input class="form-control" type="number" id="i_grams" name="grams" min="1" max="3000" step="1" required></div>
+            <div class="col-12"><label class="form-label small" for="i_dish">{% translate "Dish" %}</label><select class="form-select" id="i_dish" name="dish" data-opts="dishes" data-blank="1"></select></div>
+            <div class="col-7"><label class="form-label small" for="i_ing">{% translate "…or single ingredient" %}</label><select class="form-select" id="i_ing" name="ingredient" data-opts="ingredients" data-blank="1"></select></div>
+            <div class="col-5"><label class="form-label small" for="i_style">{% translate "Preparation" %}</label><select class="form-select" id="i_style" name="style" data-opts="styles"></select></div>
+            <div class="col-12 text-danger small" id="itemErr"></div>
+            <div class="col-12"><button class="btn btn-primary btn-sm">{% translate "Add food" %}</button></div>
+          </form>
+        </div></div>
+        <div class="col-md-5"><div class="panel h-100">
+          <h2 class="h6 fw-semibold">{% translate "Add a supplement" %}</h2>
+          <form id="suppForm" class="row g-2" novalidate>
+            <div class="col-12"><label class="form-label small" for="s_supp">{% translate "Supplement" %}</label><select class="form-select" id="s_supp" name="supplement" data-opts="supplements"></select></div>
+            <div class="col-6"><label class="form-label small" for="s_doses">{% translate "Doses" %}</label><input class="form-control" type="number" id="s_doses" name="doses" min="0.25" max="20" step="0.25" value="1"></div>
+            <div class="col-12"><button class="btn btn-outline-primary btn-sm">{% translate "Add supplement" %}</button></div>
+          </form>
+        </div></div>
+      </div>
+      <div class="panel">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2"><h2 class="h5 mb-0"><i class="bi bi-lightbulb me-2"></i>{% translate "Nutrition insights" %}</h2><span class="pill pill-good"><i class="bi bi-shield-lock me-1"></i>{% translate "computed in your browser, no external AI" %}</span></div>
+        <p class="small text-secondary mt-1">{% translate "Automatic checks against WHO and FDA reference values. Interpretation remains the dietitian's decision." %}</p>
+        <ul class="list-unstyled mb-0" id="insights"></ul>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="panel mb-4">
+        <h2 class="h6 fw-semibold">{% translate "Energy sources" %}</h2>
+        <div style="height:190px"><canvas id="macro" role="img" aria-label="{% translate 'Energy split' %}"></canvas></div>
+        <h2 class="h6 fw-semibold mt-3">{% translate "Fatty acids, % of energy" %}</h2>
+        <div style="height:150px"><canvas id="fa" role="img" aria-label="{% translate 'Fatty acids as percent of energy' %}"></canvas></div>
+        <p class="small text-secondary mb-0">{% translate "Dashed line: WHO limit of 10% of energy from saturated fat." %}</p>
+      </div>
+      <div class="panel mb-4">
+        <h2 class="h6 fw-semibold">{% translate "Share of reference values" %} <span class="small text-secondary fw-normal">{% translate "(incl. supplements)" %}</span></h2>
+        <div id="pctRows"></div>
+      </div>
+      <div class="panel">
+        <h2 class="h6 fw-semibold">{% translate "Energy by meal" %}</h2>
+        <div style="height:170px"><canvas id="meals" role="img" aria-label="{% translate 'Energy by meal' %}"></canvas></div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}{% include "static_site/_ws_scripts.html" %}{% endblock %}

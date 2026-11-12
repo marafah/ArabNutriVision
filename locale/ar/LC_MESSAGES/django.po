@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 12:18+0300\n"
+"POT-Creation-Date: 2026-11-12 14:08+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,92 +35,112 @@ msgstr "التغذية السريرية · الوصفات وبروتوكول ا�
 msgid "MSc in Nutrition (graduate)"
 msgstr "ماجستير في التغذية (خرّيجة)"
 
-#: nutrition/forms.py:7
+#: nutrition/forms.py:7 nutrition/static_views.py:33
 msgid "Average of recipes"
 msgstr "متوسط الوصفات"
 
-#: nutrition/forms.py:26
+#: nutrition/forms.py:26 nutrition/templates/static_site/participants.html:16
 msgid "Participant code"
 msgstr "رمز المشارك"
 
 #: nutrition/forms.py:26 nutrition/templates/nutrition/participant_list.html:9
+#: nutrition/templates/static_site/participants.html:10
+#: nutrition/templates/static_site/participants.html:17
 msgid "Sex"
 msgstr "الجنس"
 
-#: nutrition/forms.py:26
+#: nutrition/forms.py:26 nutrition/templates/static_site/participants.html:18
 msgid "Age (years)"
 msgstr "العمر (بالسنوات)"
 
-#: nutrition/forms.py:26
+#: nutrition/forms.py:26 nutrition/templates/static_site/participants.html:19
 msgid "Energy target (kcal/day)"
 msgstr "هدف الطاقة (سعرة/يوم)"
 
 #: nutrition/forms.py:26 nutrition/forms.py:38
 #: nutrition/templates/nutrition/participant_list.html:9
+#: nutrition/templates/static_site/participant.html:31
+#: nutrition/templates/static_site/participants.html:10
+#: nutrition/templates/static_site/participants.html:20
 msgid "Notes"
 msgstr "ملاحظات"
 
 #: nutrition/forms.py:38
 #: nutrition/templates/nutrition/participant_detail.html:17
+#: nutrition/templates/static_site/participant.html:21
+#: nutrition/templates/static_site/participant.html:29
 msgid "Date"
 msgstr "التاريخ"
 
 #: nutrition/forms.py:38
 #: nutrition/templates/nutrition/participant_detail.html:17
+#: nutrition/templates/static_site/participant.html:21
+#: nutrition/templates/static_site/participant.html:30
 msgid "Method"
 msgstr "الطريقة"
 
 #: nutrition/forms.py:48 nutrition/templates/nutrition/analyze.html:35
 #: nutrition/templates/nutrition/record_detail.html:54
+#: nutrition/templates/static_site/record.html:40
 msgid "Preparation"
 msgstr "طريقة التحضير"
 
 #: nutrition/forms.py:53 nutrition/templates/nutrition/record_detail.html:51
+#: nutrition/templates/static_site/record.html:37
 msgid "Portion (g)"
 msgstr "الحصة (غ)"
 
 #: nutrition/forms.py:53 nutrition/templates/nutrition/record_detail.html:53
+#: nutrition/templates/static_site/record.html:39
 msgid "…or single ingredient"
 msgstr "…أو مكوّن منفرد"
 
 #: nutrition/forms.py:53 nutrition/templates/nutrition/analyze.html:49
+#: nutrition/templates/nutrition/analyze.html:67
 #: nutrition/templates/nutrition/record_detail.html:27
 #: nutrition/templates/nutrition/record_detail.html:50
+#: nutrition/templates/static_site/record.html:27
+#: nutrition/templates/static_site/record.html:36
 msgid "Meal"
 msgstr "الوجبة"
 
 #: nutrition/forms.py:53 nutrition/templates/nutrition/analyze.html:27
 #: nutrition/templates/nutrition/dish_list.html:18
 #: nutrition/templates/nutrition/record_detail.html:52
+#: nutrition/templates/static_site/record.html:38
 msgid "Dish"
 msgstr "الطبق"
 
-#: nutrition/forms.py:65
+#: nutrition/forms.py:65 nutrition/static_views.py:50
 msgid "Choose a dish or an ingredient."
 msgstr "اختر طبقاً أو مكوّناً."
 
-#: nutrition/forms.py:67
+#: nutrition/forms.py:67 nutrition/static_views.py:51
 msgid "Enter a portion between 1 and 3000 g."
 msgstr "أدخل حصة بين 1 و3000 غ."
 
-#: nutrition/forms.py:75 nutrition/templates/nutrition/record_detail.html:38
+#: nutrition/forms.py:75 nutrition/static_views.py:63
+#: nutrition/templates/nutrition/record_detail.html:38
 #: nutrition/templates/nutrition/record_detail.html:61
+#: nutrition/templates/static_site/record.html:48
 msgid "Supplement"
 msgstr "مكمّل غذائي"
 
 #: nutrition/forms.py:75 nutrition/templates/nutrition/record_detail.html:62
+#: nutrition/templates/static_site/record.html:49
 msgid "Doses"
 msgstr "عدد الجرعات"
 
-#: nutrition/forms.py:84
+#: nutrition/forms.py:84 nutrition/templates/static_site/ffq.html:11
+#: nutrition/templates/static_site/participant.html:2
 msgid "Participant"
 msgstr "المشارك"
 
-#: nutrition/forms.py:85
+#: nutrition/forms.py:85 nutrition/templates/static_site/ffq.html:12
 msgid "File"
 msgstr "الملف"
 
-#: nutrition/forms.py:85
+#: nutrition/forms.py:85 nutrition/templates/static_site/ffq.html:12
 msgid "CSV or Excel (.xlsx) with columns: food, frequency, portion_g"
 msgstr "ملف CSV أو Excel (.xlsx) بالأعمدة: food وfrequency وportion_g"
 
@@ -128,60 +148,66 @@ msgstr "ملف CSV أو Excel (.xlsx) بالأعمدة: food وfrequency وporti
 msgid "Upload a .csv or .xlsx file."
 msgstr "ارفع ملفاً بصيغة ‎.csv أو ‎.xlsx."
 
-#: nutrition/forms.py:104
+#: nutrition/forms.py:104 nutrition/templates/static_site/_val_form.html:2
 msgid "Session id"
 msgstr "رمز جلسة الطبخ"
 
-#: nutrition/forms.py:104
+#: nutrition/forms.py:104 nutrition/templates/static_site/_val_form.html:3
 msgid "Plate no."
 msgstr "رقم الطبق"
 
-#: nutrition/forms.py:104
+#: nutrition/forms.py:104 nutrition/templates/static_site/_val_form.html:4
 msgid "True dish"
 msgstr "الطبق الفعلي"
 
-#: nutrition/forms.py:104
+#: nutrition/forms.py:104 nutrition/templates/static_site/_val_form.html:5
 msgid "True recipe variant"
 msgstr "نوع الوصفة الفعلي"
 
-#: nutrition/forms.py:105
+#: nutrition/forms.py:105 nutrition/templates/static_site/_val_form.html:6
 msgid "Weighed portion (g)"
 msgstr "الحصة الموزونة (غ)"
 
-#: nutrition/forms.py:105
+#: nutrition/forms.py:105 nutrition/templates/static_site/_val_form.html:7
 msgid "View"
 msgstr "زاوية التصوير"
 
-#: nutrition/forms.py:105 nutrition/templates/nutrition/analyze.html:72
+#: nutrition/forms.py:105 nutrition/templates/nutrition/analyze.html:90
 #: nutrition/templates/nutrition/validation.html:55
+#: nutrition/templates/static_site/_val_form.html:10
 msgid "Reference card in photo"
 msgstr "بطاقة مرجعية في الصورة"
 
-#: nutrition/forms.py:106
+#: nutrition/forms.py:106 nutrition/templates/static_site/_val_form.html:8
 msgid "Phone"
 msgstr "الهاتف"
 
 #: nutrition/forms.py:106 nutrition/templates/nutrition/validation.html:9
+#: nutrition/templates/static_site/_val_form.html:9
+#: nutrition/templates/static_site/validation.html:9
 msgid "Split"
 msgstr "المجموعة"
 
 #: nutrition/forms.py:106 nutrition/templates/nutrition/validation.html:42
+#: nutrition/templates/static_site/_val_form.html:11
+#: nutrition/templates/static_site/validation.html:38
 msgid "AI dish"
 msgstr "طبق النموذج"
 
-#: nutrition/forms.py:106
+#: nutrition/forms.py:106 nutrition/templates/static_site/_val_form.html:12
 msgid "AI portion (g)"
 msgstr "حصة النموذج (غ)"
 
 #: nutrition/forms.py:106 nutrition/forms.py:114
+#: nutrition/templates/static_site/_val_form.html:13
 msgid "AI style"
 msgstr "نمط التحضير حسب النموذج"
 
-#: nutrition/forms.py:107
+#: nutrition/forms.py:107 nutrition/templates/static_site/_val_form.html:14
 msgid "Image-only kcal (external model)"
 msgstr "السعرات من الصورة فقط (نموذج خارجي)"
 
-#: nutrition/forms.py:107
+#: nutrition/forms.py:107 nutrition/templates/static_site/_val_form.html:15
 msgid "Image-only fat g (external model)"
 msgstr "الدهون (غ) من الصورة فقط (نموذج خارجي)"
 
@@ -250,7 +276,7 @@ msgstr "قائمة طعام / خطة وجبات"
 msgid "FFQ (daily average)"
 msgstr "استبيان تكرار الأطعمة (متوسط يومي)"
 
-#: nutrition/models.py:142 nutrition/templates/nutrition/analyze.html:123
+#: nutrition/models.py:142 nutrition/templates/nutrition/analyze.html:141
 msgid "Manual"
 msgstr "يدوي"
 
@@ -291,7 +317,7 @@ msgid "Vitamins"
 msgstr "الفيتامينات"
 
 #: nutrition/nutrients.py:44 nutrition/templates/nutrition/analyze.html:39
-#: nutrition/templates/nutrition/analyze.html:126
+#: nutrition/templates/nutrition/analyze.html:144
 #: nutrition/templates/nutrition/dish_detail.html:89
 #: nutrition/templates/nutrition/home.html:2
 #: nutrition/templates/nutrition/home.html:27
@@ -299,14 +325,14 @@ msgid "Home"
 msgstr "بيتي"
 
 #: nutrition/nutrients.py:44 nutrition/templates/nutrition/analyze.html:40
-#: nutrition/templates/nutrition/analyze.html:126
+#: nutrition/templates/nutrition/analyze.html:144
 #: nutrition/templates/nutrition/dish_detail.html:89
 #: nutrition/templates/nutrition/home.html:28
 msgid "Restaurant"
 msgstr "مطاعم"
 
 #: nutrition/nutrients.py:44 nutrition/templates/nutrition/analyze.html:38
-#: nutrition/templates/nutrition/analyze.html:126
+#: nutrition/templates/nutrition/analyze.html:144
 #: nutrition/templates/nutrition/dish_detail.html:89
 msgid "Light"
 msgstr "خفيف"
@@ -347,35 +373,35 @@ msgstr "نوع قطعة اللحم وكميتها"
 msgid "Other ingredients and yield"
 msgstr "مكوّنات أخرى والمردود"
 
-#: nutrition/services/estimate.py:102
+#: nutrition/services/estimate.py:102 nutrition/static_views.py:72
 #, python-format
 msgid "Fat supplies %(p).0f%% of energy, above the 20–35%% range."
 msgstr ""
 "توفّر الدهون %(p).0f%% من الطاقة، وهذا أعلى من النطاق الموصى به 20–35%%."
 
-#: nutrition/services/estimate.py:104
+#: nutrition/services/estimate.py:104 nutrition/static_views.py:73
 #, python-format
 msgid ""
 "Saturated fat is %(p).1f%% of energy; the WHO recommends less than 10%%."
 msgstr ""
 "الدهون المشبعة %(p).1f%% من الطاقة، وتوصي منظمة الصحة العالمية بأقل من 10%%."
 
-#: nutrition/services/estimate.py:106
+#: nutrition/services/estimate.py:106 nutrition/static_views.py:74
 #, python-format
 msgid "Sodium is %(v).0f mg, above the 2,300 mg upper limit."
 msgstr "الصوديوم %(v).0f ملغ، وهذا أعلى من الحد الأعلى 2,300 ملغ."
 
-#: nutrition/services/estimate.py:108
+#: nutrition/services/estimate.py:108 nutrition/static_views.py:75
 #, python-format
 msgid "Fibre is %(v).0f g; adults are advised 25–30 g a day."
 msgstr "الألياف %(v).0f غ، ويُنصح البالغون بـ 25–30 غ يومياً."
 
-#: nutrition/services/estimate.py:110
+#: nutrition/services/estimate.py:110 nutrition/static_views.py:76
 #, python-format
 msgid "Daily glycaemic load is %(v).0f (above 120 is considered high)."
 msgstr "الحمل السكري اليومي %(v).0f (أكثر من 120 يُعدّ مرتفعاً)."
 
-#: nutrition/services/estimate.py:114
+#: nutrition/services/estimate.py:114 nutrition/static_views.py:77
 #, python-format
 msgid ""
 "%(n)d dish(es) are recorded as restaurant or unknown preparation (%(k).0f "
@@ -384,27 +410,377 @@ msgstr ""
 "عدد الأطباق المسجّلة بتحضير مطاعم أو غير معروف: %(n)d (%(k).0f سعرة). تأكيد "
 "طريقة التحضير هو أكثر ما يضيّق نطاق الدهون المخفية."
 
-#: nutrition/services/estimate.py:119
+#: nutrition/services/estimate.py:119 nutrition/static_views.py:78
 #, python-format
 msgid "Largest energy sources: %(names)s."
 msgstr "أكبر مصادر الطاقة: %(names)s."
 
-#: nutrition/services/estimate.py:120
+#: nutrition/services/estimate.py:120 nutrition/static_views.py:79
 msgid "Iron"
 msgstr "الحديد"
 
-#: nutrition/services/estimate.py:120
+#: nutrition/services/estimate.py:120 nutrition/static_views.py:79
 msgid "Calcium"
 msgstr "الكالسيوم"
 
-#: nutrition/services/estimate.py:123
+#: nutrition/services/estimate.py:123 nutrition/static_views.py:79
 #, python-format
 msgid "%(label)s is %(v).0f mg (%(p).0f%% of the reference value)."
 msgstr "%(label)s %(v).0f ملغ (%(p).0f%% من القيمة المرجعية)."
 
-#: nutrition/services/estimate.py:125
+#: nutrition/services/estimate.py:125 nutrition/static_views.py:80
 msgid "No nutrient exceeded the limits checked here."
 msgstr "لم يتجاوز أي عنصر غذائي الحدود التي تم فحصها هنا."
+
+#: nutrition/static_views.py:43
+#: nutrition/templates/nutrition/record_detail.html:41
+msgid "Total (food)"
+msgstr "المجموع (الطعام)"
+
+#: nutrition/static_views.py:43 nutrition/templates/nutrition/analyze.html:108
+#: nutrition/templates/nutrition/analyze.html:135
+#: nutrition/templates/nutrition/dish_detail.html:72
+#: nutrition/templates/nutrition/dish_detail.html:94
+#: nutrition/templates/nutrition/dish_detail.html:96
+#: nutrition/templates/nutrition/dish_list.html:18
+#: nutrition/templates/nutrition/home.html:26
+#: nutrition/templates/nutrition/home.html:27
+#: nutrition/templates/nutrition/home.html:28
+#: nutrition/templates/nutrition/participant_detail.html:17
+#: nutrition/templates/nutrition/participant_list.html:10
+#: nutrition/templates/nutrition/recipe_builder.html:22
+#: nutrition/templates/nutrition/record_detail.html:27
+#: nutrition/templates/nutrition/validation.html:73
+#: nutrition/templates/static_site/participant.html:21
+#: nutrition/templates/static_site/record.html:27
+msgid "kcal"
+msgstr "سعرة"
+
+#: nutrition/static_views.py:43 nutrition/templates/nutrition/analyze.html:33
+#: nutrition/templates/nutrition/analyze.html:135
+#: nutrition/templates/nutrition/dish_detail.html:72
+#: nutrition/templates/nutrition/dish_detail.html:96
+#: nutrition/templates/nutrition/home.html:22
+#: nutrition/templates/nutrition/record_detail.html:17
+#: nutrition/templates/nutrition/record_detail.html:18
+#: nutrition/templates/nutrition/record_detail.html:27
+#: nutrition/templates/nutrition/validation.html:19
+#: nutrition/templates/nutrition/validation.html:42
+#: nutrition/templates/static_site/record.html:27
+#: nutrition/templates/static_site/validation.html:38
+msgid "g"
+msgstr "غ"
+
+#: nutrition/static_views.py:43 nutrition/templates/nutrition/analyze.html:135
+msgid "mg"
+msgstr "ملغ"
+
+#: nutrition/static_views.py:43 nutrition/templates/nutrition/analyze.html:155
+msgid "Could not save."
+msgstr "تعذّر الحفظ."
+
+#: nutrition/static_views.py:43
+msgid "Saved."
+msgstr "تم الحفظ."
+
+#: nutrition/static_views.py:43
+msgid "Deleted."
+msgstr "تم الحذف."
+
+#: nutrition/static_views.py:44
+#: nutrition/templates/nutrition/record_detail.html:11
+msgid "Press again to delete"
+msgstr "اضغط مرة أخرى للحذف"
+
+#: nutrition/static_views.py:44
+#: nutrition/templates/static_site/_ws_notice.html:2
+msgid "Loading…"
+msgstr "جارٍ التحميل…"
+
+#: nutrition/static_views.py:44
+msgid "Email or password is incorrect."
+msgstr "البريد الإلكتروني أو كلمة المرور غير صحيحة."
+
+#: nutrition/static_views.py:45
+msgid ""
+"The online database is not configured yet. See the README (GitHub Pages + "
+"Supabase)."
+msgstr ""
+"لم تُهيّأ قاعدة البيانات الإلكترونية بعد. راجع ملف README (GitHub Pages + "
+"Supabase)."
+
+#: nutrition/static_views.py:46
+#: nutrition/templates/nutrition/dashboard.html:22
+msgid "No participants yet. Add one with a pseudonymous code such as P001."
+msgstr "لا يوجد مشاركون بعد. أضف مشاركاً برمز مستعار مثل P001."
+
+#: nutrition/static_views.py:47
+#: nutrition/templates/nutrition/dashboard.html:26
+msgid "No records yet."
+msgstr "لا توجد سجلات بعد."
+
+#: nutrition/static_views.py:47
+#: nutrition/templates/nutrition/participant_detail.html:14
+#: nutrition/templates/static_site/participant.html:18
+msgid "No records yet. Create the first one with the form."
+msgstr "لا توجد سجلات بعد. أنشئ أول سجل من النموذج."
+
+#: nutrition/static_views.py:48
+#: nutrition/templates/nutrition/record_detail.html:37
+msgid "No foods yet. Add the first item with the form below, or from a photo."
+msgstr "لا توجد أطعمة بعد. أضف أول عنصر من النموذج في الأسفل أو من صورة."
+
+#: nutrition/static_views.py:49
+#: nutrition/templates/nutrition/validation.html:46
+msgid "No plates yet."
+msgstr "لا توجد أطباق بعد."
+
+#: nutrition/static_views.py:49
+#: nutrition/templates/nutrition/validation.html:30
+msgid ""
+"No plates with recognition outputs yet. Add a plate with the form, or from "
+"the Analyze page after weighing."
+msgstr ""
+"لا توجد أطباق بنتائج تعرّف بعد. أضف طبقاً من النموذج أو من صفحة التحليل بعد "
+"الوزن."
+
+#: nutrition/static_views.py:50 nutrition/views.py:146
+msgid "You already have a participant with this code."
+msgstr "لديك مشارك بهذا الرمز مسبقاً."
+
+#: nutrition/static_views.py:51
+msgid "Fill in the required fields."
+msgstr "املأ الحقول المطلوبة."
+
+#: nutrition/static_views.py:52 nutrition/views.py:195
+#, python-format
+msgid "Added %(food)s (%(g).0f g)."
+msgstr "تمت إضافة %(food)s (%(g).0f غ)."
+
+#: nutrition/static_views.py:52 nutrition/views.py:275
+#, python-format
+msgid "Added %(food)s (%(g).0f g) to the record of %(p)s, %(d)s."
+msgstr "تمت إضافة %(food)s (%(g).0f غ) إلى سجل %(p)s بتاريخ %(d)s."
+
+#: nutrition/static_views.py:53 nutrition/templates/nutrition/analyze.html:155
+msgid "Open record"
+msgstr "فتح السجل"
+
+#: nutrition/static_views.py:53 nutrition/views.py:390
+#, python-format
+msgid "Plate %(f)s saved."
+msgstr "تم حفظ الطبق %(f)s."
+
+#: nutrition/static_views.py:53 nutrition/views.py:149
+#, python-format
+msgid "Participant %(code)s added."
+msgstr "تمت إضافة المشارك %(code)s."
+
+#: nutrition/static_views.py:54 nutrition/views.py:293
+#, python-format
+msgid "Imported %(n)d FFQ items as average daily intake."
+msgstr "تم استيراد %(n)d عنصراً من الاستبيان كمتوسط مأخوذ يومي."
+
+#: nutrition/static_views.py:54
+#: nutrition/templates/nutrition/ffq_import.html:14
+msgid "Fix these rows and upload again:"
+msgstr "صحّح هذه الصفوف ثم ارفع الملف مجدداً:"
+
+#: nutrition/static_views.py:55
+#, python-format
+msgid "Row %(n)s: food '%(f)s' is not in the composition table"
+msgstr "الصف %(n)s: الطعام '%(f)s' غير موجود في جدول التركيب"
+
+#: nutrition/static_views.py:56
+#, python-format
+msgid "Row %(n)s: cannot read frequency '%(f)s'"
+msgstr "الصف %(n)s: تعذّرت قراءة التكرار '%(f)s'"
+
+#: nutrition/static_views.py:56
+msgid "The file has no readable rows."
+msgstr "لا يحتوي الملف على صفوف قابلة للقراءة."
+
+#: nutrition/static_views.py:57
+#, python-format
+msgid "FFQ import: %(f)s"
+msgstr "استيراد استبيان تكرار الطعام: %(f)s"
+
+#: nutrition/static_views.py:58
+#: nutrition/templates/nutrition/participant_detail.html:7
+#, python-format
+msgid "%(a)s years"
+msgstr "%(a)s سنة"
+
+#: nutrition/static_views.py:58
+#: nutrition/templates/nutrition/dashboard.html:22
+#, python-format
+msgid "%(a)s y"
+msgstr "%(a)s سنة"
+
+#: nutrition/static_views.py:58
+#: nutrition/templates/nutrition/participant_detail.html:7
+#, python-format
+msgid "target %(t)s kcal/day"
+msgstr "الهدف %(t)s سعرة/يوم"
+
+#: nutrition/static_views.py:58
+#: nutrition/templates/nutrition/participant_detail.html:7
+#, python-format
+msgid "Participant %(c)s"
+msgstr "المشارك %(c)s"
+
+#: nutrition/static_views.py:59
+#, python-format
+msgid "%(n)s records"
+msgstr "عدد السجلات: %(n)s"
+
+#: nutrition/static_views.py:59
+#, python-format
+msgid "%(n)s items"
+msgstr "عدد العناصر: %(n)s"
+
+#: nutrition/static_views.py:59
+#, python-format
+msgid "%(n)s recall/record days"
+msgstr "أيام الاسترجاع/التسجيل: %(n)s"
+
+#: nutrition/static_views.py:60
+#, python-format
+msgid "Usual intake · mean of %(n)s days incl. supplements"
+msgstr "المأخوذ المعتاد · متوسط %(n)s يوم مع المكمّلات"
+
+#: nutrition/static_views.py:61
+#: nutrition/templates/nutrition/record_detail.html:16
+#, python-format
+msgid "kcal · target %(t)s"
+msgstr "سعرة · الهدف %(t)s"
+
+#: nutrition/static_views.py:61
+#: nutrition/templates/nutrition/record_detail.html:17
+#, python-format
+msgid "protein · %(p)s%% of energy"
+msgstr "بروتين · %(p)s%% من الطاقة"
+
+#: nutrition/static_views.py:62
+#: nutrition/templates/nutrition/record_detail.html:18
+#, python-format
+msgid "fat · %(p)s%% of energy · SFA %(f)s%%"
+msgstr "دهون · %(p)s%% من الطاقة · مشبعة %(f)s%%"
+
+#: nutrition/static_views.py:62
+#: nutrition/templates/nutrition/record_detail.html:19
+#, python-format
+msgid "glycaemic load · carbohydrate %(c)s g"
+msgstr "الحمل السكري · كربوهيدرات %(c)s غ"
+
+#: nutrition/static_views.py:63
+#: nutrition/templates/nutrition/record_detail.html:33
+#, python-format
+msgid "image-only estimate: %(k)s kcal"
+msgstr "تقدير من الصورة فقط: %(k)s سعرة"
+
+#: nutrition/static_views.py:63
+#: nutrition/templates/nutrition/record_detail.html:36
+msgid "Remove"
+msgstr "حذف"
+
+#: nutrition/static_views.py:64
+#: nutrition/templates/nutrition/participant_detail.html:45
+msgid "Energy (kcal)"
+msgstr "الطاقة (سعرة)"
+
+#: nutrition/static_views.py:64
+#: nutrition/templates/nutrition/participant_detail.html:45
+msgid "Fat (g)"
+msgstr "الدهون (غ)"
+
+#: nutrition/static_views.py:64 nutrition/templates/nutrition/analyze.html:136
+#: nutrition/templates/nutrition/record_detail.html:103
+msgid "Protein"
+msgstr "البروتين"
+
+#: nutrition/static_views.py:64 nutrition/templates/nutrition/analyze.html:136
+#: nutrition/templates/nutrition/record_detail.html:27
+#: nutrition/templates/nutrition/record_detail.html:103
+#: nutrition/templates/static_site/record.html:27
+msgid "Fat"
+msgstr "الدهون"
+
+#: nutrition/static_views.py:64 nutrition/templates/nutrition/analyze.html:136
+#: nutrition/templates/nutrition/record_detail.html:103
+msgid "Carbohydrate"
+msgstr "الكربوهيدرات"
+
+#: nutrition/static_views.py:65 nutrition/templates/nutrition/analyze.html:137
+#: nutrition/templates/nutrition/record_detail.html:104
+msgid "of energy"
+msgstr "من الطاقة"
+
+#: nutrition/static_views.py:65
+#: nutrition/templates/nutrition/validation.html:40
+#: nutrition/templates/nutrition/validation.html:73
+#: nutrition/templates/static_site/validation.html:36
+msgid "Plates"
+msgstr "الأطباق"
+
+#: nutrition/static_views.py:65
+#: nutrition/templates/nutrition/validation.html:73
+msgid "Bias"
+msgstr "الانحياز"
+
+#: nutrition/static_views.py:65
+#: nutrition/templates/nutrition/validation.html:74
+msgid "Mean of estimate and truth (kcal)"
+msgstr "متوسط التقدير والحقيقة (سعرة)"
+
+#: nutrition/static_views.py:66
+#: nutrition/templates/nutrition/validation.html:74
+msgid "Estimate − truth (kcal)"
+msgstr "التقدير − الحقيقة (سعرة)"
+
+#: nutrition/static_views.py:66
+#, python-format
+msgid "plates · %(n)s cooking sessions"
+msgstr "طبق · جلسات الطبخ: %(n)s"
+
+#: nutrition/static_views.py:66
+#: nutrition/templates/nutrition/validation.html:43
+msgid "demo"
+msgstr "تجريبي"
+
+#: nutrition/static_views.py:67 nutrition/views.py:373
+msgid "Image-only AI (zero-shot)"
+msgstr "ذكاء اصطناعي من الصورة فقط (دون تدريب)"
+
+#: nutrition/static_views.py:67 nutrition/views.py:373
+msgid "An external model's own kcal estimate from pixels"
+msgstr "تقدير نموذج خارجي للسعرات من الصورة مباشرة"
+
+#: nutrition/static_views.py:68 nutrition/views.py:374
+msgid "Recipe-aware (AI dish + grams + style)"
+msgstr "مبني على الوصفة (طبق النموذج + الغرامات + النمط)"
+
+#: nutrition/static_views.py:68 nutrition/views.py:374
+msgid "ArabNutriVision pipeline"
+msgstr "منهجية ArabNutriVision"
+
+#: nutrition/static_views.py:69 nutrition/views.py:375
+msgid "Recipe-aware, true dish"
+msgstr "مبني على الوصفة، الطبق الحقيقي"
+
+#: nutrition/static_views.py:69 nutrition/views.py:375
+msgid "Upper bound for recognition errors"
+msgstr "الحد الأعلى لأداء التعرّف"
+
+#: nutrition/static_views.py:70 nutrition/templates/nutrition/dashboard.html:6
+#, python-format
+msgid "Welcome, %(n)s"
+msgstr "مرحباً، %(n)s"
+
+#: nutrition/static_views.py:70
+#, python-format
+msgid "Signed in as %(n)s"
+msgstr "مسجّل الدخول باسم %(n)s"
 
 #: nutrition/templates/nutrition/analyze.html:2
 #: nutrition/templates/nutrition/analyze.html:6
@@ -481,21 +857,8 @@ msgstr "الحصة في الطبق"
 msgid "Portion in grams"
 msgstr "الحصة بالغرام"
 
-#: nutrition/templates/nutrition/analyze.html:33
-#: nutrition/templates/nutrition/analyze.html:117
-#: nutrition/templates/nutrition/dish_detail.html:72
-#: nutrition/templates/nutrition/dish_detail.html:96
-#: nutrition/templates/nutrition/home.html:22
-#: nutrition/templates/nutrition/record_detail.html:17
-#: nutrition/templates/nutrition/record_detail.html:18
-#: nutrition/templates/nutrition/record_detail.html:27
-#: nutrition/templates/nutrition/validation.html:19
-#: nutrition/templates/nutrition/validation.html:42
-msgid "g"
-msgstr "غ"
-
 #: nutrition/templates/nutrition/analyze.html:37
-#: nutrition/templates/nutrition/analyze.html:126
+#: nutrition/templates/nutrition/analyze.html:144
 msgid "Average"
 msgstr "متوسط"
 
@@ -504,26 +867,33 @@ msgid "Step 3 · Save"
 msgstr "الخطوة 3 · الحفظ"
 
 #: nutrition/templates/nutrition/analyze.html:48
+#: nutrition/templates/nutrition/analyze.html:66
+#: nutrition/templates/static_site/record.html:2
 msgid "Dietary record"
 msgstr "السجل الغذائي"
 
-#: nutrition/templates/nutrition/analyze.html:52
-msgid "Add to record"
-msgstr "أضف إلى السجل"
-
-#: nutrition/templates/nutrition/analyze.html:53
-msgid "Save as weighed validation plate"
-msgstr "احفظ كطبق موزون للتحقق"
-
-#: nutrition/templates/nutrition/analyze.html:56
+#: nutrition/templates/nutrition/analyze.html:51
+#: nutrition/templates/nutrition/analyze.html:74
 msgid "Create a participant and a record first to save foods."
 msgstr "أنشئ مشاركاً وسجلاً أولاً لتتمكن من حفظ الأطعمة."
 
-#: nutrition/templates/nutrition/analyze.html:57
+#: nutrition/templates/nutrition/analyze.html:51
+#: nutrition/templates/nutrition/analyze.html:75
 msgid "Go to participants"
 msgstr "الذهاب إلى المشاركين"
 
-#: nutrition/templates/nutrition/analyze.html:62
+#: nutrition/templates/nutrition/analyze.html:53
+#: nutrition/templates/nutrition/analyze.html:70
+msgid "Add to record"
+msgstr "أضف إلى السجل"
+
+#: nutrition/templates/nutrition/analyze.html:54
+#: nutrition/templates/nutrition/analyze.html:71
+msgid "Save as weighed validation plate"
+msgstr "احفظ كطبق موزون للتحقق"
+
+#: nutrition/templates/nutrition/analyze.html:58
+#: nutrition/templates/nutrition/analyze.html:80
 msgid ""
 "Ground truth from the scale, plus this photo's recognition outputs (filled "
 "in automatically)."
@@ -531,187 +901,150 @@ msgstr ""
 "القيم الحقيقية من الميزان، إضافة إلى نتائج التعرّف لهذه الصورة (تُملأ "
 "تلقائياً)."
 
-#: nutrition/templates/nutrition/analyze.html:75
-#: nutrition/templates/nutrition/validation.html:56
-msgid "Save plate"
-msgstr "احفظ الطبق"
-
-#: nutrition/templates/nutrition/analyze.html:79
+#: nutrition/templates/nutrition/analyze.html:62
+#: nutrition/templates/nutrition/analyze.html:97
+#: nutrition/templates/static_site/login.html:2
+#: nutrition/templates/static_site/login.html:17
 #: templates/registration/login.html:2 templates/registration/login.html:18
 msgid "Sign in"
 msgstr "تسجيل الدخول"
 
-#: nutrition/templates/nutrition/analyze.html:79
+#: nutrition/templates/nutrition/analyze.html:62
+#: nutrition/templates/nutrition/analyze.html:97
 msgid "to add foods to a participant's record or to the validation set."
 msgstr "لإضافة الأطعمة إلى سجل مشارك أو إلى مجموعة التحقق."
 
-#: nutrition/templates/nutrition/analyze.html:90
-#: nutrition/templates/nutrition/analyze.html:117
-#: nutrition/templates/nutrition/dish_detail.html:72
-#: nutrition/templates/nutrition/dish_detail.html:94
-#: nutrition/templates/nutrition/dish_detail.html:96
-#: nutrition/templates/nutrition/dish_list.html:18
-#: nutrition/templates/nutrition/home.html:26
-#: nutrition/templates/nutrition/home.html:27
-#: nutrition/templates/nutrition/home.html:28
-#: nutrition/templates/nutrition/participant_detail.html:17
-#: nutrition/templates/nutrition/participant_list.html:10
-#: nutrition/templates/nutrition/recipe_builder.html:18
-#: nutrition/templates/nutrition/record_detail.html:27
-#: nutrition/templates/nutrition/validation.html:73
-msgid "kcal"
-msgstr "سعرة"
-
 #: nutrition/templates/nutrition/analyze.html:93
+#: nutrition/templates/nutrition/validation.html:56
+#: nutrition/templates/static_site/_val_form.html:17
+msgid "Save plate"
+msgstr "احفظ الطبق"
+
+#: nutrition/templates/nutrition/analyze.html:111
 msgid "Energy split by macronutrient"
 msgstr "توزيع الطاقة حسب المغذيات الكبرى"
 
-#: nutrition/templates/nutrition/analyze.html:95
+#: nutrition/templates/nutrition/analyze.html:113
 msgid "Where the energy comes from"
 msgstr "من أين تأتي الطاقة"
 
-#: nutrition/templates/nutrition/analyze.html:102
+#: nutrition/templates/nutrition/analyze.html:120
 msgid "Recipe-aware (this tool)"
 msgstr "التقدير المبني على الوصفة (هذه الأداة)"
 
-#: nutrition/templates/nutrition/analyze.html:103
+#: nutrition/templates/nutrition/analyze.html:121
 msgid "Average-recipe estimate (preparation unknown)"
 msgstr "تقدير متوسط الوصفات (التحضير غير معروف)"
 
-#: nutrition/templates/nutrition/analyze.html:117
-msgid "mg"
-msgstr "ملغ"
-
-#: nutrition/templates/nutrition/analyze.html:117
+#: nutrition/templates/nutrition/analyze.html:135
 msgid "µg"
 msgstr "ميكروغرام"
 
-#: nutrition/templates/nutrition/analyze.html:117
+#: nutrition/templates/nutrition/analyze.html:135
 msgid "fat"
 msgstr "دهون"
 
-#: nutrition/templates/nutrition/analyze.html:118
-#: nutrition/templates/nutrition/record_detail.html:103
-msgid "Protein"
-msgstr "البروتين"
-
-#: nutrition/templates/nutrition/analyze.html:118
-#: nutrition/templates/nutrition/record_detail.html:27
-#: nutrition/templates/nutrition/record_detail.html:103
-msgid "Fat"
-msgstr "الدهون"
-
-#: nutrition/templates/nutrition/analyze.html:118
-#: nutrition/templates/nutrition/record_detail.html:103
-msgid "Carbohydrate"
-msgstr "الكربوهيدرات"
-
-#: nutrition/templates/nutrition/analyze.html:119
-#: nutrition/templates/nutrition/record_detail.html:104
-msgid "of energy"
-msgstr "من الطاقة"
-
-#: nutrition/templates/nutrition/analyze.html:120
+#: nutrition/templates/nutrition/analyze.html:138
 msgid "Example"
 msgstr "مثال"
 
-#: nutrition/templates/nutrition/analyze.html:120
+#: nutrition/templates/nutrition/analyze.html:138
 msgid "Example result · not your photo"
 msgstr "نتيجة توضيحية · ليست صورتك"
 
-#: nutrition/templates/nutrition/analyze.html:121
+#: nutrition/templates/nutrition/analyze.html:139
 msgid "From photo"
 msgstr "من الصورة"
 
-#: nutrition/templates/nutrition/analyze.html:121
+#: nutrition/templates/nutrition/analyze.html:139
 #, python-format, python-brace-format
 msgid "Recognised · {c}%% confidence"
 msgstr "تم التعرّف · ثقة {c}%%"
 
-#: nutrition/templates/nutrition/analyze.html:122
+#: nutrition/templates/nutrition/analyze.html:140
 msgid "Corrected"
 msgstr "مصحّح"
 
-#: nutrition/templates/nutrition/analyze.html:122
+#: nutrition/templates/nutrition/analyze.html:140
 msgid "AI result, corrected by you"
 msgstr "نتيجة النموذج بعد تصحيحك"
 
-#: nutrition/templates/nutrition/analyze.html:123
+#: nutrition/templates/nutrition/analyze.html:141
 msgid "Manual entry"
 msgstr "إدخال يدوي"
 
-#: nutrition/templates/nutrition/analyze.html:124
+#: nutrition/templates/nutrition/analyze.html:142
 msgid "Likely range"
 msgstr "النطاق المرجّح"
 
-#: nutrition/templates/nutrition/analyze.html:124
+#: nutrition/templates/nutrition/analyze.html:142
 msgid "average of 3 recipes"
 msgstr "متوسط 3 وصفات"
 
-#: nutrition/templates/nutrition/analyze.html:125
+#: nutrition/templates/nutrition/analyze.html:143
 msgid "light recipe"
 msgstr "وصفة خفيفة"
 
-#: nutrition/templates/nutrition/analyze.html:125
+#: nutrition/templates/nutrition/analyze.html:143
 msgid "home recipe"
 msgstr "وصفة بيتية"
 
-#: nutrition/templates/nutrition/analyze.html:125
+#: nutrition/templates/nutrition/analyze.html:143
 msgid "restaurant recipe"
 msgstr "وصفة مطاعم"
 
-#: nutrition/templates/nutrition/analyze.html:127
+#: nutrition/templates/nutrition/analyze.html:145
 #, python-brace-format
 msgid "estimated glycaemic load (dish GI ≈ {v}, carbohydrate-weighted)"
 msgstr "الحمل السكري المقدّر (المؤشر السكري للطبق ≈ {v}، موزون بالكربوهيدرات)"
 
-#: nutrition/templates/nutrition/analyze.html:128
+#: nutrition/templates/nutrition/analyze.html:146
 #: nutrition/templates/nutrition/dish_detail.html:53
 msgid "Nutrient"
 msgstr "العنصر الغذائي"
 
-#: nutrition/templates/nutrition/analyze.html:128
+#: nutrition/templates/nutrition/analyze.html:146
 msgid "This portion"
 msgstr "هذه الحصة"
 
-#: nutrition/templates/nutrition/analyze.html:128
+#: nutrition/templates/nutrition/analyze.html:146
 msgid "Range"
 msgstr "النطاق"
 
-#: nutrition/templates/nutrition/analyze.html:129
+#: nutrition/templates/nutrition/analyze.html:147
 msgid "Hidden-fat sources in this recipe:"
 msgstr "مصادر الدهون المخفية في هذه الوصفة:"
 
-#: nutrition/templates/nutrition/analyze.html:129
+#: nutrition/templates/nutrition/analyze.html:147
 msgid "none listed"
 msgstr "لا يوجد"
 
-#: nutrition/templates/nutrition/analyze.html:129
+#: nutrition/templates/nutrition/analyze.html:147
 msgid "Note:"
 msgstr "ملاحظة:"
 
-#: nutrition/templates/nutrition/analyze.html:130
+#: nutrition/templates/nutrition/analyze.html:148
 msgid "Photo ready. Press Recognise dish."
 msgstr "الصورة جاهزة. اضغط «تعرّف على الطبق»."
 
-#: nutrition/templates/nutrition/analyze.html:131
+#: nutrition/templates/nutrition/analyze.html:149
 msgid "Loading the on-device model…"
 msgstr "جارٍ تحميل النموذج على الجهاز…"
 
-#: nutrition/templates/nutrition/analyze.html:131
+#: nutrition/templates/nutrition/analyze.html:149
 #, python-format, python-brace-format
 msgid "Downloading the open-source model once ({v}%%)…"
 msgstr "تنزيل النموذج مفتوح المصدر لمرة واحدة ({v}%%)…"
 
-#: nutrition/templates/nutrition/analyze.html:132
+#: nutrition/templates/nutrition/analyze.html:150
 msgid "Recognising the dish on this device…"
 msgstr "جارٍ التعرّف على الطبق على هذا الجهاز…"
 
-#: nutrition/templates/nutrition/analyze.html:133
+#: nutrition/templates/nutrition/analyze.html:151
 msgid "This does not look like food. Try a clearer top-down photo."
 msgstr "لا يبدو أن هذا طعام. جرّب صورة أوضح من الأعلى."
 
-#: nutrition/templates/nutrition/analyze.html:134
+#: nutrition/templates/nutrition/analyze.html:152
 #, python-format, python-brace-format
 msgid ""
 "Done: {v} ({c}%%). Check the dish, then weigh or adjust the portion; it "
@@ -720,7 +1053,7 @@ msgstr ""
 "تم: {v} ({c}%%). راجِع الطبق، ثم زِن الحصة أو عدّلها؛ تبدأ من الحصة "
 "المعتادة."
 
-#: nutrition/templates/nutrition/analyze.html:135
+#: nutrition/templates/nutrition/analyze.html:153
 #, python-format, python-brace-format
 msgid ""
 "Preparation suggested from appearance: {v} ({c}%%). Confirm it if you know "
@@ -729,32 +1062,22 @@ msgstr ""
 "طريقة التحضير المقترحة من المظهر: {v} ({c}%%). أكّدها إذا كنت تعرف كيف طُبخ "
 "الطبق."
 
-#: nutrition/templates/nutrition/analyze.html:136
+#: nutrition/templates/nutrition/analyze.html:154
 msgid ""
 "The on-device model could not run in this browser. Choose the dish and "
 "portion by hand."
 msgstr "تعذّر تشغيل النموذج في هذا المتصفح. اختر الطبق والحصة يدوياً."
 
-#: nutrition/templates/nutrition/analyze.html:137
-msgid "Could not save."
-msgstr "تعذّر الحفظ."
-
-#: nutrition/templates/nutrition/analyze.html:137
-msgid "Open record"
-msgstr "فتح السجل"
-
 #: nutrition/templates/nutrition/dashboard.html:2
+#: nutrition/templates/static_site/dashboard.html:2
 msgid "Workspace"
 msgstr "مساحة العمل"
 
 #: nutrition/templates/nutrition/dashboard.html:5
+#: nutrition/templates/static_site/dashboard.html:5
+#: nutrition/templates/static_site/dashboard.html:6
 msgid "Researcher workspace"
 msgstr "مساحة عمل الباحث"
-
-#: nutrition/templates/nutrition/dashboard.html:6
-#, python-format
-msgid "Welcome, %(n)s"
-msgstr "مرحباً، %(n)s"
 
 #: nutrition/templates/nutrition/dashboard.html:8
 #: nutrition/templates/nutrition/dashboard.html:21
@@ -762,15 +1085,23 @@ msgstr "مرحباً، %(n)s"
 #: nutrition/templates/nutrition/participant_list.html:2
 #: nutrition/templates/nutrition/participant_list.html:6
 #: nutrition/templates/nutrition/record_detail.html:5
+#: nutrition/templates/static_site/dashboard.html:10
+#: nutrition/templates/static_site/dashboard.html:23
+#: nutrition/templates/static_site/participant.html:5
+#: nutrition/templates/static_site/participants.html:2
+#: nutrition/templates/static_site/participants.html:6
+#: nutrition/templates/static_site/record.html:5
 msgid "Participants"
 msgstr "المشاركون"
 
 #: nutrition/templates/nutrition/dashboard.html:9
 #: nutrition/templates/nutrition/dashboard.html:25
+#: nutrition/templates/static_site/dashboard.html:27
 msgid "Recent records"
 msgstr "أحدث السجلات"
 
 #: nutrition/templates/nutrition/dashboard.html:10
+#: nutrition/templates/static_site/dashboard.html:13
 msgid "Weighed validation plates"
 msgstr "أطباق التحقق الموزونة"
 
@@ -780,49 +1111,56 @@ msgstr "وصفاتك"
 
 #: nutrition/templates/nutrition/dashboard.html:14
 #: nutrition/templates/nutrition/dish_detail.html:21
+#: nutrition/templates/static_site/dashboard.html:16
 msgid "Analyze a photo"
 msgstr "تحليل صورة"
 
 #: nutrition/templates/nutrition/dashboard.html:14
+#: nutrition/templates/static_site/dashboard.html:16
 msgid "Recognise, weigh, add to a record"
 msgstr "تعرّف، زِن، وأضف إلى سجل"
 
 #: nutrition/templates/nutrition/dashboard.html:15
+#: nutrition/templates/static_site/dashboard.html:17
 msgid "Participants & records"
 msgstr "المشاركون والسجلات"
 
 #: nutrition/templates/nutrition/dashboard.html:15
+#: nutrition/templates/static_site/dashboard.html:17
 msgid "24-h recalls, food records, menus"
 msgstr "استرجاع 24 ساعة، سجلات غذائية، قوائم طعام"
 
 #: nutrition/templates/nutrition/dashboard.html:16
 #: nutrition/templates/nutrition/ffq_import.html:6
+#: nutrition/templates/static_site/dashboard.html:18
+#: nutrition/templates/static_site/ffq.html:6
 msgid "Import an FFQ"
 msgstr "استيراد استبيان تكرار الأطعمة"
 
 #: nutrition/templates/nutrition/dashboard.html:16
+#: nutrition/templates/static_site/dashboard.html:18
 msgid "CSV or Excel → daily average"
 msgstr "CSV أو Excel ← متوسط يومي"
 
 #: nutrition/templates/nutrition/dashboard.html:17
 #: nutrition/templates/nutrition/home.html:76
 #: nutrition/templates/nutrition/validation.html:2
-#: nutrition/templates/nutrition/validation.html:6 templates/base.html:47
+#: nutrition/templates/nutrition/validation.html:6
+#: nutrition/templates/static_site/dashboard.html:19
+#: nutrition/templates/static_site/validation.html:2
+#: nutrition/templates/static_site/validation.html:6 templates/base.html:51
 msgid "Validation lab"
 msgstr "مختبر التحقق"
 
 #: nutrition/templates/nutrition/dashboard.html:17
+#: nutrition/templates/static_site/dashboard.html:19
 msgid "Weighed plates → paper metrics"
 msgstr "أطباق موزونة ← مؤشرات الورقة البحثية"
 
 #: nutrition/templates/nutrition/dashboard.html:21
+#: nutrition/templates/static_site/dashboard.html:23
 msgid "Add"
 msgstr "إضافة"
-
-#: nutrition/templates/nutrition/dashboard.html:22
-#, python-format
-msgid "%(a)s y"
-msgstr "%(a)s سنة"
 
 #: nutrition/templates/nutrition/dashboard.html:22
 #, python-format
@@ -835,16 +1173,8 @@ msgstr[3] "%(n)s سجل"
 msgstr[4] "%(n)s سجل"
 msgstr[5] "%(n)s سجل"
 
-#: nutrition/templates/nutrition/dashboard.html:22
-msgid "No participants yet. Add one with a pseudonymous code such as P001."
-msgstr "لا يوجد مشاركون بعد. أضف مشاركاً برمز مستعار مثل P001."
-
-#: nutrition/templates/nutrition/dashboard.html:26
-msgid "No records yet."
-msgstr "لا توجد سجلات بعد."
-
 #: nutrition/templates/nutrition/dish_detail.html:5
-#: nutrition/templates/nutrition/recipe_builder.html:5 templates/base.html:44
+#: nutrition/templates/nutrition/recipe_builder.html:5 templates/base.html:48
 msgid "Composition table"
 msgstr "جدول التركيب الغذائي"
 
@@ -952,13 +1282,13 @@ msgid "Draft standard recipe (to be replaced by weighed recipe)"
 msgstr "وصفة قياسية مبدئية (ستُستبدل بوصفة موزونة)"
 
 #: nutrition/templates/nutrition/dish_detail.html:72
-#: nutrition/templates/nutrition/recipe_builder.html:18
+#: nutrition/templates/nutrition/recipe_builder.html:22
 msgid "Ingredient"
 msgstr "المكوّن"
 
 #: nutrition/templates/nutrition/dish_detail.html:72
 #: nutrition/templates/nutrition/dish_detail.html:94
-#: nutrition/templates/nutrition/recipe_builder.html:18
+#: nutrition/templates/nutrition/recipe_builder.html:22
 msgid "fat g"
 msgstr "دهون (غ)"
 
@@ -982,7 +1312,7 @@ msgstr "الطاقة (سعرة/100 غ)"
 msgid "Fat (g/100 g)"
 msgstr "الدهون (غ/100 غ)"
 
-#: nutrition/templates/nutrition/dish_list.html:2 templates/base.html:93
+#: nutrition/templates/nutrition/dish_list.html:2 templates/base.html:103
 msgid "Arabic Recipe Composition Table"
 msgstr "جدول التركيب الغذائي للوصفات العربية"
 
@@ -1001,6 +1331,10 @@ msgid ""
 msgstr ""
 "متوسط ثلاث وصفات؛ يوضح الشريط النطاق من الخفيفة إلى المطاعم، والعلامة تمثل "
 "المتوسط."
+
+#: nutrition/templates/nutrition/dish_list.html:8
+msgid "Recipe calculator"
+msgstr "حاسبة الوصفات"
 
 #: nutrition/templates/nutrition/dish_list.html:8
 msgid "Add a recipe"
@@ -1028,11 +1362,13 @@ msgstr "النطاق (سعرة)"
 
 #: nutrition/templates/nutrition/dish_list.html:18
 #: nutrition/templates/nutrition/participant_detail.html:17
+#: nutrition/templates/static_site/participant.html:21
 msgid "Protein g"
 msgstr "بروتين (غ)"
 
 #: nutrition/templates/nutrition/dish_list.html:18
 #: nutrition/templates/nutrition/participant_detail.html:17
+#: nutrition/templates/static_site/participant.html:21
 msgid "Fat g"
 msgstr "دهون (غ)"
 
@@ -1050,6 +1386,7 @@ msgstr "ألياف (غ)"
 
 #: nutrition/templates/nutrition/dish_list.html:18
 #: nutrition/templates/nutrition/record_detail.html:27
+#: nutrition/templates/static_site/record.html:27
 msgid "Na mg"
 msgstr "صوديوم (ملغ)"
 
@@ -1067,6 +1404,7 @@ msgid "placeholder ingredient"
 msgstr "مكوّن بقيمة مؤقتة"
 
 #: nutrition/templates/nutrition/dish_list.html:30
+#: nutrition/templates/nutrition/dish_list.html:45
 msgid "No dishes match your search."
 msgstr "لا توجد أطباق مطابقة لبحثك."
 
@@ -1083,24 +1421,25 @@ msgstr ""
 
 #: nutrition/templates/nutrition/ffq_import.html:2
 #: nutrition/templates/nutrition/participant_detail.html:8
+#: nutrition/templates/static_site/ffq.html:2
+#: nutrition/templates/static_site/participant.html:10
 msgid "Import FFQ"
 msgstr "استيراد الاستبيان"
 
 #: nutrition/templates/nutrition/ffq_import.html:5
+#: nutrition/templates/static_site/ffq.html:5
 msgid "Food Frequency Questionnaire"
 msgstr "استبيان تكرار الأطعمة"
 
 #: nutrition/templates/nutrition/ffq_import.html:11
+#: nutrition/templates/static_site/ffq.html:13
 msgid "Import"
 msgstr "استيراد"
 
 #: nutrition/templates/nutrition/ffq_import.html:12
+#: nutrition/templates/static_site/ffq.html:14
 msgid "Download the template"
 msgstr "تنزيل النموذج"
-
-#: nutrition/templates/nutrition/ffq_import.html:14
-msgid "Fix these rows and upload again:"
-msgstr "صحّح هذه الصفوف ثم ارفع الملف مجدداً:"
 
 #: nutrition/templates/nutrition/ffq_import.html:15
 #, python-format
@@ -1114,10 +1453,12 @@ msgstr[4] "تمت قراءة %(n)s صف."
 msgstr[5] "تمت قراءة %(n)s صف."
 
 #: nutrition/templates/nutrition/ffq_import.html:18
+#: nutrition/templates/static_site/ffq.html:19
 msgid "File format"
 msgstr "صيغة الملف"
 
 #: nutrition/templates/nutrition/ffq_import.html:22
+#: nutrition/templates/static_site/ffq.html:23
 msgid ""
 "<b>food</b>: a dish or ingredient code, English name, or Arabic name from "
 "the composition table."
@@ -1126,6 +1467,7 @@ msgstr ""
 "جدول التركيب."
 
 #: nutrition/templates/nutrition/ffq_import.html:23
+#: nutrition/templates/static_site/ffq.html:24
 msgid ""
 "<b>frequency</b>: <code>n/day</code>, <code>n/week</code>, "
 "<code>n/month</code> or <code>never</code>. A plain number means times per "
@@ -1136,6 +1478,7 @@ msgstr ""
 "اليوم."
 
 #: nutrition/templates/nutrition/ffq_import.html:24
+#: nutrition/templates/static_site/ffq.html:25
 msgid ""
 "<b>portion_g</b>: grams per occasion; blank uses the dish's typical serving."
 msgstr ""
@@ -1143,6 +1486,7 @@ msgstr ""
 " للطبق."
 
 #: nutrition/templates/nutrition/ffq_import.html:25
+#: nutrition/templates/static_site/ffq.html:26
 msgid ""
 "The result is saved as one “FFQ (daily average)” record: grams/day = "
 "frequency/day × portion."
@@ -1309,8 +1653,9 @@ msgstr "مستوحى من سير عمل بحثي على غرار ESHA"
 msgid "Everything a nutrition study needs"
 msgstr "كل ما تحتاجه دراسة تغذوية"
 
-#: nutrition/templates/nutrition/home.html:69 templates/base.html:58
-#: templates/registration/login.html:8
+#: nutrition/templates/nutrition/home.html:69
+#: nutrition/templates/static_site/login.html:8 templates/base.html:61
+#: templates/base.html:68 templates/registration/login.html:8
 msgid "Researcher sign-in"
 msgstr "دخول الباحثين"
 
@@ -1406,12 +1751,13 @@ msgid "kcal/100 g · range %(lo)s–%(hi)s"
 msgstr "سعرة/100 غ · النطاق ⁦%(lo)s–%(hi)s⁩"
 
 #: nutrition/templates/nutrition/home.html:98
-#: nutrition/templates/nutrition/research.html:58 templates/base.html:86
+#: nutrition/templates/nutrition/research.html:58 templates/base.html:96
 msgid "Research team"
 msgstr "فريق البحث"
 
-#: nutrition/templates/nutrition/home.html:98 templates/base.html:6
-#: templates/base.html:33 templates/base.html:81 templates/base.html:95
+#: nutrition/templates/nutrition/home.html:98
+#: nutrition/templates/static_site/login.html:7 templates/base.html:6
+#: templates/base.html:37 templates/base.html:91 templates/base.html:105
 #: templates/registration/login.html:7
 msgid "University of Petra"
 msgstr "جامعة البترا"
@@ -1420,22 +1766,8 @@ msgstr "جامعة البترا"
 msgid "A collaboration between computer science and clinical nutrition."
 msgstr "تعاون بين علوم الحاسوب والتغذية السريرية."
 
-#: nutrition/templates/nutrition/participant_detail.html:7
-#, python-format
-msgid "%(a)s years"
-msgstr "%(a)s سنة"
-
-#: nutrition/templates/nutrition/participant_detail.html:7
-#, python-format
-msgid "target %(t)s kcal/day"
-msgstr "الهدف %(t)s سعرة/يوم"
-
-#: nutrition/templates/nutrition/participant_detail.html:7
-#, python-format
-msgid "Participant %(c)s"
-msgstr "المشارك %(c)s"
-
 #: nutrition/templates/nutrition/participant_detail.html:13
+#: nutrition/templates/static_site/participant.html:16
 msgid "Energy and fat by day"
 msgstr "الطاقة والدهون حسب اليوم"
 
@@ -1451,31 +1783,33 @@ msgstr[4] "%(n)s يوم استرجاع/تسجيل"
 msgstr[5] "%(n)s يوم استرجاع/تسجيل"
 
 #: nutrition/templates/nutrition/participant_detail.html:14
+#: nutrition/templates/static_site/participant.html:17
 msgid "Energy by day"
 msgstr "الطاقة حسب اليوم"
 
-#: nutrition/templates/nutrition/participant_detail.html:14
-msgid "No records yet. Create the first one with the form."
-msgstr "لا توجد سجلات بعد. أنشئ أول سجل من النموذج."
-
 #: nutrition/templates/nutrition/participant_detail.html:17
+#: nutrition/templates/static_site/participant.html:21
 msgid "Items"
 msgstr "العناصر"
 
 #: nutrition/templates/nutrition/participant_detail.html:17
+#: nutrition/templates/static_site/participant.html:21
 #, python-format
 msgid "SFA %% kcal"
 msgstr "الدهون المشبعة %% من السعرات"
 
 #: nutrition/templates/nutrition/participant_detail.html:17
+#: nutrition/templates/static_site/participant.html:21
 msgid "Sodium mg"
 msgstr "الصوديوم (ملغ)"
 
 #: nutrition/templates/nutrition/participant_detail.html:23
+#: nutrition/templates/static_site/participant.html:27
 msgid "New record"
 msgstr "سجل جديد"
 
 #: nutrition/templates/nutrition/participant_detail.html:26
+#: nutrition/templates/static_site/participant.html:33
 msgid "Create record"
 msgstr "إنشاء سجل"
 
@@ -1492,10 +1826,13 @@ msgstr[5] "المأخوذ المعتاد · متوسط %(n)s يوم مع الم�
 
 #: nutrition/templates/nutrition/participant_detail.html:32
 #: nutrition/templates/nutrition/record_detail.html:87
+#: nutrition/templates/static_site/participant.html:38
+#: nutrition/templates/static_site/record.html:69
 msgid "Share of reference values"
 msgstr "النسبة من القيم المرجعية"
 
 #: nutrition/templates/nutrition/participant_detail.html:34
+#: nutrition/templates/static_site/participant.html:40
 msgid ""
 "Energy against the participant target; others against US FDA Daily Values "
 "(sodium, SFA and cholesterol are upper limits)."
@@ -1503,32 +1840,29 @@ msgstr ""
 "الطاقة مقارنة بهدف المشارك؛ وباقي العناصر مقارنة بالقيم اليومية لإدارة "
 "الغذاء والدواء الأمريكية (الصوديوم والدهون المشبعة والكوليسترول حدود عليا)."
 
-#: nutrition/templates/nutrition/participant_detail.html:45
-msgid "Energy (kcal)"
-msgstr "الطاقة (سعرة)"
-
-#: nutrition/templates/nutrition/participant_detail.html:45
-msgid "Fat (g)"
-msgstr "الدهون (غ)"
-
 #: nutrition/templates/nutrition/participant_list.html:5
-#: templates/base.html:46
+#: nutrition/templates/static_site/participants.html:5 templates/base.html:50
 msgid "Dietary records"
 msgstr "السجلات الغذائية"
 
 #: nutrition/templates/nutrition/participant_list.html:9
+#: nutrition/templates/static_site/participants.html:10
 msgid "Code"
 msgstr "الرمز"
 
 #: nutrition/templates/nutrition/participant_list.html:9
+#: nutrition/templates/static_site/participants.html:10
 msgid "Age"
 msgstr "العمر"
 
 #: nutrition/templates/nutrition/participant_list.html:9
+#: nutrition/templates/static_site/participants.html:10
 msgid "Energy target"
 msgstr "هدف الطاقة"
 
 #: nutrition/templates/nutrition/participant_list.html:9
+#: nutrition/templates/static_site/dashboard.html:11
+#: nutrition/templates/static_site/participants.html:10
 msgid "Records"
 msgstr "السجلات"
 
@@ -1537,10 +1871,12 @@ msgid "No participants yet. Add the first one with the form."
 msgstr "لا يوجد مشاركون بعد. أضف أول مشارك من النموذج."
 
 #: nutrition/templates/nutrition/participant_list.html:13
+#: nutrition/templates/static_site/participants.html:13
 msgid "Add a participant"
 msgstr "إضافة مشارك"
 
 #: nutrition/templates/nutrition/participant_list.html:14
+#: nutrition/templates/static_site/participants.html:14
 msgid ""
 "Use a pseudonymous code only. Names, phone numbers and IDs must stay outside"
 " this system."
@@ -1549,6 +1885,7 @@ msgstr ""
 "هذا النظام."
 
 #: nutrition/templates/nutrition/participant_list.html:17
+#: nutrition/templates/static_site/participants.html:22
 msgid "Add participant"
 msgstr "إضافة المشارك"
 
@@ -1564,39 +1901,48 @@ msgstr "حساب الوصفة مع المردود"
 msgid "Add a weighed recipe"
 msgstr "إضافة وصفة موزونة"
 
-#: nutrition/templates/nutrition/recipe_builder.html:13
+#: nutrition/templates/nutrition/recipe_builder.html:14
+msgid ""
+"This online edition calculates the recipe in your browser. Adding new dishes"
+" to the shared composition table is done by the research team in the "
+"repository data."
+msgstr ""
+"تحسب هذه النسخة الإلكترونية الوصفة داخل متصفحك. أما إضافة أطباق جديدة إلى "
+"جدول التركيب المشترك فيتولاها فريق البحث في بيانات المستودع."
+
+#: nutrition/templates/nutrition/recipe_builder.html:16
 msgid "Save to composition table"
 msgstr "حفظ في جدول التركيب"
 
-#: nutrition/templates/nutrition/recipe_builder.html:16
+#: nutrition/templates/nutrition/recipe_builder.html:20
 msgid "Raw ingredients in the pot"
 msgstr "المكوّنات النيئة في القِدر"
 
-#: nutrition/templates/nutrition/recipe_builder.html:16
+#: nutrition/templates/nutrition/recipe_builder.html:20
 msgid "Add ingredient"
 msgstr "إضافة مكوّن"
 
-#: nutrition/templates/nutrition/recipe_builder.html:18
+#: nutrition/templates/nutrition/recipe_builder.html:22
 msgid "Raw g"
 msgstr "غ نيء"
 
-#: nutrition/templates/nutrition/recipe_builder.html:19
+#: nutrition/templates/nutrition/recipe_builder.html:23
 msgid "Batch total"
 msgstr "مجموع الطبخة"
 
-#: nutrition/templates/nutrition/recipe_builder.html:21
+#: nutrition/templates/nutrition/recipe_builder.html:25
 msgid "kcal per 100 g cooked"
 msgstr "سعرة لكل 100 غ مطبوخ"
 
-#: nutrition/templates/nutrition/recipe_builder.html:22
+#: nutrition/templates/nutrition/recipe_builder.html:26
 msgid "fat g per 100 g cooked"
 msgstr "غ دهون لكل 100 غ مطبوخ"
 
-#: nutrition/templates/nutrition/recipe_builder.html:23
+#: nutrition/templates/nutrition/recipe_builder.html:27
 msgid "yield (cooked / raw weight)"
 msgstr "المردود (الوزن المطبوخ / النيء)"
 
-#: nutrition/templates/nutrition/recipe_builder.html:25
+#: nutrition/templates/nutrition/recipe_builder.html:29
 msgid ""
 "Per-100 g values = 100 × Σ(raw grams × nutrient density) / cooked batch "
 "weight. Water absorbed or evaporated is captured by the cooked weight, so "
@@ -1606,55 +1952,35 @@ msgstr ""
 "بعد الطهي. الماء الممتص أو المتبخر ينعكس في الوزن بعد الطهي، لذا زِن القِدر "
 "كاملاً دائماً بعد الطهي."
 
-#: nutrition/templates/nutrition/recipe_builder.html:38
+#: nutrition/templates/nutrition/recipe_builder.html:42
 msgid "Choose…"
 msgstr "اختر…"
 
-#: nutrition/templates/nutrition/recipe_builder.html:39
+#: nutrition/templates/nutrition/recipe_builder.html:43
 msgid "Raw grams"
 msgstr "الغرامات النيئة"
 
-#: nutrition/templates/nutrition/recipe_builder.html:40
+#: nutrition/templates/nutrition/recipe_builder.html:44
 msgid "Remove ingredient"
 msgstr "حذف المكوّن"
 
 #: nutrition/templates/nutrition/record_detail.html:9
+#: nutrition/templates/static_site/record.html:11
 msgid "Export CSV"
 msgstr "تصدير CSV"
 
 #: nutrition/templates/nutrition/record_detail.html:10
+#: nutrition/templates/static_site/record.html:12
 msgid "Add from photo"
 msgstr "إضافة من صورة"
 
 #: nutrition/templates/nutrition/record_detail.html:11
-msgid "Press again to delete"
-msgstr "اضغط مرة أخرى للحذف"
-
-#: nutrition/templates/nutrition/record_detail.html:11
+#: nutrition/templates/static_site/record.html:13
 msgid "Delete record"
 msgstr "حذف السجل"
 
-#: nutrition/templates/nutrition/record_detail.html:16
-#, python-format
-msgid "kcal · target %(t)s"
-msgstr "سعرة · الهدف %(t)s"
-
-#: nutrition/templates/nutrition/record_detail.html:17
-#, python-format
-msgid "protein · %(p)s%% of energy"
-msgstr "بروتين · %(p)s%% من الطاقة"
-
-#: nutrition/templates/nutrition/record_detail.html:18
-#, python-format
-msgid "fat · %(p)s%% of energy · SFA %(f)s%%"
-msgstr "دهون · %(p)s%% من الطاقة · مشبعة %(f)s%%"
-
-#: nutrition/templates/nutrition/record_detail.html:19
-#, python-format
-msgid "glycaemic load · carbohydrate %(c)s g"
-msgstr "الحمل السكري · كربوهيدرات %(c)s غ"
-
 #: nutrition/templates/nutrition/record_detail.html:25
+#: nutrition/templates/static_site/record.html:25
 msgid "Foods eaten"
 msgstr "الأطعمة المتناولة"
 
@@ -1670,67 +1996,61 @@ msgstr[4] "%(n)s عنصر"
 msgstr[5] "%(n)s عنصر"
 
 #: nutrition/templates/nutrition/record_detail.html:27
+#: nutrition/templates/static_site/record.html:27
 msgid "Food"
 msgstr "الطعام"
 
 #: nutrition/templates/nutrition/record_detail.html:27
+#: nutrition/templates/static_site/record.html:27
 msgid "Prep."
 msgstr "التحضير"
 
 #: nutrition/templates/nutrition/record_detail.html:27
+#: nutrition/templates/static_site/record.html:27
 msgid "Prot."
 msgstr "بروتين"
 
 #: nutrition/templates/nutrition/record_detail.html:27
+#: nutrition/templates/static_site/record.html:27
 msgid "SFA"
 msgstr "مشبعة"
 
 #: nutrition/templates/nutrition/record_detail.html:27
+#: nutrition/templates/static_site/record.html:27
 msgid "Carb."
 msgstr "كربوهيدرات"
 
 #: nutrition/templates/nutrition/record_detail.html:27
+#: nutrition/templates/static_site/record.html:27
 msgid "GL"
 msgstr "الحمل السكري"
-
-#: nutrition/templates/nutrition/record_detail.html:33
-#, python-format
-msgid "image-only estimate: %(k)s kcal"
-msgstr "تقدير من الصورة فقط: %(k)s سعرة"
-
-#: nutrition/templates/nutrition/record_detail.html:36
-msgid "Remove"
-msgstr "حذف"
-
-#: nutrition/templates/nutrition/record_detail.html:37
-msgid "No foods yet. Add the first item with the form below, or from a photo."
-msgstr "لا توجد أطعمة بعد. أضف أول عنصر من النموذج في الأسفل أو من صورة."
 
 #: nutrition/templates/nutrition/record_detail.html:39
 msgid "Remove supplement"
 msgstr "حذف المكمّل"
 
-#: nutrition/templates/nutrition/record_detail.html:41
-msgid "Total (food)"
-msgstr "المجموع (الطعام)"
-
 #: nutrition/templates/nutrition/record_detail.html:47
+#: nutrition/templates/static_site/record.html:34
 msgid "Add a food"
 msgstr "إضافة طعام"
 
 #: nutrition/templates/nutrition/record_detail.html:55
+#: nutrition/templates/static_site/record.html:42
 msgid "Add food"
 msgstr "أضف الطعام"
 
 #: nutrition/templates/nutrition/record_detail.html:59
+#: nutrition/templates/static_site/record.html:46
 msgid "Add a supplement"
 msgstr "إضافة مكمّل غذائي"
 
 #: nutrition/templates/nutrition/record_detail.html:63
+#: nutrition/templates/static_site/record.html:50
 msgid "Add supplement"
 msgstr "أضف المكمّل"
 
 #: nutrition/templates/nutrition/record_detail.html:69
+#: nutrition/templates/static_site/record.html:55
 msgid "Nutrition insights"
 msgstr "ملاحظات غذائية"
 
@@ -1739,6 +2059,7 @@ msgid "computed on the server, no external AI"
 msgstr "تُحسب على الخادم دون ذكاء اصطناعي خارجي"
 
 #: nutrition/templates/nutrition/record_detail.html:70
+#: nutrition/templates/static_site/record.html:56
 msgid ""
 "Automatic checks against WHO and FDA reference values. Interpretation "
 "remains the dietitian's decision."
@@ -1751,38 +2072,46 @@ msgid "Add foods to see insights."
 msgstr "أضف أطعمة لتظهر الملاحظات."
 
 #: nutrition/templates/nutrition/record_detail.html:80
+#: nutrition/templates/static_site/record.html:62
 msgid "Energy sources"
 msgstr "مصادر الطاقة"
 
 #: nutrition/templates/nutrition/record_detail.html:81
+#: nutrition/templates/static_site/record.html:63
 msgid "Energy split"
 msgstr "توزيع الطاقة"
 
 #: nutrition/templates/nutrition/record_detail.html:82
+#: nutrition/templates/static_site/record.html:64
 #, python-format
 msgid "Fatty acids, %% of energy"
 msgstr "الأحماض الدهنية، %% من الطاقة"
 
 #: nutrition/templates/nutrition/record_detail.html:83
+#: nutrition/templates/static_site/record.html:65
 msgid "Fatty acids as percent of energy"
 msgstr "الأحماض الدهنية كنسبة من الطاقة"
 
 #: nutrition/templates/nutrition/record_detail.html:84
+#: nutrition/templates/static_site/record.html:66
 #, python-format
 msgid "Dashed line: WHO limit of 10%% of energy from saturated fat."
 msgstr ""
 "الخط المتقطع: حد منظمة الصحة العالمية 10%% من الطاقة من الدهون المشبعة."
 
 #: nutrition/templates/nutrition/record_detail.html:87
+#: nutrition/templates/static_site/record.html:69
 msgid "(incl. supplements)"
 msgstr "(مع المكمّلات)"
 
 #: nutrition/templates/nutrition/record_detail.html:91
 #: nutrition/templates/nutrition/record_detail.html:92
+#: nutrition/templates/static_site/record.html:73
+#: nutrition/templates/static_site/record.html:74
 msgid "Energy by meal"
 msgstr "الطاقة حسب الوجبة"
 
-#: nutrition/templates/nutrition/research.html:2 templates/base.html:49
+#: nutrition/templates/nutrition/research.html:2 templates/base.html:53
 msgid "Research"
 msgstr "البحث"
 
@@ -1907,11 +2236,13 @@ msgstr ""
 
 #: nutrition/templates/nutrition/research.html:33
 #: nutrition/templates/nutrition/validation.html:28
+#: nutrition/templates/static_site/validation.html:27
 msgid "Energy MAPE"
 msgstr "متوسط الخطأ النسبي للطاقة"
 
 #: nutrition/templates/nutrition/research.html:33
 #: nutrition/templates/nutrition/validation.html:28
+#: nutrition/templates/static_site/validation.html:27
 msgid "Fat MAPE"
 msgstr "متوسط الخطأ النسبي للدهون"
 
@@ -2024,10 +2355,12 @@ msgid "Restaurant minus light (kcal per 100 g)"
 msgstr "المطاعم ناقص الخفيفة (سعرة لكل 100 غ)"
 
 #: nutrition/templates/nutrition/validation.html:6
+#: nutrition/templates/static_site/validation.html:6
 msgid "ArabFood-N · weighed ground truth"
 msgstr "ArabFood-N · قيم حقيقية موزونة"
 
 #: nutrition/templates/nutrition/validation.html:7
+#: nutrition/templates/static_site/validation.html:7
 msgid ""
 "Every weighed plate becomes a data point for RQ1–RQ4. Metrics update as "
 "plates are added."
@@ -2036,18 +2369,22 @@ msgstr ""
 "الأطباق."
 
 #: nutrition/templates/nutrition/validation.html:10
+#: nutrition/templates/static_site/validation.html:10
 msgid "All"
 msgstr "الكل"
 
 #: nutrition/templates/nutrition/validation.html:10
+#: nutrition/templates/static_site/validation.html:10
 msgid "Train"
 msgstr "تدريب"
 
 #: nutrition/templates/nutrition/validation.html:10
+#: nutrition/templates/static_site/validation.html:10
 msgid "Val"
 msgstr "تحقق"
 
 #: nutrition/templates/nutrition/validation.html:10
+#: nutrition/templates/static_site/validation.html:10
 msgid "Test"
 msgstr "اختبار"
 
@@ -2073,22 +2410,27 @@ msgstr[4] "طبق · %(n)s جلسة طبخ"
 msgstr[5] "طبق · %(n)s جلسة طبخ"
 
 #: nutrition/templates/nutrition/validation.html:18
+#: nutrition/templates/static_site/validation.html:18
 msgid "top-1 dish recognition"
 msgstr "دقة التعرّف (الخيار الأول)"
 
 #: nutrition/templates/nutrition/validation.html:19
+#: nutrition/templates/static_site/validation.html:19
 msgid "portion MAPE"
 msgstr "متوسط الخطأ النسبي للحصة"
 
 #: nutrition/templates/nutrition/validation.html:20
+#: nutrition/templates/static_site/validation.html:20
 msgid "truth inside recipe-aware interval (RQ4)"
 msgstr "القيمة الحقيقية داخل النطاق المبني على الوصفة (السؤال 4)"
 
 #: nutrition/templates/nutrition/validation.html:26
+#: nutrition/templates/static_site/validation.html:25
 msgid "Energy and fat error by system"
 msgstr "خطأ الطاقة والدهون حسب النظام"
 
 #: nutrition/templates/nutrition/validation.html:26
+#: nutrition/templates/static_site/validation.html:25
 #, python-format
 msgid "MAPE with bootstrap 95%% CI; Bland–Altman bias (estimate − truth)."
 msgstr ""
@@ -2097,85 +2439,80 @@ msgstr ""
 
 #: nutrition/templates/nutrition/validation.html:28
 #: nutrition/templates/nutrition/validation.html:35
+#: nutrition/templates/static_site/validation.html:27
+#: nutrition/templates/static_site/validation.html:32
 msgid "System"
 msgstr "النظام"
 
 #: nutrition/templates/nutrition/validation.html:28
+#: nutrition/templates/static_site/validation.html:27
 #, python-format
 msgid "95%% CI"
 msgstr "فترة ثقة 95%%"
 
 #: nutrition/templates/nutrition/validation.html:28
+#: nutrition/templates/static_site/validation.html:27
 msgid "Bias kcal"
 msgstr "الانحياز (سعرة)"
 
 #: nutrition/templates/nutrition/validation.html:28
+#: nutrition/templates/static_site/validation.html:27
 msgid "LoA"
 msgstr "حدود التوافق"
 
-#: nutrition/templates/nutrition/validation.html:30
-msgid ""
-"No plates with recognition outputs yet. Add a plate with the form, or from "
-"the Analyze page after weighing."
-msgstr ""
-"لا توجد أطباق بنتائج تعرّف بعد. أضف طبقاً من النموذج أو من صفحة التحليل بعد "
-"الوزن."
-
 #: nutrition/templates/nutrition/validation.html:35
 #: nutrition/templates/nutrition/validation.html:36
+#: nutrition/templates/static_site/validation.html:32
+#: nutrition/templates/static_site/validation.html:33
 msgid "Bland–Altman plot"
 msgstr "مخطط Bland–Altman"
 
-#: nutrition/templates/nutrition/validation.html:40
-#: nutrition/templates/nutrition/validation.html:73
-msgid "Plates"
-msgstr "الأطباق"
-
 #: nutrition/templates/nutrition/validation.html:42
+#: nutrition/templates/static_site/validation.html:38
 msgid "Image"
 msgstr "الصورة"
 
 #: nutrition/templates/nutrition/validation.html:42
+#: nutrition/templates/static_site/validation.html:38
 msgid "Session"
 msgstr "الجلسة"
 
 #: nutrition/templates/nutrition/validation.html:42
+#: nutrition/templates/static_site/validation.html:38
 msgid "Dish (truth)"
 msgstr "الطبق (الحقيقي)"
 
 #: nutrition/templates/nutrition/validation.html:42
+#: nutrition/templates/static_site/validation.html:38
 msgid "kcal truth"
 msgstr "السعرات الحقيقية"
 
 #: nutrition/templates/nutrition/validation.html:42
+#: nutrition/templates/static_site/validation.html:38
 msgid "AI g"
 msgstr "غرامات النموذج"
 
 #: nutrition/templates/nutrition/validation.html:42
+#: nutrition/templates/static_site/validation.html:38
 msgid "Image-only"
 msgstr "من الصورة فقط"
 
 #: nutrition/templates/nutrition/validation.html:42
+#: nutrition/templates/static_site/validation.html:38
 msgid "Recipe-aware"
 msgstr "مبني على الوصفة"
-
-#: nutrition/templates/nutrition/validation.html:43
-msgid "demo"
-msgstr "تجريبي"
 
 #: nutrition/templates/nutrition/validation.html:45
 msgid "Delete plate"
 msgstr "حذف الطبق"
 
-#: nutrition/templates/nutrition/validation.html:46
-msgid "No plates yet."
-msgstr "لا توجد أطباق بعد."
-
 #: nutrition/templates/nutrition/validation.html:52
+#: nutrition/templates/static_site/validation.html:45
 msgid "Add a weighed plate"
 msgstr "إضافة طبق موزون"
 
 #: nutrition/templates/nutrition/validation.html:53
+#: nutrition/templates/static_site/validation.html:46
 msgid ""
 "Protocol: weigh the plated portion on a 1 g scale; photograph top-down and "
 "at 45°, with and without a card; split by cooking session, never by image."
@@ -2183,103 +2520,73 @@ msgstr ""
 "البروتوكول: زِن الحصة في الطبق بميزان دقته 1 غ؛ صوّر من الأعلى وبزاوية 45°، "
 "مع البطاقة وبدونها؛ وقسّم البيانات حسب جلسة الطبخ وليس حسب الصورة."
 
-#: nutrition/templates/nutrition/validation.html:73
-msgid "Bias"
-msgstr "الانحياز"
+#: nutrition/templates/static_site/dashboard.html:12
+msgid "Foods recorded"
+msgstr "الأطعمة المسجّلة"
 
-#: nutrition/templates/nutrition/validation.html:74
-msgid "Mean of estimate and truth (kcal)"
-msgstr "متوسط التقدير والحقيقة (سعرة)"
+#: nutrition/templates/static_site/login.html:9
+#: templates/registration/login.html:9
+msgid "Dietary records and the validation lab are private to each researcher."
+msgstr "السجلات الغذائية ومختبر التحقق خاصة بكل باحث."
 
-#: nutrition/templates/nutrition/validation.html:74
-msgid "Estimate − truth (kcal)"
-msgstr "التقدير − الحقيقة (سعرة)"
+#: nutrition/templates/static_site/login.html:13
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#: nutrition/templates/static_site/login.html:15
+#: templates/registration/login.html:16
+msgid "Password"
+msgstr "كلمة المرور"
+
+#: nutrition/templates/static_site/login.html:19
+msgid ""
+"Accounts are created by the project administrator. Data are stored in the "
+"project's own Supabase database, and each researcher sees only their own "
+"rows."
+msgstr ""
+"يُنشئ مسؤول المشروع الحسابات. تُحفظ البيانات في قاعدة بيانات Supabase الخاصة"
+" بالمشروع، ولا يرى كل باحث إلا سجلاته."
+
+#: nutrition/templates/static_site/participant.html:11
+msgid "Delete participant"
+msgstr "حذف المشارك"
+
+#: nutrition/templates/static_site/record.html:55
+msgid "computed in your browser, no external AI"
+msgstr "محسوبة في متصفحك، دون ذكاء اصطناعي خارجي"
 
 #: nutrition/views.py:98
 msgid "This dish has no recipe yet."
 msgstr "لا توجد وصفة لهذا الطبق بعد."
 
-#: nutrition/views.py:141
-msgid "You already have a participant with this code."
-msgstr "لديك مشارك بهذا الرمز مسبقاً."
-
-#: nutrition/views.py:144
-#, python-format
-msgid "Participant %(code)s added."
-msgstr "تمت إضافة المشارك %(code)s."
-
-#: nutrition/views.py:158
+#: nutrition/views.py:163
 msgid "Record created. Add the foods eaten."
 msgstr "تم إنشاء السجل. أضف الأطعمة المتناولة."
 
-#: nutrition/views.py:190
-#, python-format
-msgid "Added %(food)s (%(g).0f g)."
-msgstr "تمت إضافة %(food)s (%(g).0f غ)."
-
-#: nutrition/views.py:196
+#: nutrition/views.py:201
 msgid "Supplement added."
 msgstr "تمت إضافة المكمّل."
 
-#: nutrition/views.py:211
+#: nutrition/views.py:216
 msgid "Item removed."
 msgstr "تم حذف العنصر."
 
-#: nutrition/views.py:230
+#: nutrition/views.py:235
 msgid "Record deleted."
 msgstr "تم حذف السجل."
 
-#: nutrition/views.py:264
+#: nutrition/views.py:269
 msgid "Invalid portion."
 msgstr "حصة غير صالحة."
 
-#: nutrition/views.py:270
-#, python-format
-msgid "Added %(food)s (%(g).0f g) to the record of %(p)s, %(d)s."
-msgstr "تمت إضافة %(food)s (%(g).0f غ) إلى سجل %(p)s بتاريخ %(d)s."
-
-#: nutrition/views.py:288
-#, python-format
-msgid "Imported %(n)d FFQ items as average daily intake."
-msgstr "تم استيراد %(n)d عنصراً من الاستبيان كمتوسط مأخوذ يومي."
-
-#: nutrition/views.py:309
+#: nutrition/views.py:314
 msgid "Add at least one ingredient with a weight."
 msgstr "أضف مكوّناً واحداً على الأقل مع وزنه."
 
-#: nutrition/views.py:325
+#: nutrition/views.py:330
 #, python-format
 msgid "%(name)s added to the composition table."
 msgstr "تمت إضافة %(name)s إلى جدول التركيب."
-
-#: nutrition/views.py:368
-msgid "Image-only AI (zero-shot)"
-msgstr "ذكاء اصطناعي من الصورة فقط (دون تدريب)"
-
-#: nutrition/views.py:368
-msgid "An external model's own kcal estimate from pixels"
-msgstr "تقدير نموذج خارجي للسعرات من الصورة مباشرة"
-
-#: nutrition/views.py:369
-msgid "Recipe-aware (AI dish + grams + style)"
-msgstr "مبني على الوصفة (طبق النموذج + الغرامات + النمط)"
-
-#: nutrition/views.py:369
-msgid "ArabNutriVision pipeline"
-msgstr "منهجية ArabNutriVision"
-
-#: nutrition/views.py:370
-msgid "Recipe-aware, true dish"
-msgstr "مبني على الوصفة، الطبق الحقيقي"
-
-#: nutrition/views.py:370
-msgid "Upper bound for recognition errors"
-msgstr "الحد الأعلى لأداء التعرّف"
-
-#: nutrition/views.py:385
-#, python-format
-msgid "Plate %(f)s saved."
-msgstr "تم حفظ الطبق %(f)s."
 
 #: templates/base.html:7
 msgid ""
@@ -2298,31 +2605,31 @@ msgid ""
 "University of Petra · Faculty of Information Technology · Amman, Jordan"
 msgstr "جامعة البترا · كلية تكنولوجيا المعلومات · عمّان، الأردن"
 
-#: templates/base.html:26
+#: templates/base.html:23 templates/base.html:29
 msgid "Switch language"
 msgstr "تغيير اللغة"
 
-#: templates/base.html:35
+#: templates/base.html:39
 msgid "Recipe-aware dietary assessment"
 msgstr "تقييم غذائي مبني على الوصفة"
 
-#: templates/base.html:37
+#: templates/base.html:41
 msgid "Menu"
 msgstr "القائمة"
 
-#: templates/base.html:43
+#: templates/base.html:47
 msgid "Analyze"
 msgstr "تحليل"
 
-#: templates/base.html:55
+#: templates/base.html:59 templates/base.html:65
 msgid "Sign out"
 msgstr "تسجيل الخروج"
 
-#: templates/base.html:69
+#: templates/base.html:79
 msgid "Close"
 msgstr "إغلاق"
 
-#: templates/base.html:82
+#: templates/base.html:92
 #, python-format
 msgid ""
 "ArabNutriVision v%(v)s, a research prototype for recipe-aware nutrient "
@@ -2331,7 +2638,7 @@ msgstr ""
 "ArabNutriVision الإصدار %(v)s، نموذج بحثي أولي لتقدير القيم الغذائية للأطباق"
 " العربية المركّبة اعتماداً على الوصفة."
 
-#: templates/base.html:83
+#: templates/base.html:93
 msgid ""
 "Values come from provisional standard recipes and USDA-based ingredient "
 "data. Not for clinical decisions until validated."
@@ -2339,29 +2646,25 @@ msgstr ""
 "القيم مستمدة من وصفات قياسية مبدئية وبيانات مكوّنات مستندة إلى USDA. لا "
 "تُستخدم لقرارات سريرية قبل التحقق منها."
 
-#: templates/base.html:90
+#: templates/base.html:100
 msgid "Project"
 msgstr "المشروع"
 
-#: templates/base.html:92
+#: templates/base.html:102
 msgid "Paper and method"
 msgstr "الورقة والمنهجية"
 
-#: templates/base.html:94
+#: templates/base.html:104
 msgid "Source code on GitHub"
 msgstr "الشيفرة المصدرية على GitHub"
 
-#: templates/base.html:100
+#: templates/base.html:110
 msgid "University of Petra · ArabNutriVision research group"
 msgstr "جامعة البترا · مجموعة ArabNutriVision البحثية"
 
-#: templates/base.html:100
+#: templates/base.html:110
 msgid "Code: MIT licence · Data: CC BY 4.0"
 msgstr "الشيفرة: ترخيص MIT · البيانات: CC BY 4.0"
-
-#: templates/registration/login.html:9
-msgid "Dietary records and the validation lab are private to each researcher."
-msgstr "السجلات الغذائية ومختبر التحقق خاصة بكل باحث."
 
 #: templates/registration/login.html:11
 msgid "Username or password is incorrect."
@@ -2370,10 +2673,6 @@ msgstr "اسم المستخدم أو كلمة المرور غير صحيحة."
 #: templates/registration/login.html:14
 msgid "Username"
 msgstr "اسم المستخدم"
-
-#: templates/registration/login.html:16
-msgid "Password"
-msgstr "كلمة المرور"
 
 #: templates/registration/login.html:20
 msgid "Demo account (example data):"

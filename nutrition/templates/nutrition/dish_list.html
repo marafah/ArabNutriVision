@@ -5,7 +5,7 @@
   <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
     <div><div class="eyebrow">{% translate "Arabic Recipe Composition Table · draft v0.1" %}</div><h1 class="h2 mb-0">{% translate "Nutrients per 100 g of cooked dish" %}</h1>
       <p class="text-secondary small mb-0">{% translate "Mean of three recipe variants; the bar shows the light-to-restaurant range, the tick the mean." %}</p></div>
-    {% if user.is_authenticated %}<a href="{% url 'nutrition:recipe_builder' %}" class="btn btn-primary"><i class="bi bi-journal-plus me-1"></i>{% translate "Add a recipe" %}</a>{% endif %}
+    {% if user.is_authenticated or STATIC_SITE %}<a href="{% url 'nutrition:recipe_builder' %}" class="btn btn-primary"><i class="bi bi-journal-plus me-1"></i>{% if STATIC_SITE %}{% translate "Recipe calculator" %}{% else %}{% translate "Add a recipe" %}{% endif %}</a>{% endif %}
   </div>
   <form class="row g-2 mb-3" method="get">
     <div class="col-sm-6 col-md-5"><input class="form-control" type="search" name="q" value="{{ q }}" placeholder="{% translate 'Search a dish (English or Arabic)' %}" aria-label="{% translate 'Search dishes' %}"></div>
@@ -18,7 +18,7 @@
         <thead><tr><th class="ps-3">{% translate "Dish" %}</th><th>{% translate "Category" %}</th><th class="n">{% translate "kcal" %}</th><th style="min-width:130px">{% translate "Range (kcal)" %}</th><th class="n">{% translate "Protein g" %}</th><th class="n">{% translate "Fat g" %}</th><th class="n">{% translate "SFA g" %}</th><th class="n">{% translate "Carb g" %}</th><th class="n">{% translate "Fibre g" %}</th><th class="n">{% translate "Na mg" %}</th><th class="n">{% translate "GI" %}</th><th class="n pe-3">{% translate "% kcal fat" %}</th></tr></thead>
         <tbody>
         {% for p in profiles %}
-          <tr style="cursor:pointer" onclick="location.href='{% url 'nutrition:dish_detail' p.code %}'">
+          <tr data-s="{{ p.name|lower }} {{ p.name_ar }} {{ p.code }}" data-cat="{{ p.category }}" style="cursor:pointer" onclick="location.href='{% url 'nutrition:dish_detail' p.code %}'">
             <td class="ps-3"><a href="{% url 'nutrition:dish_detail' p.code %}" class="fw-semibold text-decoration-none">{{ p|dish_name_full|truncatechars:40 }}</a><div class="small text-secondary">{{ p|dish_alt }}</div>{% if p.has_estimates %}<span class="pill pill-est mt-1">{% translate "placeholder ingredient" %}</span>{% endif %}</td>
             <td class="small">{{ p.category|cat }}</td>
             <td class="n fw-semibold">{{ p.mean.kcal|floatformat:0 }}</td>
@@ -27,7 +27,7 @@
             <td class="n">{{ p.mean.carb_g|floatformat:1 }}</td><td class="n">{{ p.mean.fiber_g|floatformat:1 }}</td><td class="n">{{ p.mean.sodium_mg|floatformat:0 }}</td>
             <td class="n">{{ p.gi|default:"–" }}</td><td class="n pe-3"><span class="pill {% if p.energy_from_fat_pct > 35 %}pill-rose{% else %}pill-good{% endif %}">{{ p.energy_from_fat_pct|floatformat:0 }}%</span></td>
           </tr>
-        {% empty %}<tr><td colspan="12" class="text-center text-secondary py-4">{% translate "No dishes match your search." %}</td></tr>{% endfor %}
+        {% empty %}<tr data-empty><td colspan="12" class="text-center text-secondary py-4">{% translate "No dishes match your search." %}</td></tr>{% endfor %}
         </tbody>
       </table>
     </div>
@@ -35,3 +35,14 @@
   <p class="small text-secondary mt-2">{% translate "Ingredient values are USDA-based approximations; rows marked placeholder (jameed, white cheese) await reference-book or laboratory values. % kcal fat above 35% is flagged against the WHO upper range for total fat." %}</p>
 </div>
 {% endblock %}
+{% block scripts %}{% if STATIC_SITE %}
+<script>
+(function () {   // static edition: search and category filter run in the browser
+  const p = new URLSearchParams(location.search), q = (p.get("q") || "").trim(), c = p.get("cat") || "", f = document.querySelector("form");
+  f.q.value = q; f.cat.value = c;
+  let shown = 0;
+  document.querySelectorAll("tbody tr[data-s]").forEach(tr => { const ok = (!q || tr.dataset.s.includes(q.toLowerCase())) && (!c || tr.dataset.cat === c); tr.hidden = !ok; shown += ok; });
+  if (!shown) document.querySelector("tbody").insertAdjacentHTML("beforeend", `<tr><td colspan="12" class="text-center text-secondary py-4">{% translate "No dishes match your search." %}</td></tr>`);
+})();
+</script>
+{% endif %}{% endblock %}

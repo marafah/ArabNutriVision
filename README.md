@@ -10,7 +10,7 @@
   <img alt="Python" src="https://img.shields.io/badge/python-3.11%2B-15305e">
   <img alt="Django" src="https://img.shields.io/badge/Django-5.1-0c4b33">
   <img alt="Bootstrap" src="https://img.shields.io/badge/Bootstrap-5.3-7952b3">
-  <img alt="Tests" src="https://img.shields.io/badge/tests-19%20passing-2e7d4f">
+  <img alt="Tests" src="https://img.shields.io/badge/tests-passing-2e7d4f">
   <img alt="Licence" src="https://img.shields.io/badge/code-MIT-b0413e">
   <img alt="Data" src="https://img.shields.io/badge/data-CC%20BY%204.0-c3922e">
 </p>
@@ -79,18 +79,33 @@ Bootstrap 5.3.3, Bootstrap Icons 1.11.3, Chart.js 4.4.1, transformers.js 2.17.2 
 | `ANV_ADMIN_USERNAME`, `ANV_ADMIN_PASSWORD` | Admin account created at deploy time |
 | `DJANGO_SECRET_KEY`, `DJANGO_DEBUG=0`, `DJANGO_ALLOWED_HOSTS` | Production settings |
 
-### Deploy (Render, free)
+### Online edition: GitHub Pages + Supabase (free, never sleeps)
 
-1. Sign in at [render.com](https://render.com) with GitHub.
-2. **New → Blueprint**, choose `marafah/ArabNutriVision`; Render reads `render.yaml`.
-3. Render generates `ANV_ADMIN_PASSWORD` (admin user `marafah`); read it under the service's **Environment** tab.
-4. After the build, the app is live at `https://arabnutrivision.onrender.com` (or the name Render assigns).
+The repository publishes itself to **https://marafah.github.io/ArabNutriVision/** (English) and `/ar/` (Arabic)
+through `.github/workflows/pages.yml`. Public pages (analysis with on-device CLIP, composition table, research)
+are static HTML. Dietary records, FFQ import and the validation lab run in the browser and store data in a
+[Supabase](https://supabase.com) PostgreSQL database protected by row-level security (`supabase/schema.sql`).
 
-The build loads the composition table, a demo account (`demo` / `arabnutrivision-demo`, example data only) and the admin account.
-With the default SQLite database, data entered online are reset when the free service restarts; set `DATABASE_URL`
-to a PostgreSQL database (Render, Neon, Supabase) to keep records permanently. Free services sleep after 15 minutes
-without visits; the workflow `.github/workflows/keepalive.yml` pings the site every 10 minutes so it stays awake
-(a short loading page can still appear for about a minute right after each new deploy).
+One-time setup:
+
+1. **GitHub Pages**: repository *Settings → Pages → Source: GitHub Actions*.
+2. **Supabase**: create a free project, open *SQL Editor*, paste `supabase/schema.sql` and run it.
+3. *Authentication → Sign In / Providers*: turn off "Allow new users to sign up"; then *Users → Add user* for each
+   researcher (email + password, "Auto confirm").
+4. *Project Settings → API*: copy the Project URL and the public **anon / publishable** key (never the
+   `service_role` / secret key).
+5. GitHub *Settings → Secrets and variables → Actions → Variables*: add `SUPABASE_URL` and `SUPABASE_ANON_KEY`,
+   then re-run the *GitHub Pages* workflow.
+
+The anon key is public by design; access is enforced by the policies in `schema.sql` (each researcher reads and
+writes only their own rows). `.github/workflows/keepalive.yml` calls a tiny `ping()` function daily so the free
+Supabase project is not paused for inactivity. Build locally with
+`ANV_STATIC_SITE=1 python manage.py build_site --out _site`.
+
+### Server edition (optional, Render)
+
+`render.yaml` still deploys the full Django server (admin, server-side records) to Render's free plan, which sleeps
+after 15 minutes without visits.
 
 ## Research code (`research/`)
 

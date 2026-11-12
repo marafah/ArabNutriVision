@@ -9,3 +9,4 @@ media/
 .pytest_cache/
 .DS_Store
 *.log
+_site/

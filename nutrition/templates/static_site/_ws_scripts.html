@@ -1,0 +1,3 @@
+{% load static %}{{ ref_json|json_script:"anv-ref" }}{{ js_json|json_script:"anv-t" }}
+<script>window.ANV_PAGE = "{{ ws_page }}"; window.ANV_URLS = {participant: "{% url 'nutrition:participant_view' %}", record: "{% url 'nutrition:record_view' %}", participants: "{% url 'nutrition:participants' %}", dish: "{% url 'nutrition:dishes' %}", validation: "{% url 'nutrition:validation' %}"};</script>
+<script src="{% static 'nutrition/js/workspace.js' %}"></script>

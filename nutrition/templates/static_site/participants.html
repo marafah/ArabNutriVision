@@ -1,0 +1,28 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% translate "Participants" %}{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="eyebrow">{% translate "Dietary records" %}</div>
+  <h1 class="h2 mb-3">{% translate "Participants" %}</h1>
+  {% include "static_site/_ws_notice.html" %}
+  <div class="row g-4" id="wsBody" hidden>
+    <div class="col-lg-7"><div class="panel p-0"><div class="table-responsive"><table class="table table-anv table-hover align-middle mb-0">
+      <thead><tr><th class="ps-3">{% translate "Code" %}</th><th>{% translate "Sex" %}</th><th class="n">{% translate "Age" %}</th><th class="n">{% translate "Energy target" %}</th><th class="n">{% translate "Records" %}</th><th class="pe-3">{% translate "Notes" %}</th></tr></thead>
+      <tbody id="partRows"></tbody></table></div></div></div>
+    <div class="col-lg-5"><div class="panel">
+      <h2 class="h5">{% translate "Add a participant" %}</h2>
+      <p class="small text-secondary"><i class="bi bi-shield-lock me-1"></i>{% translate "Use a pseudonymous code only. Names, phone numbers and IDs must stay outside this system." %}</p>
+      <form id="partForm" novalidate>
+        <div class="mb-2"><label class="form-label small" for="p_code">{% translate "Participant code" %}</label><input class="form-control" id="p_code" name="code" maxlength="30" required placeholder="P003" dir="ltr"></div>
+        <div class="mb-2"><label class="form-label small" for="p_sex">{% translate "Sex" %}</label><select class="form-select" id="p_sex" name="sex" data-opts="sexes"></select></div>
+        <div class="mb-2"><label class="form-label small" for="p_age">{% translate "Age (years)" %}</label><input class="form-control" id="p_age" name="age_years" type="number" min="0" max="130"></div>
+        <div class="mb-2"><label class="form-label small" for="p_target">{% translate "Energy target (kcal/day)" %}</label><input class="form-control" id="p_target" name="energy_target_kcal" type="number" min="500" max="6000" value="2000" required></div>
+        <div class="mb-2"><label class="form-label small" for="p_notes">{% translate "Notes" %}</label><input class="form-control" id="p_notes" name="notes" maxlength="200"></div>
+        <div class="text-danger small mb-2" id="partErr"></div>
+        <button class="btn btn-primary mt-1">{% translate "Add participant" %}</button>
+      </form>
+    </div></div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}{% include "static_site/_ws_scripts.html" %}{% endblock %}

@@ -1,0 +1,46 @@
+name: GitHub Pages
+# Builds the static edition (public pages in English and Arabic + the Supabase-backed researcher
+# workspace) and publishes it at https://<owner>.github.io/<repo>/ on every push to main.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ANV_STATIC_SITE: "1"
+      ANV_BASE_PATH: /${{ github.event.repository.name }}
+      SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+      SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: |
+          python manage.py migrate --noinput
+          python manage.py load_reference_data
+          python manage.py build_site --out _site
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

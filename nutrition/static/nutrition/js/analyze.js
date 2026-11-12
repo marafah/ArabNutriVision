@@ -182,7 +182,7 @@
   };
 
   const addBtn = $("#addBtn");
-  if (addBtn) addBtn.onclick = async () => {
+  if (addBtn && !window.ANV_CFG) addBtn.onclick = async () => {
     const fd = new FormData();
     fd.append("record", $("#recSel").value); fd.append("meal", $("#mealSel").value); fd.append("dish", state.dish);
     fd.append("grams", Math.round(state.grams)); fd.append("style", state.style); fd.append("source", state.example ? "manual" : state.source);
@@ -195,6 +195,7 @@
   };
 
   function fillValidation() {
+    if (window.ANV.onResult) window.ANV.onResult(state);   // static edition (workspace.js) fills its own form
     const f = $("#valForm"); if (!f) return;
     const d = byCode[state.dish];
     const set = (name, v) => { const el = f.querySelector(`[name="${name}"]`); if (el && v != null) el.value = v; };
@@ -208,5 +209,6 @@
   }
   const vf = $("#valForm"); if (vf) vf.addEventListener("change", () => vf.dataset.touched = "1");
 
+  window.ANV.state = state;
   syncGrams(); render();
 })();

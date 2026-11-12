@@ -9,4 +9,12 @@ TEAM = [
 
 
 def site(request):
-    return {"ANV_VERSION": "1.0.0", "TEAM": TEAM}
+    from django.conf import settings
+    from django.utils.translation import get_language
+    ctx = {"ANV_VERSION": "1.1.0", "TEAM": TEAM, "STATIC_SITE": settings.STATIC_SITE}
+    if settings.STATIC_SITE:
+        base = settings.ANV_BASE_PATH
+        ar = (get_language() or "en").startswith("ar")
+        ctx.update({"ALT_URL": base + ("" if ar else "/ar") + request.path_info, "SITE_ROOT": base,
+                    "SUPABASE_URL": settings.SUPABASE_URL, "SUPABASE_ANON_KEY": settings.SUPABASE_ANON_KEY})
+    return ctx

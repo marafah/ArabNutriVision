@@ -1,0 +1,43 @@
+{% extends "base.html" %}{% load static i18n %}
+{% block title %}{% translate "Sign in" %}{% endblock %}
+{% block content %}
+<div class="container py-5" style="max-width:460px">
+  <div class="panel shadow-sm">
+    <div class="text-center mb-3">
+      <img src="{% static 'nutrition/img/uop_logo_navy.png' %}" alt="{% translate 'University of Petra' %}" style="height:44px;width:auto">
+      <h1 class="h4 mt-3 mb-1">{% translate "Researcher sign-in" %}</h1>
+      <p class="text-secondary small mb-0">{% translate "Dietary records and the validation lab are private to each researcher." %}</p>
+    </div>
+    <div class="alert alert-danger py-2 small d-none" id="loginErr" role="alert"></div>
+    <form id="loginForm" novalidate>
+      <label class="form-label small" for="id_email">{% translate "Email" %}</label>
+      <input class="form-control mb-3" type="email" name="email" id="id_email" autocomplete="username" required autofocus dir="ltr">
+      <label class="form-label small" for="id_password">{% translate "Password" %}</label>
+      <input class="form-control mb-3" type="password" name="password" id="id_password" autocomplete="current-password" required dir="ltr">
+      <button class="btn btn-primary w-100" id="loginBtn">{% translate "Sign in" %}</button>
+    </form>
+    <p class="small text-secondary mt-3 mb-0"><i class="bi bi-shield-lock me-1"></i>{% translate "Accounts are created by the project administrator. Data are stored in the project's own Supabase database, and each researcher sees only their own rows." %}</p>
+  </div>
+</div>
+{{ js_json|json_script:"anv-t" }}
+{% endblock %}
+{% block scripts %}
+<script>
+(async function () {
+  const T = JSON.parse(document.getElementById("anv-t").textContent), C = window.ANVCloud, err = document.getElementById("loginErr");
+  const fail = m => { err.textContent = m; err.classList.remove("d-none"); };
+  const params = new URLSearchParams(location.search);
+  let next = params.get("next") || "{% url 'nutrition:dashboard' %}";
+  if (!next.startsWith(window.ANV_CFG.root + "/") || next.startsWith("//")) next = "{% url 'nutrition:dashboard' %}";
+  if (!C.configured) { fail(T.notConfigured); document.getElementById("loginBtn").disabled = true; return; }
+  if (await C.ready) { location.replace(next); return; }
+  document.getElementById("loginForm").onsubmit = async e => {
+    e.preventDefault();
+    const btn = document.getElementById("loginBtn"); btn.disabled = true;
+    const {error} = await C.sb.auth.signInWithPassword({email: e.target.email.value.trim(), password: e.target.password.value});
+    btn.disabled = false;
+    if (error) fail(T.signInFail); else location.replace(next);
+  };
+})();
+</script>
+{% endblock %}

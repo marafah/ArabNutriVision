@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.urls import path
 
 from . import views
@@ -26,3 +27,12 @@ urlpatterns = [
     path("validation/<int:pk>/delete/", views.validation_delete, name="validation_delete"),
     path("api/add-item/", views.api_add_item, name="api_add_item"),
 ]
+
+if settings.STATIC_SITE:   # static edition: researcher pages are client-side (Supabase)
+    from . import static_views as sv
+    _swap = {"dashboard": sv.dashboard, "participants": sv.participants, "ffq": sv.ffq, "validation": sv.validation, "recipe_builder": sv.recipe_builder}
+    for _u in urlpatterns:
+        if _u.name in _swap:
+            _u.callback = _swap[_u.name]
+    urlpatterns += [path("participants/view/", sv.participant_view, name="participant_view"),
+                    path("records/view/", sv.record_view, name="record_view")]

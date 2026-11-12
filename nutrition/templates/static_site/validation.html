@@ -1,0 +1,54 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% translate "Validation lab" %}{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+    <div><div class="eyebrow">{% translate "ArabFood-N · weighed ground truth" %}</div><h1 class="h2 mb-0">{% translate "Validation lab" %}</h1>
+      <p class="text-secondary small mb-0">{% translate "Every weighed plate becomes a data point for RQ1–RQ4. Metrics update as plates are added." %}</p></div>
+    <div class="d-flex gap-2 flex-wrap">
+      <div class="btn-group btn-group-sm" role="group" aria-label="{% translate 'Split' %}" id="splitBtns">
+        <button type="button" class="btn btn-outline-primary active" data-split="">{% translate "All" %}</button><button type="button" class="btn btn-outline-primary" data-split="train">{% translate "Train" %}</button><button type="button" class="btn btn-outline-primary" data-split="val">{% translate "Val" %}</button><button type="button" class="btn btn-outline-primary" data-split="test">{% translate "Test" %}</button></div>
+      <button class="btn btn-sm btn-primary" id="csvBtn"><i class="bi bi-download me-1"></i>annotations.csv</button>
+    </div>
+  </div>
+  {% include "static_site/_ws_notice.html" %}
+  <div id="wsBody" hidden>
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3"><div class="stat"><div class="v" id="vN">–</div><div class="l" id="vNl"></div></div></div>
+    <div class="col-6 col-md-3"><div class="stat"><div class="v" id="vTop1">–</div><div class="l">{% translate "top-1 dish recognition" %}</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat"><div class="v" id="vPort">–</div><div class="l">{% translate "portion MAPE" %} <span id="vPortMae"></span></div></div></div>
+    <div class="col-6 col-md-3"><div class="stat"><div class="v" id="vCov">–</div><div class="l">{% translate "truth inside recipe-aware interval (RQ4)" %}</div></div></div>
+  </div>
+  <div class="row g-4">
+    <div class="col-lg-8 min-w-0">
+      <div class="panel p-0 mb-4">
+        <div class="p-3 pb-0"><h2 class="h5 mb-0">{% translate "Energy and fat error by system" %}</h2><p class="small text-secondary mb-0">{% translate "MAPE with bootstrap 95% CI; Bland–Altman bias (estimate − truth)." %}</p></div>
+        <div class="table-responsive"><table class="table table-anv align-middle mb-0">
+          <thead><tr><th class="ps-3">{% translate "System" %}</th><th class="n">n</th><th class="n">{% translate "Energy MAPE" %}</th><th class="n">{% translate "95% CI" %}</th><th class="n">{% translate "Bias kcal" %}</th><th class="n">{% translate "LoA" %}</th><th class="n pe-3">{% translate "Fat MAPE" %}</th></tr></thead>
+          <tbody id="sysRows"></tbody>
+        </table></div>
+      </div>
+      <div class="panel mb-4" id="baPanel" hidden>
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2"><h2 class="h5 mb-0">{% translate "Bland–Altman plot" %}</h2><select id="baSel" class="form-select form-select-sm w-auto" aria-label="{% translate 'System' %}"></select></div>
+        <div style="height:300px" class="mt-2"><canvas id="ba" role="img" aria-label="{% translate 'Bland–Altman plot' %}"></canvas></div>
+      </div>
+      <div class="panel p-0">
+        <div class="p-3 pb-0"><h2 class="h5 mb-0">{% translate "Plates" %}</h2></div>
+        <div class="table-responsive" style="max-height:420px"><table class="table table-anv table-sm align-middle mb-0">
+          <thead class="sticky-top bg-white"><tr><th class="ps-3">{% translate "Image" %}</th><th>{% translate "Session" %}</th><th>{% translate "Dish (truth)" %}</th><th class="n">{% translate "g" %}</th><th class="n">{% translate "kcal truth" %}</th><th>{% translate "AI dish" %}</th><th class="n">{% translate "AI g" %}</th><th class="n">{% translate "Image-only" %}</th><th class="n">{% translate "Recipe-aware" %}</th><th class="pe-3"></th></tr></thead>
+          <tbody id="plateRows"></tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="panel">
+        <h2 class="h5">{% translate "Add a weighed plate" %}</h2>
+        <p class="small text-secondary">{% translate "Protocol: weigh the plated portion on a 1 g scale; photograph top-down and at 45°, with and without a card; split by cooking session, never by image." %}</p>
+        {% include "static_site/_val_form.html" with form_id="valForm" %}
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}{% include "static_site/_ws_scripts.html" %}{% endblock %}

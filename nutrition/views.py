@@ -116,9 +116,14 @@ def analyze(request):
     records = []
     if request.user.is_authenticated:
         records = IntakeRecord.objects.filter(participant__owner=request.user).select_related("participant")[:30]
-    return render(request, "nutrition/analyze.html", {
+    extra = {}
+    from django.conf import settings
+    if settings.STATIC_SITE:
+        from .static_views import js_strings, reference_data
+        extra = {"ref_json": reference_data(), "js_json": js_strings(), "ws_page": "analyze"}
+    return render(request, "nutrition/analyze.html", {**extra, 
         "dishes_json": json.dumps(_profiles_json(), ensure_ascii=False), "nut_json": json.dumps(_nutrient_meta(), ensure_ascii=False),
-        "records": records, "meals": MEALS, "vform": ValidationSampleForm() if request.user.is_authenticated else None})
+        "records": records, "meals": MEALS, "vform": ValidationSampleForm() if request.user.is_authenticated and not settings.STATIC_SITE else None})
 
 
 # ------------------------------------------------------------------ researcher workspace
