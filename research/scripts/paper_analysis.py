@@ -209,12 +209,13 @@ import matplotlib  # noqa: E402
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 
-plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 9, "axes.spines.top": False, "axes.spines.right": False})
+plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 10, "axes.spines.top": False, "axes.spines.right": False,
+                     "axes.grid": True, "grid.color": "#e3e6ec", "grid.linewidth": 0.6, "axes.axisbelow": True})
 C = {"light": "#56682b", "home": "#3e6f8e", "restaurant": "#9a2a3c", "grey": "#8a8f84"}
 
 
 def save(fig, name):
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, 0.08, 1, 1) if name.startswith("fig4") else None)
     fig.savefig(FIG / f"{name}.png", dpi=300)
     fig.savefig(FIG / f"{name}.pdf")
     plt.close(fig)
@@ -222,20 +223,21 @@ def save(fig, name):
 
 # Fig 2: kcal/100 g by variant
 order = sorted(rows_a, key=lambda r: r["kcal_mean"])
-fig, ax = plt.subplots(figsize=(6.5, 5.2))
+fig, ax = plt.subplots(figsize=(7.0, 6.4))
 y = np.arange(len(order))
 ax.hlines(y, [r["kcal_light"] for r in order], [r["kcal_restaurant"] for r in order], color=C["grey"], lw=2, alpha=.6)
 for s in ("light", "home", "restaurant"):
     ax.scatter([r[f"kcal_{s}"] for r in order], y, s=22, color=C[s], label=s.capitalize(), zorder=3)
 ax.set_yticks(y, [r["en"] for r in order])
 ax.set_xlabel("Energy (kcal per 100 g cooked dish)")
-ax.legend(frameon=False, loc="lower right")
-ax.set_title("Energy density of 22 Arabic dishes by preparation variant", fontsize=10, loc="left")
+ax.legend(frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.09), ncol=3)
+ax.grid(axis="y", visible=False)
+ax.set_xlim(0, 480)
 save(fig, "fig2_energy_by_variant")
 
 # Fig 3: decomposition of gap
 ob = sorted(rows_b, key=lambda r: r["gap_kcal_per100"])
-fig, ax = plt.subplots(figsize=(6.5, 5.2))
+fig, ax = plt.subplots(figsize=(7.0, 6.8))
 left = np.zeros(len(ob))
 cols = {"added_fat": "#c98a14", "fat_rich_ingredients": "#9a2a3c", "meat_cut_and_amount": "#3e6f8e", "other": "#b9bdb2"}
 labs = {"added_fat": "Added oil / ghee / butter", "fat_rich_ingredients": "Tahini, nuts, cheese", "meat_cut_and_amount": "Meat cut and amount", "other": "Other ingredients and yield"}
@@ -249,12 +251,13 @@ ax.barh(np.arange(len(ob)), neg, color=cols["other"], height=.7)
 ax.set_xlim(min(neg.min(), 0) * 1.1, left.max() * 1.05)
 ax.set_yticks(np.arange(len(ob)), [TAB[r["dish"]].en.split(" (")[0] for r in ob])
 ax.set_xlabel("Restaurant minus light recipe (kcal per 100 g)")
-ax.legend(frameon=False, loc="lower right", fontsize=8)
-ax.set_title("What drives the energy gap between preparations", fontsize=10, loc="left")
+ax.legend(frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.08), ncol=2)
+ax.grid(axis="y", visible=False)
+ax.axvline(0, color="#333", lw=0.8)
 save(fig, "fig3_gap_decomposition")
 
 # Fig 4: error budget
-fig, axs = plt.subplots(1, 2, figsize=(7.2, 3.2))
+fig, axs = plt.subplots(1, 2, figsize=(7.4, 3.9))
 names = {"mean_profile": "Preparation-blind (mean recipe)", "style_acc0.6": "Recipe-aware, style 60% correct",
          "style_acc0.8": "Recipe-aware, style 80% correct", "oracle_variant": "Recipe-aware, true style"}
 colr = {"mean_profile": "#9a2a3c", "style_acc0.6": "#c98a14", "style_acc0.8": "#3e6f8e", "oracle_variant": "#56682b"}
@@ -265,9 +268,11 @@ for est in names:
 for a, t in zip(axs, ("Energy", "Fat")):
     a.set_xlabel("Portion estimation error (log-SD, %)")
     a.set_ylabel(f"{t} MAPE (%)")
-    a.set_title(t, fontsize=10, loc="left")
+    a.set_title(f"({'a' if t == 'Energy' else 'b'}) {t}", fontsize=11, loc="left")
     a.axhline(20, color="#8a8f84", ls=":", lw=1)
-axs[0].legend(frameon=False, fontsize=7, loc="upper left")
+h, l = axs[0].get_legend_handles_labels()
+fig.legend(h, l, frameon=False, loc="lower center", ncol=2, bbox_to_anchor=(0.5, -0.01))
+fig.subplots_adjust(bottom=0.3)
 save(fig, "fig4_error_budget")
 
 print(json.dumps({k: v for k, v in summary.items() if k != "montecarlo"}, indent=1, ensure_ascii=False))
