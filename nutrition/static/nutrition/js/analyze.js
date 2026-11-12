@@ -104,7 +104,11 @@
     photo = f; const p = $("#preview"); p.src = URL.createObjectURL(f); p.hidden = false; $("#dropHint").hidden = true;
     $("#analyzeBtn").disabled = false;
     status(T.ready);
+    // recognise automatically as soon as the photo is shown (the button stays for re-runs)
+    p.decode().catch(() => {}).then(() => $("#analyzeBtn").click());
   }
+  // start fetching the on-device model as soon as the visitor opens the photo picker
+  drop.addEventListener("pointerdown", () => classifier().catch(() => {}), {once: true});
   function status(t, err) { const s = $("#status"); s.textContent = t; s.className = "small mt-2 " + (err ? "text-danger" : "text-secondary"); }
 
   // ---- on-device recognition: CLIP zero-shot (open-source, runs in the browser; no API) ----
