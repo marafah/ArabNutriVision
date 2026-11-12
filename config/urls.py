@@ -17,5 +17,6 @@ urlpatterns = [
 if settings.STATIC_SITE:   # static edition: sign-in handled by Supabase in the browser
     from nutrition import static_views
     urlpatterns = [path("accounts/login/", static_views.login, name="login"),
+                   path("accounts/register/", static_views.register, name="register"),
                    path("accounts/logout/", static_views.login, name="logout")] + [
         u for u in urlpatterns if getattr(u, "name", None) not in ("login", "logout")]

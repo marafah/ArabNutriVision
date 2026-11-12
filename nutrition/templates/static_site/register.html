@@ -1,0 +1,56 @@
+{% extends "base.html" %}{% load static i18n %}
+{% block title %}{% translate "Create an account" %}{% endblock %}
+{% block content %}
+<div class="container py-5" style="max-width:480px">
+  <div class="panel shadow-sm">
+    <div class="text-center mb-3">
+      <img src="{% static 'nutrition/img/uop_logo_navy.png' %}" alt="{% translate 'University of Petra' %}" style="height:44px;width:auto">
+      <h1 class="h4 mt-3 mb-1">{% translate "Create an account" %}</h1>
+      <p class="text-secondary small mb-0">{% translate "For researchers, dietitians and students. Each account sees only its own participants and records." %}</p>
+    </div>
+    <div class="alert alert-danger py-2 small d-none" id="regErr" role="alert"></div>
+    <div class="alert alert-success py-2 small d-none" id="regOk" role="status"></div>
+    <form id="regForm" novalidate>
+      <label class="form-label small" for="r_name">{% translate "Full name" %}</label>
+      <input class="form-control mb-3" type="text" id="r_name" maxlength="80" autocomplete="name" required>
+      <label class="form-label small" for="r_email">{% translate "Email" %}</label>
+      <input class="form-control mb-3" type="email" id="r_email" autocomplete="email" required dir="ltr">
+      <label class="form-label small" for="r_pw">{% translate "Password" %}</label>
+      <input class="form-control mb-1" type="password" id="r_pw" autocomplete="new-password" minlength="8" required dir="ltr">
+      <div class="form-text mb-3">{% translate "At least 8 characters. Right-click the field and choose “Suggest strong password” to let the browser create and save one." %}</div>
+      <label class="form-label small" for="r_pw2">{% translate "Confirm password" %}</label>
+      <input class="form-control mb-3" type="password" id="r_pw2" autocomplete="new-password" required dir="ltr">
+      <div class="form-check mb-3"><input class="form-check-input" type="checkbox" id="r_terms" required><label class="form-check-label small" for="r_terms">{% translate "I will store only pseudonymous participant codes (no names, phone numbers or ID numbers)." %}</label></div>
+      <button class="btn btn-primary w-100" id="regBtn">{% translate "Create account" %}</button>
+    </form>
+    <p class="small text-center mt-3 mb-0">{% translate "Already have an account?" %} <a href="{% url 'login' %}">{% translate "Sign in" %}</a></p>
+  </div>
+</div>
+{{ js_json|json_script:"anv-t" }}
+{% endblock %}
+{% block scripts %}
+<script>
+(async function () {
+  const T = JSON.parse(document.getElementById("anv-t").textContent), C = window.ANVCloud, $ = s => document.querySelector(s);
+  const err = $("#regErr"), ok = $("#regOk"), btn = $("#regBtn");
+  const fail = m => { ok.classList.add("d-none"); err.textContent = m; err.classList.remove("d-none"); };
+  if (!C.configured) { fail(T.notConfigured); btn.disabled = true; return; }
+  if (await C.ready) { location.replace("{% url 'nutrition:dashboard' %}"); return; }
+  $("#regForm").onsubmit = async e => {
+    e.preventDefault(); err.classList.add("d-none");
+    const name = $("#r_name").value.trim(), email = $("#r_email").value.trim(), pw = $("#r_pw").value;
+    if (!name || !email) return fail(T.required);
+    if (pw.length < 8) return fail(T.pwShort);
+    if (pw !== $("#r_pw2").value) return fail(T.pwMismatch);
+    if (!$("#r_terms").checked) return fail(T.required);
+    btn.disabled = true;
+    const {data, error} = await C.sb.auth.signUp({email, password: pw, options: {data: {full_name: name}, emailRedirectTo: location.origin + "{% url 'login' %}"}});
+    btn.disabled = false;
+    if (error) return fail(/registered|exists/i.test(error.message) ? T.emailTaken : /signups? not allowed|disabled/i.test(error.message) ? T.regClosed : error.message);
+    if (data.session) { location.replace("{% url 'nutrition:dashboard' %}"); return; }
+    if (data.user && Array.isArray(data.user.identities) && !data.user.identities.length) return fail(T.emailTaken);
+    $("#regForm").hidden = true; ok.textContent = T.regCheckEmail; ok.classList.remove("d-none");
+  };
+})();
+</script>
+{% endblock %}

@@ -15,7 +15,7 @@ from django.urls import set_script_prefix
 
 from nutrition.models import Dish
 
-PAGES = ["/", "/research/", "/analyze/", "/dishes/", "/dishes/new/", "/accounts/login/", "/workspace/", "/participants/",
+PAGES = ["/", "/research/", "/analyze/", "/dishes/", "/dishes/new/", "/accounts/login/", "/accounts/register/", "/workspace/", "/participants/",
          "/participants/view/", "/records/view/", "/ffq/", "/validation/", "/inbody/", "/body/", "/participants/report/"]
 
 

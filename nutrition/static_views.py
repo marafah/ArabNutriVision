@@ -41,6 +41,11 @@ def reference_data() -> dict:
 # Strings used by workspace.js. Most msgids are shared with the server edition, so one translation serves both.
 JS_MSGIDS = {
     "totalFood": gettext_noop("Total (food)"),
+    "pwShort": gettext_noop("The password must have at least 8 characters."),
+    "pwMismatch": gettext_noop("The two passwords do not match."),
+    "emailTaken": gettext_noop("An account with this email already exists. Sign in instead."),
+    "regClosed": gettext_noop("New registrations are closed. Ask the project administrator for an account."),
+    "regCheckEmail": gettext_noop("Account created. Check your email and open the confirmation link, then sign in."),
     # body composition (calculator, report, nutrition link)
     "bmiLabel": gettext_noop("Body mass index"), "ffmLabel": gettext_noop("Fat-free mass (kg)"), "whrLabel": gettext_noop("Waist–hip ratio"),
     "whtrLabel": gettext_noop("Waist-to-height ratio"), "bmrMifflin": gettext_noop("BMR, Mifflin–St Jeor (kcal)"),
@@ -119,6 +124,10 @@ def _page(request, template, page, **extra):
     ctx = {"ref_json": reference_data(), "js_json": js_strings(),
            "ws_page": page, **extra}
     return render(request, template, ctx)
+
+
+def register(request):
+    return render(request, "static_site/register.html", {"js_json": js_strings()})
 
 
 def login(request):
