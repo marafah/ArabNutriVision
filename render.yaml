@@ -4,7 +4,8 @@ services:
     runtime: python
     plan: free
     buildCommand: ./build.sh
-    startCommand: gunicorn config.wsgi --bind 0.0.0.0:$PORT
+    startCommand: python manage.py migrate --no-input && python manage.py load_reference_data && python manage.py seed_demo && python manage.py ensure_admin && gunicorn config.wsgi --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    healthCheckPath: /
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.7
@@ -12,7 +13,9 @@ services:
         value: "0"
       - key: DJANGO_SECRET_KEY
         generateValue: true
-      - key: DJANGO_ALLOWED_HOSTS
-        value: .onrender.com
+      - key: ANV_ADMIN_USERNAME
+        value: marafah
+      - key: ANV_ADMIN_PASSWORD
+        sync: false
       - key: ANTHROPIC_API_KEY
         sync: false

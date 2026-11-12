@@ -78,9 +78,17 @@ Bootstrap 5.3.3, Bootstrap Icons 1.11.3, Chart.js 4.4.1 and the IBM Plex / Sourc
 | `ANV_VISION_MODEL` | Claude model id (default `claude-sonnet-4-5`) |
 | `DJANGO_SECRET_KEY`, `DJANGO_DEBUG=0`, `DJANGO_ALLOWED_HOSTS` | Production settings |
 
-### Deploy
+### Deploy (Render, free)
 
-`render.yaml` deploys the app to [Render](https://render.com) (free web service): connect the GitHub repository, set `ANTHROPIC_API_KEY`, and Render runs the build script (`collectstatic`, `migrate`, `load_reference_data`). Any host that runs `gunicorn config.wsgi` works.
+1. Sign in at [render.com](https://render.com) with GitHub.
+2. **New → Blueprint**, choose `marafah/ArabNutriVision`; Render reads `render.yaml`.
+3. Enter `ANV_ADMIN_PASSWORD` (your admin login, user `marafah`) and, optionally, `ANTHROPIC_API_KEY`.
+4. After the build, the app is live at `https://arabnutrivision.onrender.com` (or the name Render assigns).
+
+The build loads the composition table, a demo account (`demo` / `arabnutrivision-demo`, example data only) and the admin account.
+With the default SQLite database, data entered online are reset when the free service restarts; set `DATABASE_URL`
+to a PostgreSQL database (Render, Neon, Supabase) to keep records permanently. Free services sleep after 15 minutes
+without visits, so the first page can take about a minute to load.
 
 ## Research code (`research/`)
 
