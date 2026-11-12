@@ -186,3 +186,7 @@ html[dir="rtl"] .nlabel .r { direction: ltr; text-align: left; }
   .anv-nav .navbar-nav .nav-link i, .anv-nav .btn-login i { display: none; }
   .anv-nav .navbar-brand img { width: 130px; }
 }
+
+/* signed-in user: compact initials badge (full name and e-mail in the tooltip) */
+.user-chip { display: inline-grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.35); color: #fff; font: 600 .78rem var(--anv-mono); letter-spacing: .02em; cursor: default; }

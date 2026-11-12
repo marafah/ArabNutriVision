@@ -204,7 +204,8 @@
       sb.from("records").select("id,participant_id,date,method").order("date", {ascending: false}).order("created_at", {ascending: false}).then(check),
       sb.from("items").select("id", {count: "exact", head: true}).then(r => { if (r.error) throw r.error; return r.count; }),
       sb.from("validation_samples").select("id", {count: "exact", head: true}).then(r => { if (r.error) throw r.error; return r.count; })]);
-    $("#wsWelcome").textContent = pf(T.welcome, {n: user.email});
+    $("#wsWelcome").textContent = pf(T.welcome, {n: CL.displayName(user)});
+    $("#wsEmail").textContent = user.email;
     $("#nPart").textContent = parts.length; $("#nRec").textContent = recs.length; $("#nItems").textContent = nItems; $("#nVal").textContent = nVal;
     const code = Object.fromEntries(parts.map(p => [p.id, p.code])), cnt = {};
     recs.forEach(r => cnt[r.participant_id] = (cnt[r.participant_id] || 0) + 1);

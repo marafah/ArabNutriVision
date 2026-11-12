@@ -56,8 +56,8 @@
       {% endwith %}
       {% if STATIC_SITE %}
         <div class="d-flex align-items-center gap-2" data-auth="in" hidden>
-          <span class="text-white-50 small d-none d-xxl-inline"><i class="bi bi-person-circle me-1"></i><span id="anvUser"></span></span>
-          <button class="btn btn-sm btn-outline-light" type="button" id="anvSignOut">{% translate "Sign out" %}</button>
+          <span class="user-chip" id="anvUser" title=""></span>
+          <button class="btn btn-sm btn-outline-light text-nowrap" type="button" id="anvSignOut">{% translate "Sign out" %}</button>
         </div>
         <a class="btn btn-sm btn-login btn-outline-light" data-auth="out" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right me-1"></i>{% translate "Researcher sign-in" %}</a>
       {% elif user.is_authenticated %}

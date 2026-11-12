@@ -3,7 +3,8 @@
 {% block content %}
 <div class="container py-4">
   <div class="eyebrow">{% translate "Researcher workspace" %}</div>
-  <h1 class="h2" id="wsWelcome">{% translate "Researcher workspace" %}</h1>
+  <h1 class="h3 mb-0" id="wsWelcome">{% translate "Researcher workspace" %}</h1>
+  <div class="small text-secondary mb-2"><span dir="ltr" id="wsEmail"></span></div>
   {% include "static_site/_ws_notice.html" %}
   <div id="wsBody" hidden>
   <div class="row g-3 my-2">

@@ -7,12 +7,21 @@
   const configured = !!(C.url && C.key && window.supabase);
   const sb = configured ? window.supabase.createClient(C.url, C.key, {auth: {persistSession: true, storageKey: "anv-auth"}}) : null;
 
+  /** Short display name: the registered full name, else the e-mail's local part ("mohammad_arafah" -> "Mohammad Arafah"). */
+  function displayName(user) {
+    if (!user) return "";
+    const full = user.user_metadata && user.user_metadata.full_name;
+    if (full) return full.trim();
+    return (user.email || "").split("@")[0].replace(/[._-]+/g, " ").replace(/\b\w/g, c => c.toUpperCase()).trim();
+  }
+  const initials = n => n.split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join("").toUpperCase();
+
   function show(user) {
     document.querySelectorAll("[data-auth]").forEach(el => {
       el.hidden = (el.dataset.auth === "in") !== !!user;
     });
     const u = document.getElementById("anvUser");
-    if (u) u.textContent = user ? user.email : "";
+    if (u) { const n = displayName(user); u.textContent = initials(n); u.title = user ? `${n} · ${user.email}` : ""; u.setAttribute("aria-label", u.title); }
   }
 
   const ready = (async () => {
@@ -39,5 +48,5 @@
     return user;
   }
 
-  window.ANVCloud = {sb, configured, ready, requireUser, cfg: C};
+  window.ANVCloud = {sb, configured, ready, requireUser, cfg: C, displayName};
 })();
